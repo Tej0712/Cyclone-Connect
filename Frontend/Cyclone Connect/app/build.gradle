@@ -1,0 +1,186 @@
+plugins {
+    id 'com.android.application'
+//    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace = "com.example.myapplication"
+    compileSdk = 34
+
+    buildFeatures {
+        buildConfig true
+    }
+    lintOptions {
+        baseline file("lint-baseline.xml")
+    }
+    viewBinding {
+        enabled = true
+    }
+
+    defaultConfig {
+        applicationId = "com.example.myapplication"
+        minSdk = 30
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+
+        }
+        debug{
+            testCoverageEnabled true
+        }
+
+    }
+    ndkVersion '7.4.2'
+}
+
+task javadoc(type: Javadoc) {
+
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+
+    doFirst {
+        configurations.implementation
+                .filter { it.name.endsWith('.aar') }
+                .each { aar ->
+                    copy {
+                        from zipTree(aar)
+                        include "**/classes.jar"
+                        into "$buildDir/tmp/aarsToJars/${aar.name.replace('.aar', '')}/"
+                    }
+                }
+    }
+
+    configurations.implementation.setCanBeResolved(true)
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.implementation
+    classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
+
+    android.applicationVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompileProvider.get().classpath
+        }
+    }
+
+    destinationDir = file("${project.buildDir}/outputs/javadoc/")
+    options.memberLevel = JavadocMemberLevel.PRIVATE
+    failOnError false
+    exclude '**/BuildConfig.java'
+    exclude '**/R.java'
+}
+
+
+
+dependencies {
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation 'com.google.android.gms:play-services-location:21.2.0'
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+    implementation 'androidx.navigation:navigation-fragment:2.7.7'
+    implementation 'androidx.navigation:navigation-ui:2.7.7'
+
+    implementation 'com.google.android.material:material:1.6.1' // Or latest version
+    implementation 'androidx.navigation:navigation-fragment:2.5.0' // Or latest version
+    implementation 'androidx.navigation:navigation-ui:2.5.0'
+
+//    implementation ('com.github.enricocid:cpl:1.0.3')
+//    implementation ('androidx.cardview:cardview:1.0.0')
+//
+//
+//    implementation 'com.joaomgcd:taskerpluginlibrary:0.4.4'
+
+    implementation 'com.google.maps:google-maps-services:0.18.0'
+
+
+
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation ('com.github.bumptech.glide:glide:4.13.0')
+    annotationProcessor ('com.github.bumptech.glide:compiler:4.13.0')
+
+
+
+
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Retrofit dependencies
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Volley dependency
+    implementation("com.android.volley:volley:1.2.1")
+    implementation ("org.java-websocket:Java-WebSocket:1.5.2")
+
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.android.libraries.places:places:3.4.0")
+
+    implementation ("androidx.cardview:cardview:1.0.0")
+
+    implementation ("com.airbnb.android:lottie:latest.release")
+    implementation("com.airbnb.android:lottie:6.4.0")
+
+    implementation ('com.theokanning.openai-gpt3-java:api:0.10.0')
+    implementation ('com.theokanning.openai-gpt3-java:client:0.10.0')
+    implementation ('com.squareup.retrofit2:retrofit:2.9.0')
+    implementation ('com.squareup.retrofit2:converter-jackson:2.9.0')
+
+    // for Android test
+    testImplementation ('junit:junit:4.13.2')
+    androidTestImplementation ('com.android.support.test:rules:1.0.2')
+    androidTestImplementation ('com.android.support.test:runner:1.0.2')
+    androidTestImplementation ('androidx.test.ext:junit:1.1.5')
+    androidTestImplementation ('androidx.test.espresso:espresso-core:3.5.1')
+    androidTestImplementation ('androidx.test.espresso:espresso-intents:3.5.1')
+    androidTestImplementation ('androidx.test:runner:1.5.2')
+    androidTestImplementation ('androidx.test:rules:1.5.0')
+
+    // Mockito for mocking network requests
+    androidTestImplementation 'org.mockito:mockito-android:3.11.2' // Use a version that's known to work well with Android
+    androidTestImplementation 'org.mockito:mockito-core:4.0.0' // Match core version with android version
+
+    androidTestImplementation ('com.android.volley:volley:1.2.1')
+    implementation ('androidx.cardview:cardview:1.0.0')
+
+
+}
+
+
+
+//
+//    // Room (for datatbase)
+//    implementation ("androidx.room:room-runtime:2.6.1")
+//    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+//
+//    // RecyclerView
+//    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+//
+//    // Scalable Size Unit (support for different screen sizes)
+//    implementation ("com.intuit.sdp:sdp-android:1.0.6")
+//    implementation ("com.intuit.ssp:ssp-android:1.0.6")
+//    // Material Design
+//    implementation ("com.google.android material:material:1.1.0")
+//    // Rounded ImageView
+//    implementation ("com.makeramen: roundedimageview: 2.3.0")
+
+
+
+
+

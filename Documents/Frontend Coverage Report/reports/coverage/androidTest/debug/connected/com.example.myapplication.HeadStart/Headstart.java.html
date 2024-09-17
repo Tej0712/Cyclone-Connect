@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Headstart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.HeadStart</a> &gt; <span class="el_source">Headstart.java</span></div><h1>Headstart.java</h1><pre class="source lang-java linenums">package com.example.myapplication.HeadStart;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L25">public class Headstart extends AppCompatActivity {</span>
+
+    private MajorAdapter adapter;
+<span class="nc" id="L28">    private final List&lt;Major&gt; majorList = new ArrayList&lt;&gt;();</span>
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L32">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L33">        setContentView(R.layout.activity_headstart);</span>
+
+<span class="nc" id="L35">        RecyclerView recyclerView = findViewById(R.id.majorRecyclerView);</span>
+<span class="nc" id="L36">        recyclerView.setLayoutManager(new LinearLayoutManager(this));</span>
+<span class="nc" id="L37">        adapter = new MajorAdapter(majorList);</span>
+<span class="nc" id="L38">        recyclerView.setAdapter(adapter);</span>
+
+<span class="nc" id="L40">        fetchMajors();</span>
+<span class="nc" id="L41">    }</span>
+
+    private void fetchMajors() {
+<span class="nc" id="L44">        String url = &quot;http://coms-309-046.class.las.iastate.edu:8080/majors&quot;;</span>
+
+<span class="nc" id="L46">        @SuppressLint(&quot;NotifyDataSetChanged&quot;) JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,</span>
+                response -&gt; {
+                    try {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                        for (int i = 0; i &lt; response.length(); i++) {</span>
+<span class="nc" id="L50">                            JSONObject object = response.getJSONObject(i);</span>
+<span class="nc" id="L51">                            Major major = new Major(</span>
+<span class="nc" id="L52">                                    object.getLong(&quot;majorID&quot;), // Change this to match the JSON key for the major ID from your backend</span>
+<span class="nc" id="L53">                                    object.getString(&quot;majorName&quot;)); // This seems correct but confirm the key name with your backend</span>
+<span class="nc" id="L54">                            majorList.add(major);</span>
+                        }
+
+<span class="nc" id="L57">                        adapter.notifyDataSetChanged();</span>
+<span class="nc" id="L58">                    } catch (Exception e) {</span>
+<span class="nc" id="L59">                        e.printStackTrace();</span>
+<span class="nc" id="L60">                    }</span>
+<span class="nc" id="L61">                },</span>
+                Throwable::printStackTrace);
+
+<span class="nc" id="L64">        VolleySingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);</span>
+<span class="nc" id="L65">    }</span>
+
+
+    public static class Major {
+        private final Long majorId;
+        private final String majorName;
+
+<span class="nc" id="L72">        public Major(Long majorId, String majorName) {</span>
+<span class="nc" id="L73">            this.majorId = majorId;</span>
+<span class="nc" id="L74">            this.majorName = majorName;</span>
+<span class="nc" id="L75">        }</span>
+
+        public Long getMajorId() {
+<span class="nc" id="L78">            return majorId;</span>
+        }
+
+        public String getMajorName() {
+<span class="nc" id="L82">            return majorName;</span>
+        }
+    }
+
+    private static class MajorAdapter extends RecyclerView.Adapter&lt;MajorAdapter.ViewHolder&gt; {
+        private final List&lt;Major&gt; majors;
+
+<span class="nc" id="L89">        public MajorAdapter(List&lt;Major&gt; majors) {</span>
+<span class="nc" id="L90">            this.majors = majors;</span>
+<span class="nc" id="L91">        }</span>
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+<span class="nc" id="L96">            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.major_item, parent, false);</span>
+<span class="nc" id="L97">            return new ViewHolder(view);</span>
+        }
+
+        @SuppressLint(&quot;SetTextI18n&quot;)
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+<span class="nc" id="L103">            Major major = majors.get(position);</span>
+<span class="nc" id="L104">            holder.majorId.setText(&quot;ID: &quot; + major.getMajorId());</span>
+<span class="nc" id="L105">            holder.majorName.setText(&quot;Major: &quot; + major.getMajorName());</span>
+<span class="nc" id="L106">        }</span>
+
+        @Override
+        public int getItemCount() {
+<span class="nc" id="L110">            return majors.size();</span>
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            TextView majorId;
+            TextView majorName;
+
+<span class="nc" id="L117">            public ViewHolder(View view) {</span>
+<span class="nc" id="L118">                super(view);</span>
+<span class="nc" id="L119">                majorId = view.findViewById(R.id.majorIdTextView);</span>
+<span class="nc" id="L120">                majorName = view.findViewById(R.id.majorNameTextView);</span>
+
+<span class="nc" id="L122">                view.setOnClickListener(v -&gt; {</span>
+<span class="nc" id="L123">                    int position = getAdapterPosition();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">                    if (position != RecyclerView.NO_POSITION) {</span>
+<span class="nc" id="L125">                        Major major = majors.get(position);</span>
+<span class="nc" id="L126">                        Intent intent = new Intent(view.getContext(), Headstart_courses.class);</span>
+<span class="nc" id="L127">                        intent.putExtra(&quot;majorID&quot;, major.getMajorId());</span>
+<span class="nc" id="L128">                        view.getContext().startActivity(intent);</span>
+                    }
+<span class="nc" id="L130">                });</span>
+<span class="nc" id="L131">            }</span>
+        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/space"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/exerciseId"
+        android:layout_width="377dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/enter_exercise_id"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/exerciseName"
+        android:layout_width="379dp"
+        android:layout_height="64dp"
+        android:layout_below="@id/exerciseId"
+        android:layout_marginTop="10dp"
+        android:hint="@string/exercise_name"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/exerciseDuration"
+        android:layout_width="373dp"
+        android:layout_height="61dp"
+        android:layout_below="@id/exerciseName"
+        android:layout_marginTop="10dp"
+        android:hint="@string/duration_in_minutes"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/exerciseCalories"
+        android:layout_width="375dp"
+        android:layout_height="63dp"
+        android:layout_below="@id/exerciseDuration"
+        android:layout_marginTop="10dp"
+        android:hint="@string/calories_burned"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/exerciseImageUrl"
+        android:layout_width="373dp"
+        android:layout_height="57dp"
+        android:layout_below="@id/exerciseCalories"
+        android:layout_marginTop="10dp"
+        android:hint="@string/image_url"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <Button
+        android:id="@+id/btnUpdateExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:text="@string/update_exercise"
+        android:layout_below="@id/exerciseImageUrl"
+        android:layout_marginTop="20dp"/>
+</RelativeLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>admin_headstart_update_specificcourse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.admin.HeadStart.SpecificCourse</a> &gt; <span class="el_source">admin_headstart_update_specificcourse.java</span></div><h1>admin_headstart_update_specificcourse.java</h1><pre class="source lang-java linenums">package com.example.myapplication.admin.HeadStart.SpecificCourse;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+<span class="nc" id="L19">public class admin_headstart_update_specificcourse extends AppCompatActivity {</span>
+
+    private EditText courseIdEditText;
+    private EditText programmingLanguagesEditText;
+    private EditText frameworkEditText;
+    private EditText resourcesEditText;
+    private EditText difficultyLevelEditText;
+    private EditText timeComplexityEditText;
+    private EditText reviewsEditText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L31">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L32">        setContentView(R.layout.admin_headstart_update_specificcourse);</span>
+
+<span class="nc" id="L34">        courseIdEditText = findViewById(R.id.courseIdEditText);</span>
+<span class="nc" id="L35">        programmingLanguagesEditText = findViewById(R.id.programmingLanguagesEditText);</span>
+<span class="nc" id="L36">        frameworkEditText = findViewById(R.id.frameworkEditText);</span>
+<span class="nc" id="L37">        resourcesEditText = findViewById(R.id.resourcesEditText);</span>
+<span class="nc" id="L38">        difficultyLevelEditText = findViewById(R.id.difficultyLevelEditText);</span>
+<span class="nc" id="L39">        timeComplexityEditText = findViewById(R.id.timeComplexityEditText);</span>
+<span class="nc" id="L40">        reviewsEditText = findViewById(R.id.reviewsEditText);</span>
+<span class="nc" id="L41">        Button updateButton = findViewById(R.id.updateButton);</span>
+
+<span class="nc" id="L43">        updateButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L46">                updateSpecificCourse();</span>
+<span class="nc" id="L47">            }</span>
+        });
+<span class="nc" id="L49">    }</span>
+
+    private void updateSpecificCourse() {
+<span class="nc" id="L52">        String courseIdString = courseIdEditText.getText().toString().trim();</span>
+<span class="nc" id="L53">        String programmingLanguages = programmingLanguagesEditText.getText().toString().trim();</span>
+<span class="nc" id="L54">        String framework = frameworkEditText.getText().toString().trim();</span>
+<span class="nc" id="L55">        String resources = resourcesEditText.getText().toString().trim();</span>
+<span class="nc" id="L56">        String difficultyLevel = difficultyLevelEditText.getText().toString().trim();</span>
+<span class="nc" id="L57">        String timeComplexity = timeComplexityEditText.getText().toString().trim();</span>
+<span class="nc" id="L58">        String reviews = reviewsEditText.getText().toString().trim();</span>
+
+<span class="nc bnc" id="L60" title="All 8 branches missed.">        if (courseIdString.isEmpty() || programmingLanguages.isEmpty() || framework.isEmpty() || resources.isEmpty() ||</span>
+<span class="nc bnc" id="L61" title="All 6 branches missed.">                difficultyLevel.isEmpty() || timeComplexity.isEmpty() || reviews.isEmpty()) {</span>
+<span class="nc" id="L62">            Toast.makeText(this, &quot;Please fill in all fields&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L63">            return;</span>
+        }
+
+        Long courseId;
+        try {
+<span class="nc" id="L68">            courseId = Long.parseLong(courseIdString);</span>
+<span class="nc" id="L69">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L70">            Toast.makeText(this, &quot;Invalid course ID&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L71">            return;</span>
+<span class="nc" id="L72">        }</span>
+
+<span class="nc" id="L74">        JSONObject requestBody = new JSONObject();</span>
+        try {
+<span class="nc" id="L76">            requestBody.put(&quot;courseId&quot;, courseId);</span>
+<span class="nc" id="L77">            requestBody.put(&quot;programmingLanguages&quot;, programmingLanguages);</span>
+<span class="nc" id="L78">            requestBody.put(&quot;framework&quot;, framework);</span>
+<span class="nc" id="L79">            requestBody.put(&quot;resources&quot;, resources);</span>
+<span class="nc" id="L80">            requestBody.put(&quot;difficultyLevel&quot;, difficultyLevel);</span>
+<span class="nc" id="L81">            requestBody.put(&quot;timeComplexity&quot;, timeComplexity);</span>
+<span class="nc" id="L82">            requestBody.put(&quot;reviews&quot;, reviews);</span>
+<span class="nc" id="L83">        } catch (JSONException e) {</span>
+<span class="nc" id="L84">            e.printStackTrace();</span>
+<span class="nc" id="L85">            return;</span>
+<span class="nc" id="L86">        }</span>
+
+<span class="nc" id="L88">        String url = &quot;http://coms-309-046.class.las.iastate.edu:8080/courseSpecifications/&quot; + courseId;</span>
+
+<span class="nc" id="L90">        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, requestBody,</span>
+                response -&gt; {
+<span class="nc" id="L92">                    Toast.makeText(admin_headstart_update_specificcourse.this, &quot;Specific course updated successfully&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L93">                    finish();</span>
+<span class="nc" id="L94">                },</span>
+                error -&gt; {
+<span class="nc" id="L96">                    error.printStackTrace();</span>
+<span class="nc" id="L97">                    Toast.makeText(admin_headstart_update_specificcourse.this, &quot;Failed to update specific course&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L98">                });</span>
+
+<span class="nc" id="L100">        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);</span>
+<span class="nc" id="L101">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

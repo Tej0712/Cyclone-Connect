@@ -1,0 +1,98 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > UserCalendarRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Calendar_with_userID</a>
+</div>
+
+<h1>Coverage Summary for Class: UserCalendarRepository (onetoone.Calendar_with_userID)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">UserCalendarRepository</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Calendar_with_userID;
+&nbsp;
+&nbsp;import io.micrometer.observation.ObservationFilter;
+&nbsp;import jakarta.transaction.Transactional;
+&nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+&nbsp;import org.springframework.data.jpa.repository.Modifying;
+&nbsp;import org.springframework.data.jpa.repository.Query;
+&nbsp;import org.springframework.data.repository.query.Param;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Repository
+&nbsp;public interface UserCalendarRepository extends JpaRepository&lt;CalendarEntity, Long&gt; {
+&nbsp;
+&nbsp;    @Query(&quot;SELECT ce FROM CalendarEntityWithUserID ce WHERE ce.user.userId = :userId&quot;)
+&nbsp;    List&lt;CalendarEntity&gt; findByUserId(@Param(&quot;userId&quot;) Long userId);
+&nbsp;    @Query(&quot;SELECT ce FROM CalendarEntityWithUserID ce JOIN FETCH ce.user&quot;)
+&nbsp;    List&lt;CalendarEntity&gt; findAllWithUsers();
+&nbsp;
+&nbsp;    Optional&lt;CalendarEntity&gt; findByIdAndUser_UserId(Long id, Long userId);
+&nbsp;
+&nbsp;    @Modifying
+&nbsp;    @Transactional
+&nbsp;    @Query(&quot;DELETE FROM CalendarEntityWithUserID ce WHERE ce.id = :eventId AND ce.user.userId = :userId&quot;)
+&nbsp;    void deleteByIdAndUser_UserId(@Param(&quot;eventId&quot;) Long eventId, @Param(&quot;userId&quot;) Long userId);
+&nbsp;
+&nbsp;}
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

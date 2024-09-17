@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <resources>
+
+        <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+            <item name="colorPrimary">@color/primaryColor</item>
+            <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+            <item name="colorAccent">@color/secondaryColor</item>
+            <item name="android:textColor">@color/textColor</item>
+            <item name="android:windowBackground">@color/background</item>
+        </style>
+
+        <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+            <item name="android:textSize">18sp</item>
+            <item name="android:textColor">@color/textOnPrimary</item>
+            <item name="android:padding">16dp</item>
+            <item name="backgroundTint">@color/primaryColor</item>
+            <item name="cornerRadius">8dp</item>
+        </style>
+
+        <style name="TextStyle" parent="TextAppearance.AppCompat.Large">
+            <item name="android:textSize">20sp</item>
+            <item name="android:textColor">@color/primaryDarkColor</item>
+        </style>
+
+        <style name="CounterText" parent="TextStyle">
+            <item name="android:textSize">24sp</item>
+            <item name="android:textStyle">bold</item>
+        </style>
+
+    </resources>
+

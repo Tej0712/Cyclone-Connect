@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Weather_Page.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.Weather</a> &gt; <span class="el_source">Weather_Page.java</span></div><h1>Weather_Page.java</h1><pre class="source lang-java linenums">package com.example.myapplication.Weather;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.HomePage;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+<span class="nc" id="L27">public class Weather_Page extends AppCompatActivity {</span>
+
+    private TextView textViewCityName, textViewTemperature, textViewWeatherInfo, textViewHumidity, textViewWind, textViewFeelsLike, textViewTime;
+    private ImageView imageViewWeather;
+<span class="nc" id="L31">    private final String city = &quot;Ames&quot;;</span>
+
+<span class="nc" id="L33">    private final TextView[] forecastDays = new TextView[5];</span>
+<span class="nc" id="L34">    private final TextView[] forecastTemps = new TextView[5];</span>
+<span class="nc" id="L35">    private final ImageView[] forecastIcons = new ImageView[5];</span>
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L39">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L40">        setContentView(R.layout.activity_weatherpage);</span>
+
+        // Initialize TextViews and ImageView
+<span class="nc" id="L43">        textViewCityName = findViewById(R.id.id_city);</span>
+<span class="nc" id="L44">        textViewTemperature = findViewById(R.id.id_degree);</span>
+<span class="nc" id="L45">        textViewWeatherInfo = findViewById(R.id.id_main);</span>
+<span class="nc" id="L46">        textViewHumidity = findViewById(R.id.id_humidity);</span>
+<span class="nc" id="L47">        textViewWind = findViewById(R.id.id_wind);</span>
+<span class="nc" id="L48">        textViewFeelsLike = findViewById(R.id.id_realfeel);</span>
+<span class="nc" id="L49">        textViewTime = findViewById(R.id.id_time);</span>
+<span class="nc" id="L50">        imageViewWeather = findViewById(R.id.id_weatherImage);</span>
+
+        // Initialize forecast TextViews and ImageViews
+<span class="nc" id="L53">        forecastDays[0] = findViewById(R.id.id_forecastDay1);</span>
+<span class="nc" id="L54">        forecastDays[1] = findViewById(R.id.id_forecastDay2);</span>
+<span class="nc" id="L55">        forecastDays[2] = findViewById(R.id.id_forecastDay3);</span>
+<span class="nc" id="L56">        forecastDays[3] = findViewById(R.id.id_forecastDay4);</span>
+<span class="nc" id="L57">        forecastDays[4] = findViewById(R.id.id_forecastDay5);</span>
+
+<span class="nc" id="L59">        forecastTemps[0] = findViewById(R.id.id_forecastTemp1);</span>
+<span class="nc" id="L60">        forecastTemps[1] = findViewById(R.id.id_forecastTemp2);</span>
+<span class="nc" id="L61">        forecastTemps[2] = findViewById(R.id.id_forecastTemp3);</span>
+<span class="nc" id="L62">        forecastTemps[3] = findViewById(R.id.id_forecastTemp4);</span>
+<span class="nc" id="L63">        forecastTemps[4] = findViewById(R.id.id_forecastTemp5);</span>
+
+<span class="nc" id="L65">        forecastIcons[0] = findViewById(R.id.id_forecastIcon1);</span>
+<span class="nc" id="L66">        forecastIcons[1] = findViewById(R.id.id_forecastIcon2);</span>
+<span class="nc" id="L67">        forecastIcons[2] = findViewById(R.id.id_forecastIcon3);</span>
+<span class="nc" id="L68">        forecastIcons[3] = findViewById(R.id.id_forecastIcon4);</span>
+<span class="nc" id="L69">        forecastIcons[4] = findViewById(R.id.id_forecastIcon5);</span>
+
+<span class="nc" id="L71">        String lat = &quot;42.03&quot;;</span>
+<span class="nc" id="L72">        String lon = &quot;-93.62&quot;;</span>
+<span class="nc" id="L73">        WeatherByLatLon(lat, lon);</span>
+<span class="nc" id="L74">    }</span>
+
+    private void WeatherByLatLon(String lat, String lon) {
+        //openweather api
+<span class="nc" id="L78">        String API_KEY = &quot;40dbe88e60f8f27562b2f1210084a6a7&quot;;</span>
+<span class="nc" id="L79">        String url = &quot;https://api.openweathermap.org/data/2.5/forecast?lat=&quot; + lat + &quot;&amp;lon=&quot; + lon + &quot;&amp;appid=&quot; + API_KEY + &quot;&amp;units=metric&quot;;</span>
+
+<span class="nc" id="L81">        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,</span>
+                response -&gt; {
+                    try {
+<span class="nc" id="L84">                        JSONObject json = new JSONObject(response);</span>
+
+                        // Current weather data
+<span class="nc" id="L87">                        JSONArray list = json.getJSONArray(&quot;list&quot;);</span>
+<span class="nc" id="L88">                        JSONObject currentWeather = list.getJSONObject(0);</span>
+<span class="nc" id="L89">                        JSONArray currentWeatherArray = currentWeather.getJSONArray(&quot;weather&quot;);</span>
+<span class="nc" id="L90">                        JSONObject currentWeatherObject = currentWeatherArray.getJSONObject(0);</span>
+
+<span class="nc" id="L92">                        String description = currentWeatherObject.getString(&quot;description&quot;);</span>
+<span class="nc" id="L93">                        String icons = currentWeatherObject.getString(&quot;icon&quot;);</span>
+
+                        // Get today's date
+<span class="nc" id="L96">                        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;EEE, MMM d&quot;, Locale.getDefault());</span>
+<span class="nc" id="L97">                        String currentDate = dateFormat.format(new Date());</span>
+
+<span class="nc" id="L99">                        JSONObject Main = currentWeather.getJSONObject(&quot;main&quot;);</span>
+<span class="nc" id="L100">                        double temperature = Main.getDouble(&quot;temp&quot;);</span>
+<span class="nc" id="L101">                        String Temp = Math.round(temperature) + &quot;°C&quot;;</span>
+<span class="nc" id="L102">                        double Humidity = Main.getDouble(&quot;humidity&quot;);</span>
+<span class="nc" id="L103">                        String hum = Math.round(Humidity) + &quot;%&quot;;</span>
+<span class="nc" id="L104">                        double FeelsLike = Main.getDouble(&quot;feels_like&quot;);</span>
+<span class="nc" id="L105">                        String feelsValue = Math.round(FeelsLike) + &quot;°&quot;;</span>
+
+<span class="nc" id="L107">                        JSONObject Wind = currentWeather.getJSONObject(&quot;wind&quot;);</span>
+<span class="nc" id="L108">                        String windValue = Wind.getString(&quot;speed&quot;) + &quot; &quot; + &quot;km/h&quot;;</span>
+
+<span class="nc" id="L110">                        JSONObject CityObject = json.getJSONObject(&quot;city&quot;);</span>
+<span class="nc" id="L111">                        String City = CityObject.getString(&quot;name&quot;);</span>
+
+<span class="nc" id="L113">                        setDataText(textViewCityName, City);</span>
+<span class="nc" id="L114">                        setDataText(textViewTemperature, Temp);</span>
+<span class="nc" id="L115">                        setDataText(textViewWeatherInfo, description);</span>
+<span class="nc" id="L116">                        setDataImage(imageViewWeather, icons);</span>
+<span class="nc" id="L117">                        setDataText(textViewTime, currentDate);</span>
+<span class="nc" id="L118">                        setDataText(textViewHumidity, hum);</span>
+<span class="nc" id="L119">                        setDataText(textViewFeelsLike, feelsValue);</span>
+<span class="nc" id="L120">                        setDataText(textViewWind, windValue);</span>
+
+                        // Forecast data
+<span class="nc" id="L123">                        Calendar calendar = Calendar.getInstance();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">                        for (int i = 0; i &lt; forecastDays.length; i++) {</span>
+<span class="nc" id="L125">                            String forecastDate = dateFormat.format(calendar.getTime());</span>
+<span class="nc" id="L126">                            int index = i * 8;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                            if (index &lt; list.length()) {</span>
+<span class="nc" id="L128">                                JSONObject forecastWeather = list.getJSONObject(index);</span>
+<span class="nc" id="L129">                                JSONObject forecastMain = forecastWeather.getJSONObject(&quot;main&quot;);</span>
+<span class="nc" id="L130">                                double forecastTemperature = forecastMain.getDouble(&quot;temp&quot;);</span>
+<span class="nc" id="L131">                                String forecastTemp = Math.round(forecastTemperature) + &quot;°&quot;;</span>
+<span class="nc" id="L132">                                JSONArray forecastWeatherArray = forecastWeather.getJSONArray(&quot;weather&quot;);</span>
+<span class="nc" id="L133">                                JSONObject forecastWeatherObject = forecastWeatherArray.getJSONObject(0);</span>
+<span class="nc" id="L134">                                String forecastIcon = forecastWeatherObject.getString(&quot;icon&quot;);</span>
+
+<span class="nc" id="L136">                                setDataText(forecastDays[i], forecastDate);</span>
+<span class="nc" id="L137">                                setDataText(forecastTemps[i], forecastTemp);</span>
+<span class="nc" id="L138">                                setDataImage(forecastIcons[i], forecastIcon);</span>
+                            }
+<span class="nc" id="L140">                            calendar.add(Calendar.DATE, 1);</span>
+                        }
+
+<span class="nc" id="L143">                    } catch (JSONException e) {</span>
+<span class="nc" id="L144">                        e.printStackTrace();</span>
+<span class="nc" id="L145">                    }</span>
+<span class="nc" id="L146">                },</span>
+<span class="nc" id="L147">                error -&gt; showErrorToast());</span>
+
+<span class="nc" id="L149">        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);</span>
+<span class="nc" id="L150">    }</span>
+
+    private void setDataText(final TextView text, final String value) {
+<span class="nc" id="L153">        runOnUiThread(() -&gt; text.setText(value));</span>
+<span class="nc" id="L154">    }</span>
+
+    private void setDataImage(final ImageView imageView, final String value) {
+<span class="nc" id="L157">        runOnUiThread(() -&gt; {</span>
+<span class="nc bnc" id="L158" title="All 17 branches missed.">            switch (value) {</span>
+                case &quot;01d&quot;:
+<span class="nc" id="L160">                    imageView.setImageResource(R.drawable.w01d);</span>
+<span class="nc" id="L161">                    break;</span>
+                case &quot;01n&quot;:
+<span class="nc" id="L163">                    imageView.setImageResource(R.drawable.w01d);</span>
+<span class="nc" id="L164">                    break;</span>
+                case &quot;02d&quot;:
+<span class="nc" id="L166">                    imageView.setImageResource(R.drawable.w02d);</span>
+<span class="nc" id="L167">                    break;</span>
+                case &quot;02n&quot;:
+<span class="nc" id="L169">                    imageView.setImageResource(R.drawable.w02d);</span>
+<span class="nc" id="L170">                    break;</span>
+                case &quot;03d&quot;:
+<span class="nc" id="L172">                    imageView.setImageResource(R.drawable.w03d);</span>
+<span class="nc" id="L173">                    break;</span>
+                case &quot;03n&quot;:
+<span class="nc" id="L175">                    imageView.setImageResource(R.drawable.w03d);</span>
+<span class="nc" id="L176">                    break;</span>
+                case &quot;04d&quot;:
+<span class="nc" id="L178">                    imageView.setImageResource(R.drawable.w04d);</span>
+<span class="nc" id="L179">                    break;</span>
+                case &quot;04n&quot;:
+<span class="nc" id="L181">                    imageView.setImageResource(R.drawable.w04d);</span>
+<span class="nc" id="L182">                    break;</span>
+                case &quot;09d&quot;:
+<span class="nc" id="L184">                    imageView.setImageResource(R.drawable.w09d);</span>
+<span class="nc" id="L185">                    break;</span>
+                case &quot;09n&quot;:
+<span class="nc" id="L187">                    imageView.setImageResource(R.drawable.w09d);</span>
+<span class="nc" id="L188">                    break;</span>
+                case &quot;10d&quot;:
+<span class="nc" id="L190">                    imageView.setImageResource(R.drawable.w10d);</span>
+<span class="nc" id="L191">                    break;</span>
+                case &quot;10n&quot;:
+<span class="nc" id="L193">                    imageView.setImageResource(R.drawable.w10d);</span>
+<span class="nc" id="L194">                    break;</span>
+                case &quot;11d&quot;:
+<span class="nc" id="L196">                    imageView.setImageResource(R.drawable.w11d);</span>
+<span class="nc" id="L197">                    break;</span>
+                case &quot;11n&quot;:
+<span class="nc" id="L199">                    imageView.setImageResource(R.drawable.w11d);</span>
+<span class="nc" id="L200">                    break;</span>
+                case &quot;13d&quot;:
+<span class="nc" id="L202">                    imageView.setImageResource(R.drawable.w13d);</span>
+<span class="nc" id="L203">                    break;</span>
+                case &quot;13n&quot;:
+<span class="nc" id="L205">                    imageView.setImageResource(R.drawable.w13d);</span>
+<span class="nc" id="L206">                    break;</span>
+                default:
+<span class="nc" id="L208">                    imageView.setImageResource(R.drawable.w03d);</span>
+            }
+<span class="nc" id="L210">        });</span>
+<span class="nc" id="L211">    }</span>
+
+    public void navigateToHomePage(View v) {
+<span class="nc" id="L214">        Intent intent = new Intent(Weather_Page.this, HomePage.class);</span>
+<span class="nc" id="L215">        startActivity(intent);</span>
+<span class="nc" id="L216">    }</span>
+
+    private void showErrorToast() {
+<span class="nc" id="L219">        Toast.makeText(Weather_Page.this, &quot;Failed to load weather data&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L220">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

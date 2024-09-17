@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProfilePhotoActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.profile</a> &gt; <span class="el_source">ProfilePhotoActivity.java</span></div><h1>ProfilePhotoActivity.java</h1><pre class="source lang-java linenums">package com.example.myapplication.profile;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.R;
+import com.example.myapplication.admin.AdminPage;
+import com.example.myapplication.helper.MultipartRequest;
+import com.example.myapplication.helper.VolleySingleton;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+<span class="nc" id="L32">public class ProfilePhotoActivity extends AppCompatActivity {</span>
+
+    private static final String TAG = &quot;ProfilePhotoActivity&quot;;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_PICK = 2;
+
+    private ImageView profileImageView;
+    private Button captureButton;
+    private Button selectButton;
+    private Button uploadButton;
+    private Button updateButton;
+    private Button deleteButton;
+    private Uri selectedImageUri;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L48">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L49">        setContentView(R.layout.profile_photo);</span>
+
+<span class="nc" id="L51">        profileImageView = findViewById(R.id.profileImageView);</span>
+<span class="nc" id="L52">        captureButton = findViewById(R.id.captureButton);</span>
+<span class="nc" id="L53">        selectButton = findViewById(R.id.selectButton);</span>
+<span class="nc" id="L54">        uploadButton = findViewById(R.id.uploadButton);</span>
+<span class="nc" id="L55">        updateButton = findViewById(R.id.updateButton);</span>
+<span class="nc" id="L56">        deleteButton = findViewById(R.id.deleteButton);</span>
+<span class="nc" id="L57">        updateButton.setVisibility(View.GONE); // Initially hide the update button</span>
+<span class="nc" id="L58">        deleteButton.setVisibility(View.GONE); // Initially hide the delete button</span>
+
+<span class="nc" id="L60">        captureButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L63">                Log.d(TAG, &quot;captureButton clicked&quot;);</span>
+<span class="nc" id="L64">                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {</span>
+<span class="nc" id="L66">                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);</span>
+                } else {
+<span class="nc" id="L68">                    Log.e(TAG, &quot;No camera app available&quot;);</span>
+                }
+<span class="nc" id="L70">            }</span>
+        });
+
+<span class="nc" id="L73">        selectButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L76">                Log.d(TAG, &quot;selectButton clicked&quot;);</span>
+<span class="nc" id="L77">                Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);</span>
+<span class="nc" id="L78">                startActivityForResult(pickPhotoIntent, REQUEST_IMAGE_PICK);</span>
+<span class="nc" id="L79">            }</span>
+        });
+
+<span class="nc" id="L82">        uploadButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L85">                Log.d(TAG, &quot;uploadButton clicked&quot;);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                if (selectedImageUri != null) {</span>
+<span class="nc" id="L87">                    uploadImage(selectedImageUri);</span>
+                } else {
+<span class="nc" id="L89">                    Log.e(TAG, &quot;No image selected&quot;);</span>
+<span class="nc" id="L90">                    Toast.makeText(ProfilePhotoActivity.this, &quot;Please capture or select an image first&quot;, Toast.LENGTH_SHORT).show();</span>
+                }
+<span class="nc" id="L92">            }</span>
+        });
+
+<span class="nc" id="L95">        updateButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L98">                Log.d(TAG, &quot;updateButton clicked&quot;);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                if (selectedImageUri != null) {</span>
+<span class="nc" id="L100">                    updateImage(selectedImageUri);</span>
+                } else {
+<span class="nc" id="L102">                    Log.e(TAG, &quot;No image selected&quot;);</span>
+<span class="nc" id="L103">                    Toast.makeText(ProfilePhotoActivity.this, &quot;Please capture or select an image first&quot;, Toast.LENGTH_SHORT).show();</span>
+                }
+<span class="nc" id="L105">            }</span>
+        });
+
+<span class="nc" id="L108">        deleteButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L111">                Log.d(TAG, &quot;deleteButton clicked&quot;);</span>
+<span class="nc" id="L112">                deleteImage();</span>
+<span class="nc" id="L113">            }</span>
+        });
+
+        // Load the profile photo from the server
+<span class="nc" id="L117">        loadProfilePhoto();</span>
+<span class="nc" id="L118">    }</span>
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+<span class="nc" id="L122">        super.onActivityResult(requestCode, resultCode, data);</span>
+
+<span class="nc" id="L124">        Log.d(TAG, &quot;onActivityResult: requestCode=&quot; + requestCode + &quot;, resultCode=&quot; + resultCode);</span>
+
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (resultCode == RESULT_OK) {</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">            if (requestCode == REQUEST_IMAGE_CAPTURE &amp;&amp; data != null) {</span>
+<span class="nc" id="L128">                Log.d(TAG, &quot;Image captured&quot;);</span>
+<span class="nc" id="L129">                Bundle extras = data.getExtras();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                if (extras != null) {</span>
+<span class="nc" id="L131">                    Bitmap imageBitmap = (Bitmap) extras.get(&quot;data&quot;);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">                    if (imageBitmap != null) {</span>
+<span class="nc" id="L133">                        selectedImageUri = getImageUri(imageBitmap);</span>
+<span class="nc" id="L134">                        profileImageView.setImageBitmap(imageBitmap);</span>
+                    } else {
+<span class="nc" id="L136">                        Log.e(TAG, &quot;No image data in extras&quot;);</span>
+                    }
+<span class="nc" id="L138">                } else {</span>
+<span class="nc" id="L139">                    Log.e(TAG, &quot;No extras in captured image data&quot;);</span>
+                }
+<span class="nc bnc" id="L141" title="All 4 branches missed.">            } else if (requestCode == REQUEST_IMAGE_PICK &amp;&amp; data != null) {</span>
+<span class="nc" id="L142">                Log.d(TAG, &quot;Image picked&quot;);</span>
+<span class="nc" id="L143">                selectedImageUri = data.getData();</span>
+<span class="nc" id="L144">                profileImageView.setImageURI(selectedImageUri);</span>
+            }
+        } else {
+<span class="nc" id="L147">            Log.e(TAG, &quot;Activity result not OK&quot;);</span>
+        }
+<span class="nc" id="L149">    }</span>
+
+    private Uri getImageUri(Bitmap bitmap) {
+<span class="nc" id="L152">        Log.d(TAG, &quot;getImageUri: Converting bitmap to URI&quot;);</span>
+<span class="nc" id="L153">        ByteArrayOutputStream bytes = new ByteArrayOutputStream();</span>
+<span class="nc" id="L154">        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);</span>
+<span class="nc" id="L155">        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, &quot;Title&quot;, null);</span>
+<span class="nc" id="L156">        return Uri.parse(path);</span>
+    }
+
+    private void uploadImage(Uri imageUri) {
+<span class="nc" id="L160">        Log.d(TAG, &quot;uploadImage: imageUri=&quot; + imageUri);</span>
+
+<span class="nc" id="L162">        byte[] imageData = convertImageUriToBytes(imageUri);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if (imageData != null) {</span>
+<span class="nc" id="L164">            Log.d(TAG, &quot;Image data converted to bytes. Size: &quot; + imageData.length);</span>
+
+<span class="nc" id="L166">            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);</span>
+<span class="nc" id="L167">            long userId = sharedPreferences.getLong(&quot;userId&quot;, -1);</span>
+<span class="nc" id="L168">            Log.d(TAG, &quot;User ID retrieved from shared preferences: &quot; + userId);</span>
+
+<span class="nc" id="L170">            String uploadUrl = &quot;http://coms-309-046.class.las.iastate.edu:8080/users/&quot; + userId + &quot;/image&quot;;</span>
+<span class="nc" id="L171">            Log.d(TAG, &quot;Upload URL: &quot; + uploadUrl);</span>
+
+<span class="nc" id="L173">            MultipartRequest multipartRequest = new MultipartRequest(</span>
+                    Request.Method.POST,
+                    uploadUrl,
+                    imageData,
+<span class="nc" id="L177">                    new Response.Listener&lt;String&gt;() {</span>
+                        @Override
+                        public void onResponse(String response) {
+<span class="nc" id="L180">                            Log.d(TAG, &quot;Image upload success. Response: &quot; + response);</span>
+<span class="nc" id="L181">                            Toast.makeText(ProfilePhotoActivity.this, &quot;Image uploaded successfully&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L182">                            updateButton.setVisibility(View.VISIBLE); // Show the update button</span>
+<span class="nc" id="L183">                            deleteButton.setVisibility(View.VISIBLE); // Show the delete button</span>
+<span class="nc" id="L184">                            uploadButton.setVisibility(View.GONE); // Hide the upload button</span>
+//                            Intent intent = new Intent(ProfilePhotoActivity.this, Profile.class);
+//                            startActivity(intent);
+<span class="nc" id="L187">                            finish();</span>
+<span class="nc" id="L188">                        }</span>
+                    },
+<span class="nc" id="L190">                    new Response.ErrorListener() {</span>
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L193">                            Log.e(TAG, &quot;Image upload failed. Error: &quot; + error.getMessage());</span>
+<span class="nc" id="L194">                            Toast.makeText(ProfilePhotoActivity.this, &quot;Image upload failed&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L195">                        }</span>
+                    }
+            );
+
+<span class="nc" id="L199">            Log.d(TAG, &quot;MultipartRequest created. Adding to request queue.&quot;);</span>
+<span class="nc" id="L200">            VolleySingleton.getInstance(this).addToRequestQueue(multipartRequest);</span>
+<span class="nc" id="L201">        } else {</span>
+<span class="nc" id="L202">            Log.e(TAG, &quot;Failed to convert image URI to bytes&quot;);</span>
+        }
+<span class="nc" id="L204">    }</span>
+
+    private void updateImage(Uri imageUri) {
+<span class="nc" id="L207">        Log.d(TAG, &quot;updateImage: imageUri=&quot; + imageUri);</span>
+
+<span class="nc" id="L209">        byte[] imageData = convertImageUriToBytes(imageUri);</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">        if (imageData != null) {</span>
+<span class="nc" id="L211">            Log.d(TAG, &quot;Image data converted to bytes. Size: &quot; + imageData.length);</span>
+
+<span class="nc" id="L213">            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);</span>
+<span class="nc" id="L214">            long userId = sharedPreferences.getLong(&quot;userId&quot;, -1);</span>
+<span class="nc" id="L215">            Log.d(TAG, &quot;User ID retrieved from shared preferences: &quot; + userId);</span>
+
+<span class="nc" id="L217">            String updateUrl = &quot;http://coms-309-046.class.las.iastate.edu:8080/users/&quot; + userId + &quot;/image&quot;;</span>
+<span class="nc" id="L218">            Log.d(TAG, &quot;Update URL: &quot; + updateUrl);</span>
+
+<span class="nc" id="L220">            MultipartRequest multipartRequest = new MultipartRequest(</span>
+                    Request.Method.PUT,
+                    updateUrl,
+                    imageData,
+<span class="nc" id="L224">                    new Response.Listener&lt;String&gt;() {</span>
+                        @Override
+                        public void onResponse(String response) {
+<span class="nc" id="L227">                            Log.d(TAG, &quot;Image update success. Response: &quot; + response);</span>
+<span class="nc" id="L228">                            Toast.makeText(ProfilePhotoActivity.this, &quot;Image updated successfully&quot;, Toast.LENGTH_SHORT).show();</span>
+//                            Intent intent = new Intent(ProfilePhotoActivity.this, Profile.class);
+//                            startActivity(intent);
+<span class="nc" id="L231">                            finish();</span>
+<span class="nc" id="L232">                        }</span>
+                    },
+<span class="nc" id="L234">                    new Response.ErrorListener() {</span>
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L237">                            Log.e(TAG, &quot;Image update failed. Error: &quot; + error.getMessage());</span>
+<span class="nc" id="L238">                            Toast.makeText(ProfilePhotoActivity.this, &quot;Image update failed&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L239">                        }</span>
+                    }
+            );
+
+<span class="nc" id="L243">            Log.d(TAG, &quot;MultipartRequest created. Adding to request queue.&quot;);</span>
+<span class="nc" id="L244">            VolleySingleton.getInstance(this).addToRequestQueue(multipartRequest);</span>
+<span class="nc" id="L245">        } else {</span>
+<span class="nc" id="L246">            Log.e(TAG, &quot;Failed to convert image URI to bytes&quot;);</span>
+        }
+<span class="nc" id="L248">    }</span>
+
+    private void deleteImage() {
+<span class="nc" id="L251">        Log.d(TAG, &quot;deleteImage&quot;);</span>
+
+<span class="nc" id="L253">        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);</span>
+<span class="nc" id="L254">        long userId = sharedPreferences.getLong(&quot;userId&quot;, -1);</span>
+<span class="nc" id="L255">        Log.d(TAG, &quot;User ID retrieved from shared preferences: &quot; + userId);</span>
+
+<span class="nc" id="L257">        String deleteUrl = &quot;http://coms-309-046.class.las.iastate.edu:8080/users/&quot; + userId + &quot;/image&quot;;</span>
+<span class="nc" id="L258">        Log.d(TAG, &quot;Delete URL: &quot; + deleteUrl);</span>
+
+<span class="nc" id="L260">        StringRequest stringRequest = new StringRequest(</span>
+                Request.Method.DELETE,
+                deleteUrl,
+<span class="nc" id="L263">                new Response.Listener&lt;String&gt;() {</span>
+                    @Override
+                    public void onResponse(String response) {
+<span class="nc" id="L266">                        Log.d(TAG, &quot;Image delete success. Response: &quot; + response);</span>
+<span class="nc" id="L267">                        Toast.makeText(ProfilePhotoActivity.this, &quot;Image deleted successfully&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L268">                        updateButton.setVisibility(View.GONE); // Hide the update button</span>
+<span class="nc" id="L269">                        deleteButton.setVisibility(View.GONE); // Hide the delete button</span>
+<span class="nc" id="L270">                        uploadButton.setVisibility(View.VISIBLE); // Show the upload button</span>
+<span class="nc" id="L271">                        profileImageView.setImageResource(R.drawable.user); // Set default profile photo</span>
+//                        Intent intent = new Intent(ProfilePhotoActivity.this, Profile.class);
+//                        startActivity(intent);
+<span class="nc" id="L274">                        finish();</span>
+<span class="nc" id="L275">                    }</span>
+                },
+<span class="nc" id="L277">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L280">                        Log.e(TAG, &quot;Image delete failed. Error: &quot; + error.getMessage());</span>
+<span class="nc" id="L281">                        Toast.makeText(ProfilePhotoActivity.this, &quot;Image delete failed&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L282">                    }</span>
+                }
+        );
+
+<span class="nc" id="L286">        Log.d(TAG, &quot;StringRequest created. Adding to request queue.&quot;);</span>
+<span class="nc" id="L287">        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);</span>
+<span class="nc" id="L288">    }</span>
+
+    private byte[] convertImageUriToBytes(Uri imageUri) {
+<span class="nc" id="L291">        Log.d(TAG, &quot;convertImageUriToBytes: imageUri=&quot; + imageUri);</span>
+
+<span class="nc" id="L293">        InputStream inputStream = null;</span>
+        try {
+<span class="nc" id="L295">            inputStream = getContentResolver().openInputStream(imageUri);</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">            if (inputStream == null) {</span>
+<span class="nc" id="L297">                Log.e(TAG, &quot;Failed to open InputStream: URI may be invalid.&quot;);</span>
+<span class="nc" id="L298">                return null;</span>
+            }
+
+<span class="nc" id="L301">            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();</span>
+<span class="nc" id="L302">            int bufferSize = 1024;</span>
+<span class="nc" id="L303">            byte[] buffer = new byte[bufferSize];</span>
+
+            int len;
+<span class="nc bnc" id="L306" title="All 2 branches missed.">            while ((len = inputStream.read(buffer)) != -1) {</span>
+<span class="nc" id="L307">                byteBuffer.write(buffer, 0, len);</span>
+            }
+
+<span class="nc" id="L310">            byte[] imageBytes = byteBuffer.toByteArray();</span>
+<span class="nc" id="L311">            Log.d(TAG, &quot;Image converted to bytes. Size: &quot; + imageBytes.length);</span>
+<span class="nc" id="L312">            return imageBytes;</span>
+<span class="nc" id="L313">        } catch (IOException e) {</span>
+<span class="nc" id="L314">            Log.e(TAG, &quot;Error converting image to bytes: &quot; + e.getMessage());</span>
+<span class="nc" id="L315">            e.printStackTrace();</span>
+        } finally {
+<span class="nc bnc" id="L317" title="All 2 branches missed.">            if (inputStream != null) {</span>
+                try {
+<span class="nc" id="L319">                    inputStream.close();</span>
+<span class="nc" id="L320">                } catch (IOException e) {</span>
+<span class="nc" id="L321">                    Log.e(TAG, &quot;Failed to close InputStream: &quot; + e.getMessage());</span>
+<span class="nc" id="L322">                    e.printStackTrace();</span>
+<span class="nc" id="L323">                }</span>
+            }
+        }
+<span class="nc" id="L326">        return null;</span>
+    }
+
+    private void loadProfilePhoto() {
+<span class="nc" id="L330">        Log.d(TAG, &quot;loadProfilePhoto: Loading profile photo from server&quot;);</span>
+
+<span class="nc" id="L332">        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);</span>
+<span class="nc" id="L333">        long userId = sharedPreferences.getLong(&quot;userId&quot;, -1);</span>
+<span class="nc" id="L334">        Log.d(TAG, &quot;User ID retrieved from shared preferences: &quot; + userId);</span>
+
+<span class="nc" id="L336">        String profilePhotoUrl = &quot;http://coms-309-046.class.las.iastate.edu:8080/users/&quot; + userId + &quot;/image&quot;;</span>
+<span class="nc" id="L337">        Log.d(TAG, &quot;Profile photo URL: &quot; + profilePhotoUrl);</span>
+
+<span class="nc" id="L339">        ImageRequest imageRequest = new ImageRequest(</span>
+                profilePhotoUrl,
+<span class="nc" id="L341">                new Response.Listener&lt;Bitmap&gt;() {</span>
+                    @Override
+                    public void onResponse(Bitmap response) {
+<span class="nc" id="L344">                        Log.d(TAG, &quot;Profile photo loaded successfully&quot;);</span>
+<span class="nc" id="L345">                        profileImageView.setImageBitmap(response);</span>
+<span class="nc" id="L346">                        updateButton.setVisibility(View.VISIBLE); // Show the update button</span>
+<span class="nc" id="L347">                        deleteButton.setVisibility(View.VISIBLE); // Show the delete button</span>
+<span class="nc" id="L348">                        uploadButton.setVisibility(View.GONE); // Hide the upload button</span>
+<span class="nc" id="L349">                    }</span>
+                },
+                0,
+                0,
+                ImageView.ScaleType.CENTER_CROP,
+                Bitmap.Config.RGB_565,
+<span class="nc" id="L355">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L358">                        Log.e(TAG, &quot;Error loading profile photo: &quot; + error.toString());</span>
+<span class="nc" id="L359">                        profileImageView.setImageResource(R.drawable.user); // Set default profile photo</span>
+<span class="nc" id="L360">                        updateButton.setVisibility(View.GONE); // Hide the update button</span>
+<span class="nc" id="L361">                        deleteButton.setVisibility(View.GONE); // Hide the delete button</span>
+<span class="nc" id="L362">                        uploadButton.setVisibility(View.VISIBLE); // Show the upload button</span>
+<span class="nc" id="L363">                    }</span>
+                }
+        );
+
+<span class="nc" id="L367">        VolleySingleton.getInstance(this).addToRequestQueue(imageRequest);</span>
+<span class="nc" id="L368">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

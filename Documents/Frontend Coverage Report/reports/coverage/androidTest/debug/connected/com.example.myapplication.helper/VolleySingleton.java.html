@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VolleySingleton.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.helper</a> &gt; <span class="el_source">VolleySingleton.java</span></div><h1>VolleySingleton.java</h1><pre class="source lang-java linenums">package com.example.myapplication.helper;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.LruCache;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import org.json.JSONObject;
+/**
+ * @author Abhay Prasanna Rao
+ * &lt;p&gt;
+ * Singleton class that encapsulates the Volley library's RequestQueue and ImageLoader
+ * for network operations and image caching, ensuring efficient resource management.
+ * This class provides a centralized access point for network requests and image loading
+ * within the application.
+ *
+ */
+
+public class VolleySingleton {
+    @SuppressLint(&quot;StaticFieldLeak&quot;)
+    private static VolleySingleton instance;
+    private RequestQueue requestQueue;
+    private final ImageLoader imageLoader;
+    @SuppressLint(&quot;StaticFieldLeak&quot;)
+    private static Context ctx;
+    /**
+     * Private constructor to initialize the singleton instance.
+     *
+     * @param context The application context.
+     */
+<span class="nc" id="L38">    private VolleySingleton(Context context) {</span>
+<span class="nc" id="L39">        ctx = context;</span>
+<span class="nc" id="L40">        requestQueue = getRequestQueue();</span>
+
+<span class="nc" id="L42">        imageLoader = new ImageLoader(requestQueue,</span>
+<span class="nc" id="L43">                new ImageLoader.ImageCache() {</span>
+<span class="nc" id="L44">                    private final LruCache&lt;String, Bitmap&gt; cache = new LruCache&lt;&gt;(20);</span>
+
+                    @Override
+                    public Bitmap getBitmap(String url) {
+<span class="nc" id="L48">                        return cache.get(url);</span>
+                    }
+
+                    @Override
+                    public void putBitmap(String url, Bitmap bitmap) {
+<span class="nc" id="L53">                        cache.put(url, bitmap);</span>
+<span class="nc" id="L54">                    }</span>
+                });
+<span class="nc" id="L56">    }</span>
+    /**
+     * Provides the global singleton instance and initializes it if necessary.
+     *
+     * @param context The application context.
+     * @return The singleton instance of VolleySingleton.
+     */
+    public static synchronized VolleySingleton getInstance(Context context) {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (instance == null) {</span>
+<span class="nc" id="L65">            instance = new VolleySingleton(context);</span>
+        }
+<span class="nc" id="L67">        return instance;</span>
+    }
+    /**
+     * Returns the application's RequestQueue, creating it if it is not already initialized.
+     *
+     * @return The RequestQueue for managing network requests.
+     */
+    public RequestQueue getRequestQueue() {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (requestQueue == null) {</span>
+<span class="nc" id="L76">            requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());</span>
+        }
+<span class="nc" id="L78">        return requestQueue;</span>
+    }
+    /**
+     * Adds a request to the RequestQueue for execution.
+     *
+     * @param req The request to add to the queue.
+     * @param &lt;T&gt; The type of the request's response.
+     */
+    public &lt;T&gt; void addToRequestQueue(Request&lt;T&gt; req) {
+<span class="nc" id="L87">        getRequestQueue().add(req);</span>
+<span class="nc" id="L88">    }</span>
+    /**
+     * Returns the ImageLoader for loading and caching images.
+     *
+     * @return The ImageLoader instance.
+     */
+    public ImageLoader getImageLoader() {
+<span class="nc" id="L95">        return imageLoader;</span>
+    }
+    /**
+     * Initiates a GET request to the specified URL.
+     *
+     * @param url The URL for the GET request.
+     * @param responseListener Listener for successful responses.
+     * @param errorListener Listener for error responses.
+     */
+    // Method for sending GET requests
+    public void sendGetRequest(String url, Response.Listener&lt;JSONObject&gt; responseListener, Response.ErrorListener errorListener) {
+<span class="nc" id="L106">        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener);</span>
+<span class="nc" id="L107">        addToRequestQueue(jsonObjectRequest);</span>
+<span class="nc" id="L108">    }</span>
+    /**
+     * Initiates a POST request with the specified URL and request body.
+     *
+     * @param url The URL for the POST request.
+     * @param requestBody The body of the POST request.
+     * @param responseListener Listener for successful responses.
+     * @param errorListener Listener for error responses.
+     */
+    // Method for sending POST requests
+    public void sendPostRequest(String url, JSONObject requestBody, Response.Listener&lt;JSONObject&gt; responseListener, Response.ErrorListener errorListener) {
+<span class="nc" id="L119">        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, requestBody, responseListener, errorListener);</span>
+<span class="nc" id="L120">        addToRequestQueue(jsonObjectRequest);</span>
+<span class="nc" id="L121">    }</span>
+    /**
+     * Initiates a PUT request with the specified URL and request body.
+     *
+     * @param url The URL for the PUT request.
+     * @param requestBody The body of the PUT request.
+     * @param responseListener Listener for successful responses.
+     * @param errorListener Listener for error responses.
+     */
+    // Adding methods for PUT and DELETE requests
+    // Method for sending PUT requests
+    public void sendPutRequest(String url, JSONObject requestBody, Response.Listener&lt;JSONObject&gt; responseListener, Response.ErrorListener errorListener) {
+<span class="nc" id="L133">        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, requestBody, responseListener, errorListener);</span>
+<span class="nc" id="L134">        addToRequestQueue(jsonObjectRequest);</span>
+<span class="nc" id="L135">    }</span>
+    /**
+     * Initiates a DELETE request to the specified URL.
+     *
+     * @param url The URL for the DELETE request.
+     * @param responseListener Listener for successful responses.
+     * @param errorListener Listener for error responses.
+     */
+    // Method for sending DELETE requests
+    public void sendDeleteRequest(String url, Response.Listener&lt;String&gt; responseListener, Response.ErrorListener errorListener) {
+<span class="nc" id="L145">        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, responseListener, errorListener);</span>
+<span class="nc" id="L146">        addToRequestQueue(stringRequest);</span>
+<span class="nc" id="L147">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

@@ -1,0 +1,188 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ExerciseBenefitsController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.HealthAndWellness</a>
+</div>
+
+<h1>Coverage Summary for Class: ExerciseBenefitsController (onetoone.HealthAndWellness)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ExerciseBenefitsController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    9.4%
+  </span>
+  <span class="absValue">
+    (3/32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.HealthAndWellness;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.time.Duration;
+&nbsp;import java.util.List;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/exerciseBenefits&quot;)
+&nbsp;public class ExerciseBenefitsController {
+&nbsp;
+&nbsp;    private final ExerciseBenefitsRepository exerciseBenefitsRepository;
+&nbsp;    private final ExerciseRepository exerciseRepository;
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public ExerciseBenefitsController(ExerciseBenefitsRepository exerciseBenefitsRepository, ExerciseRepository exerciseRepository) {</b>
+<b class="fc">&nbsp;        this.exerciseBenefitsRepository = exerciseBenefitsRepository;</b>
+<b class="fc">&nbsp;        this.exerciseRepository = exerciseRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // POST method for creating a new ExerciseBenefits entry
+&nbsp;    @PostMapping
+&nbsp;    public ResponseEntity&lt;ExerciseBenefitsDTO&gt; createExerciseBenefits(@RequestBody ExerciseBenefitsDTO exerciseBenefitsDTO) {
+<b class="nc">&nbsp;        return exerciseRepository.findById(exerciseBenefitsDTO.getExerciseId())</b>
+<b class="nc">&nbsp;                .map(exercise -&gt; {</b>
+<b class="nc">&nbsp;                    ExerciseBenefits exerciseBenefits = new ExerciseBenefits();</b>
+&nbsp;                    // Set properties from DTO to entity
+<b class="nc">&nbsp;                    exerciseBenefits.setCaloriesBurned(exerciseBenefitsDTO.getCaloriesBurned());</b>
+<b class="nc">&nbsp;                    exerciseBenefits.setExerciseDuration(Duration.ofMinutes(exerciseBenefitsDTO.getExerciseDurationMinutes()));</b>
+<b class="nc">&nbsp;                    exerciseBenefits.setBenefits(exerciseBenefitsDTO.getBenefits());</b>
+<b class="nc">&nbsp;                    exerciseBenefits.setExercise(exercise); // Linking with Exercise</b>
+<b class="nc">&nbsp;                    exerciseBenefits = exerciseBenefitsRepository.save(exerciseBenefits);</b>
+<b class="nc">&nbsp;                    return new ResponseEntity&lt;&gt;(ExerciseBenefitsDTO.fromEntity(exerciseBenefits), HttpStatus.CREATED);</b>
+&nbsp;                })
+<b class="nc">&nbsp;                .orElseGet(() -&gt; ResponseEntity.notFound().build());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // GET method for retrieving all ExerciseBenefits entries
+&nbsp;    @GetMapping
+&nbsp;    public ResponseEntity&lt;List&lt;ExerciseBenefitsDTO&gt;&gt; getAllExerciseBenefits() {
+<b class="nc">&nbsp;        List&lt;ExerciseBenefitsDTO&gt; exerciseBenefitsDTOs = exerciseBenefitsRepository.findAll().stream()</b>
+<b class="nc">&nbsp;                .map(ExerciseBenefitsDTO::fromEntity)</b>
+<b class="nc">&nbsp;                .collect(Collectors.toList());</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(exerciseBenefitsDTOs);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // GET method for retrieving a single ExerciseBenefits entry by id
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;ExerciseBenefitsDTO&gt; getExerciseBenefitsById(@PathVariable Long id) {
+<b class="nc">&nbsp;        return exerciseBenefitsRepository.findById(id)</b>
+<b class="nc">&nbsp;                .map(exerciseBenefits -&gt; ResponseEntity.ok(ExerciseBenefitsDTO.fromEntity(exerciseBenefits)))</b>
+<b class="nc">&nbsp;                .orElseGet(() -&gt; ResponseEntity.notFound().build());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // PUT method for updating an existing ExerciseBenefits entry
+&nbsp;    @PutMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;ExerciseBenefitsDTO&gt; updateExerciseBenefits(@PathVariable Long id, @RequestBody ExerciseBenefitsDTO exerciseBenefitsDTO) {
+<b class="nc">&nbsp;        return exerciseBenefitsRepository.findById(id)</b>
+<b class="nc">&nbsp;                .map(existingExerciseBenefits -&gt; {</b>
+&nbsp;                    // Update properties from DTO to entity
+<b class="nc">&nbsp;                    existingExerciseBenefits.setCaloriesBurned(exerciseBenefitsDTO.getCaloriesBurned());</b>
+<b class="nc">&nbsp;                    existingExerciseBenefits.setExerciseDuration(Duration.ofMinutes(exerciseBenefitsDTO.getExerciseDurationMinutes()));</b>
+<b class="nc">&nbsp;                    existingExerciseBenefits.setBenefits(exerciseBenefitsDTO.getBenefits());</b>
+&nbsp;                    // Update the ExerciseBenefits entry
+<b class="nc">&nbsp;                    existingExerciseBenefits = exerciseBenefitsRepository.save(existingExerciseBenefits);</b>
+<b class="nc">&nbsp;                    return ResponseEntity.ok(ExerciseBenefitsDTO.fromEntity(existingExerciseBenefits));</b>
+&nbsp;                })
+<b class="nc">&nbsp;                .orElseGet(() -&gt; ResponseEntity.notFound().build());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // DELETE method for deleting an ExerciseBenefits entry
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; deleteExerciseBenefits(@PathVariable Long id) {
+<b class="nc">&nbsp;        if (!exerciseBenefitsRepository.existsById(id)) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.notFound().build();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        exerciseBenefitsRepository.deleteById(id);</b>
+<b class="nc">&nbsp;        return ResponseEntity.noContent().build();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

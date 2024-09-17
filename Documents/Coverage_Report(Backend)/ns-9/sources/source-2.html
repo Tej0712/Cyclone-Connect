@@ -1,0 +1,258 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > NavigateController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Navigate</a>
+</div>
+
+<h1>Coverage Summary for Class: NavigateController (onetoone.Navigate)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NavigateController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    10%
+  </span>
+  <span class="absValue">
+    (1/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    7.5%
+  </span>
+  <span class="absValue">
+    (3/40)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Navigate;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;import onetoone.Users.User;
+&nbsp;import onetoone.Users.UserRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/navigations&quot;)
+&nbsp;public class NavigateController {
+&nbsp;
+&nbsp;    private final NavigateRepository navigateRepository;
+&nbsp;
+&nbsp;    private final UserRepository userRepository;
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public NavigateController(NavigateRepository navigateRepository, UserRepository userRepository) {</b>
+<b class="fc">&nbsp;        this.navigateRepository = navigateRepository;</b>
+<b class="fc">&nbsp;        this.userRepository = userRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @PostMapping
+&nbsp;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; createNavigate(@RequestBody NavigateDTO navigateDTO) {
+<b class="nc">&nbsp;        return userRepository.findById(navigateDTO.getUserId())</b>
+<b class="nc">&nbsp;                .map(user -&gt; {</b>
+<b class="nc">&nbsp;                    Navigate navigate = new Navigate(navigateDTO.getDestination(), navigateDTO.getDescription(), user);</b>
+<b class="nc">&nbsp;                    navigate = navigateRepository.save(navigate);</b>
+&nbsp;
+<b class="nc">&nbsp;                    Map&lt;String, Object&gt; successResponse = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;                    successResponse.put(&quot;message&quot;, &quot;Navigation created successfully&quot;);</b>
+<b class="nc">&nbsp;                    successResponse.put(&quot;id&quot;, navigate.getId());</b>
+&nbsp;
+<b class="nc">&nbsp;                    return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);</b>
+&nbsp;                })
+<b class="nc">&nbsp;                .orElseGet(() -&gt; {</b>
+<b class="nc">&nbsp;                    Map&lt;String, Object&gt; errorResponse = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;                    errorResponse.put(&quot;error&quot;, &quot;User not found with ID: &quot; + navigateDTO.getUserId());</b>
+&nbsp;
+<b class="nc">&nbsp;                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);</b>
+&nbsp;                });
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;//    @PostMapping
+&nbsp;//    public ResponseEntity&lt;?&gt; createNavigate(@RequestBody NavigateDTO navigateDTO) {
+&nbsp;//        return userRepository.findById(navigateDTO.getUserId())
+&nbsp;//                .map(user -&gt; {
+&nbsp;//                    Navigate navigate = new Navigate(navigateDTO.getDestination(), navigateDTO.getDescription(), user);
+&nbsp;//                    navigate = navigateRepository.save(navigate);
+&nbsp;//                    return ResponseEntity.status(HttpStatus.CREATED).body(&quot;Navigation created successfully with ID: &quot; + navigate.getId());
+&nbsp;//                })
+&nbsp;//                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;User not found with ID: &quot; + navigateDTO.getUserId()));
+&nbsp;//    }
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    public ResponseEntity&lt;?&gt; getAllNavigates() {
+<b class="nc">&nbsp;        List&lt;Navigate&gt; navigations = navigateRepository.findAll();</b>
+<b class="nc">&nbsp;        if (navigations.isEmpty()) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return ResponseEntity.ok(navigations);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; getNavigateById(@PathVariable Long id) {
+<b class="nc">&nbsp;        Optional&lt;Navigate&gt; navigation = navigateRepository.findById(id);</b>
+<b class="nc">&nbsp;        return navigation</b>
+<b class="nc">&nbsp;                .&lt;ResponseEntity&lt;?&gt;&gt;map(ResponseEntity::ok)</b>
+<b class="nc">&nbsp;                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;Navigation not found with ID: &quot; + id));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @PutMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; updateNavigate(@PathVariable Long id, @RequestBody NavigateDTO navigateDTO) {
+<b class="nc">&nbsp;        return navigateRepository.findById(id).map(existingNavigate -&gt; {</b>
+&nbsp;            // This line is removed: userRepository.findById(navigateDTO.getUserId()).ifPresent(existingNavigate::setUser);
+<b class="nc">&nbsp;            existingNavigate.setDestination(navigateDTO.getDestination());</b>
+<b class="nc">&nbsp;            existingNavigate.setDescription(navigateDTO.getDescription());</b>
+<b class="nc">&nbsp;            Navigate updatedNavigate = navigateRepository.save(existingNavigate);</b>
+&nbsp;
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            response.put(&quot;message&quot;, &quot;Navigation updated successfully&quot;);</b>
+<b class="nc">&nbsp;            response.put(&quot;id&quot;, updatedNavigate.getId());</b>
+&nbsp;
+<b class="nc">&nbsp;            return ResponseEntity.ok(response);</b>
+<b class="nc">&nbsp;        }).orElseGet(() -&gt; {</b>
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; errorResponse = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            errorResponse.put(&quot;error&quot;, &quot;Navigation not found with ID: &quot; + id);</b>
+&nbsp;
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;//    @PutMapping(&quot;/{id}&quot;)
+&nbsp;//    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; updateNavigate(@PathVariable Long id, @RequestBody NavigateDTO navigateDTO) {
+&nbsp;//        return navigateRepository.findById(id).map(existingNavigate -&gt; {
+&nbsp;//            userRepository.findById(navigateDTO.getUserId()).ifPresent(existingNavigate::setUser);
+&nbsp;//            existingNavigate.setDestination(navigateDTO.getDestination());
+&nbsp;//            existingNavigate.setDescription(navigateDTO.getDescription());
+&nbsp;//            Navigate updatedNavigate = navigateRepository.save(existingNavigate);
+&nbsp;//
+&nbsp;//            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();
+&nbsp;//            response.put(&quot;message&quot;, &quot;Navigation updated successfully&quot;);
+&nbsp;//            response.put(&quot;id&quot;, updatedNavigate.getId());
+&nbsp;//
+&nbsp;//            return ResponseEntity.ok(response); // This returns ResponseEntity&lt;Map&lt;String, Object&gt;&gt;
+&nbsp;//        }).orElseGet(() -&gt; {
+&nbsp;//            Map&lt;String, Object&gt; errorResponse = new HashMap&lt;&gt;();
+&nbsp;//            errorResponse.put(&quot;error&quot;, &quot;Navigation not found with ID: &quot; + id);
+&nbsp;//
+&nbsp;//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse); // This also returns ResponseEntity&lt;Map&lt;String, Object&gt;&gt;
+&nbsp;//        });
+&nbsp;//    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;//    @PutMapping(&quot;/{id}&quot;)
+&nbsp;//    public ResponseEntity&lt;?&gt; updateNavigate(@PathVariable Long id, @RequestBody NavigateDTO navigateDTO) {
+&nbsp;//        return navigateRepository.findById(id).map(existingNavigate -&gt; {
+&nbsp;//            userRepository.findById(navigateDTO.getUserId()).ifPresent(existingNavigate::setUser);
+&nbsp;//            existingNavigate.setDestination(navigateDTO.getDestination());
+&nbsp;//            existingNavigate.setDescription(navigateDTO.getDescription());
+&nbsp;//            Navigate updatedNavigate = navigateRepository.save(existingNavigate);
+&nbsp;//            return ResponseEntity.ok(&quot;Navigation updated successfully with ID: &quot; + updatedNavigate.getId());
+&nbsp;//        }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;Navigation not found with ID: &quot; + id));
+&nbsp;//    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; deleteNavigate(@PathVariable Long id) {
+<b class="nc">&nbsp;        Optional&lt;Navigate&gt; navigationOptional = navigateRepository.findById(id);</b>
+<b class="nc">&nbsp;        if (navigationOptional.isPresent()) {</b>
+<b class="nc">&nbsp;            navigateRepository.deleteById(id);</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(&quot;Navigation deleted successfully with ID: &quot; + id);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;Navigation not found with ID: &quot; + id);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

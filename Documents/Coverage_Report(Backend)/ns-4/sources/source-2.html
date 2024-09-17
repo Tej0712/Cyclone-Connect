@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > EmergencyController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.EmergencyContacts</a>
+</div>
+
+<h1>Coverage Summary for Class: EmergencyController (onetoone.EmergencyContacts)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EmergencyController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    7.4%
+  </span>
+  <span class="absValue">
+    (2/27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.EmergencyContacts;
+&nbsp;
+&nbsp;import onetoone.EmergencyContacts.Emergency;
+&nbsp;import onetoone.EmergencyContacts.EmergencyRepository; // Correct the import to match the package
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import java.util.List;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/api/emergencies&quot;)
+&nbsp;public class EmergencyController {
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private EmergencyRepository emergencyRepository;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public EmergencyController(EmergencyRepository emergencyRepository) {</b>
+<b class="fc">&nbsp;        this.emergencyRepository = emergencyRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Get all emergency contacts
+&nbsp;    @GetMapping
+&nbsp;    public List&lt;Emergency&gt; getAllEmergencies() {
+<b class="nc">&nbsp;        return emergencyRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Create a new emergency contact
+&nbsp;
+&nbsp;    @PostMapping
+&nbsp;    public ResponseEntity&lt;Emergency&gt; createEmergency(@RequestBody Emergency emergency) {
+<b class="nc">&nbsp;        Emergency savedEmergency = emergencyRepository.save(emergency);</b>
+<b class="nc">&nbsp;        return ResponseEntity.status(HttpStatus.CREATED).body(savedEmergency);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;//    @PostMapping
+&nbsp;//    public Emergency createEmergency(@RequestBody Emergency emergency) {
+&nbsp;//        return emergencyRepository.save(emergency);
+&nbsp;//    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    // Get a single emergency contact by ID
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Emergency&gt; getEmergencyById(@PathVariable Long id) {
+<b class="nc">&nbsp;        Emergency emergency = emergencyRepository.findById(id)</b>
+<b class="nc">&nbsp;                .orElseThrow(() -&gt; new RuntimeException(&quot;Emergency not found with id &quot; + id));</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(emergency);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    // Update an emergency contact
+&nbsp;    @PutMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; updateEmergency(@PathVariable Long id, @RequestBody Emergency emergencyDetails) {
+<b class="nc">&nbsp;        Emergency emergency = emergencyRepository.findById(id)</b>
+<b class="nc">&nbsp;                .orElseThrow(() -&gt; new RuntimeException(&quot;Emergency not found with id &quot; + id));</b>
+&nbsp;
+<b class="nc">&nbsp;        emergency.setContactName(emergencyDetails.getContactName());</b>
+<b class="nc">&nbsp;        emergency.setPhoneNumber(emergencyDetails.getPhoneNumber());</b>
+<b class="nc">&nbsp;        emergency.setDescription(emergencyDetails.getDescription());</b>
+&nbsp;
+<b class="nc">&nbsp;        emergencyRepository.save(emergency);</b>
+&nbsp;
+<b class="nc">&nbsp;        Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;        response.put(&quot;message&quot;, &quot;Emergency contact with ID &quot; + id + &quot; was updated successfully.&quot;);</b>
+<b class="nc">&nbsp;        response.put(&quot;emergencyId&quot;, id);</b>
+&nbsp;
+<b class="nc">&nbsp;        return ResponseEntity.ok(response);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;//    @PutMapping(&quot;/{id}&quot;)
+&nbsp;//    public ResponseEntity&lt;?&gt; updateEmergency(@PathVariable Long id, @RequestBody Emergency emergencyDetails) {
+&nbsp;//        Emergency emergency = emergencyRepository.findById(id)
+&nbsp;//                .orElseThrow(() -&gt; new RuntimeException(&quot;Emergency not found with id &quot; + id));
+&nbsp;//
+&nbsp;//        emergency.setContactName(emergencyDetails.getContactName());
+&nbsp;//        emergency.setPhoneNumber(emergencyDetails.getPhoneNumber());
+&nbsp;//        emergency.setDescription(emergencyDetails.getDescription());
+&nbsp;//
+&nbsp;//        emergencyRepository.save(emergency);
+&nbsp;//
+&nbsp;//        return ResponseEntity.ok(&quot;Emergency contact with ID &quot; + id + &quot; was updated successfully.&quot;);
+&nbsp;//    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    // Delete an emergency contact
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; deleteEmergency(@PathVariable Long id) {
+<b class="nc">&nbsp;        return emergencyRepository.findById(id)</b>
+<b class="nc">&nbsp;                .map(emergency -&gt; {</b>
+<b class="nc">&nbsp;                    emergencyRepository.delete(emergency);</b>
+<b class="nc">&nbsp;                    return ResponseEntity.ok(&quot;Emergency contact with ID &quot; + id + &quot; was deleted successfully.&quot;);</b>
+&nbsp;                })
+<b class="nc">&nbsp;                .orElseThrow(() -&gt; new RuntimeException(&quot;Emergency not found with id &quot; + id));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // Get emergency contacts by contact name
+&nbsp;    @GetMapping(&quot;/search&quot;)
+&nbsp;    public ResponseEntity&lt;List&lt;Emergency&gt;&gt; getEmergencyByContactName(@RequestParam String name) {
+<b class="nc">&nbsp;        List&lt;Emergency&gt; emergencies = emergencyRepository.findByContactNameContainingIgnoreCase(name);</b>
+<b class="nc">&nbsp;        if (emergencies.isEmpty()) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.notFound().build();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return ResponseEntity.ok(emergencies);</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

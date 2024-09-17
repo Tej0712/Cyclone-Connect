@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NavigateApp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.HelpMenu.Navigate</a> &gt; <span class="el_source">NavigateApp.java</span></div><h1>NavigateApp.java</h1><pre class="source lang-java linenums">package com.example.myapplication.HelpMenu.Navigate;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L21">public class NavigateApp extends AppCompatActivity {</span>
+
+    private NavigationAdapter adapter;
+<span class="nc" id="L24">    private final List&lt;NavigationItem&gt; navigationItemList = new ArrayList&lt;&gt;();</span>
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L28">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L29">        setContentView(R.layout.activity_navigate);</span>
+
+<span class="nc" id="L31">        RecyclerView recyclerView = findViewById(R.id.navigationRecyclerView);</span>
+<span class="nc" id="L32">        recyclerView.setLayoutManager(new LinearLayoutManager(this));</span>
+<span class="nc" id="L33">        adapter = new NavigationAdapter(navigationItemList);</span>
+<span class="nc" id="L34">        recyclerView.setAdapter(adapter);</span>
+
+<span class="nc" id="L36">        fetchNavigations();</span>
+<span class="nc" id="L37">    }</span>
+
+    private void fetchNavigations() {
+<span class="nc" id="L40">        String url = &quot;http://coms-309-046.class.las.iastate.edu:8080/navigations&quot;;</span>
+
+<span class="nc" id="L42">        @SuppressLint(&quot;NotifyDataSetChanged&quot;) JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,</span>
+                response -&gt; {
+                    try {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                        for (int i = 0; i &lt; response.length(); i++) {</span>
+<span class="nc" id="L46">                            JSONObject object = response.getJSONObject(i);</span>
+<span class="nc" id="L47">                            NavigationItem item = new NavigationItem(</span>
+<span class="nc" id="L48">                                    object.getLong(&quot;id&quot;),</span>
+<span class="nc" id="L49">                                    object.getString(&quot;destination&quot;),</span>
+<span class="nc" id="L50">                                    object.getString(&quot;description&quot;),</span>
+<span class="nc" id="L51">                                    object.optLong(&quot;userId&quot;));</span>
+<span class="nc" id="L52">                            navigationItemList.add(item);</span>
+                        }
+<span class="nc" id="L54">                        adapter.notifyDataSetChanged();</span>
+<span class="nc" id="L55">                    } catch (Exception e) {</span>
+<span class="nc" id="L56">                        e.printStackTrace();</span>
+<span class="nc" id="L57">                    }</span>
+<span class="nc" id="L58">                },</span>
+                Throwable::printStackTrace);
+
+<span class="nc" id="L61">        VolleySingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);</span>
+<span class="nc" id="L62">    }</span>
+
+    public static class NavigationItem {
+        private final Long id;
+        private final String destination;
+        private final String description;
+        private final Long userId;
+
+<span class="nc" id="L70">        public NavigationItem(Long id, String destination, String description, Long userId) {</span>
+<span class="nc" id="L71">            this.id = id;</span>
+<span class="nc" id="L72">            this.destination = destination;</span>
+<span class="nc" id="L73">            this.description = description;</span>
+<span class="nc" id="L74">            this.userId = userId;</span>
+<span class="nc" id="L75">        }</span>
+
+        // Getters
+<span class="nc" id="L78">        public Long getId() { return id; }</span>
+<span class="nc" id="L79">        public String getDestination() { return description; }</span>
+<span class="nc" id="L80">        public String getDescription() { return destination; }</span>
+<span class="nc" id="L81">        public Long getUserId() { return userId; }</span>
+    }
+
+    public static class NavigationAdapter extends RecyclerView.Adapter&lt;NavigationAdapter.ViewHolder&gt; {
+        private final List&lt;NavigateApp.NavigationItem&gt; navigationItems;
+
+<span class="nc" id="L87">        public NavigationAdapter(List&lt;NavigateApp.NavigationItem&gt; navigationItems) {</span>
+<span class="nc" id="L88">            this.navigationItems = navigationItems;</span>
+<span class="nc" id="L89">        }</span>
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+<span class="nc" id="L94">            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.navigation_item, parent, false);</span>
+<span class="nc" id="L95">            return new ViewHolder(view);</span>
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+<span class="nc" id="L100">            NavigateApp.NavigationItem item = navigationItems.get(position);</span>
+            // Combine ID and Destination for display
+<span class="nc" id="L102">            String displayText = item.getId() + &quot; - &quot; + item.getDestination();</span>
+<span class="nc" id="L103">            holder.destinationTextView.setText(displayText);</span>
+<span class="nc" id="L104">            holder.descriptionTextView.setText(item.getDescription());</span>
+            // Initially hide the description
+<span class="nc" id="L106">            holder.descriptionTextView.setVisibility(View.GONE);</span>
+
+<span class="nc" id="L108">            holder.rootView.setOnClickListener(v -&gt; {</span>
+                // Toggle visibility of description upon clicking the card
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                holder.descriptionTextView.setVisibility(holder.descriptionTextView.isShown() ? View.GONE : View.VISIBLE);</span>
+<span class="nc" id="L111">            });</span>
+<span class="nc" id="L112">        }</span>
+
+        @Override
+        public int getItemCount() {
+<span class="nc" id="L116">            return navigationItems.size();</span>
+        }
+
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+            TextView destinationTextView, descriptionTextView;
+            View rootView; // Root view for click listener
+
+            public ViewHolder(View view) {
+<span class="nc" id="L124">                super(view);</span>
+<span class="nc" id="L125">                rootView = view; // Assign root view</span>
+<span class="nc" id="L126">                destinationTextView = view.findViewById(R.id.subjectTextView);</span>
+<span class="nc" id="L127">                descriptionTextView = view.findViewById(R.id.descriptionTextView);</span>
+<span class="nc" id="L128">            }</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

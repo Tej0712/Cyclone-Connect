@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="grades_array">
+        <item>A</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B</item>
+        <item>B-</item>
+        <item>C+</item>
+        <item>C</item>
+        <item>C-</item>
+        <item>D</item>
+        <item>F</item>
+    </string-array>
+
+    <string-array name="categories_array">
+        <item>Electronics</item>
+        <item>Clothing</item>
+        <item>Books</item>
+        <item>Accessories</item>
+        <item>Others</item>
+    </string-array>
+
+</resources>

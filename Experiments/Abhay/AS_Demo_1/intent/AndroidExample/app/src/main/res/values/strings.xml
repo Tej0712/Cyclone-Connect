@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidExample</string>
+    <string name="preference_file_key">com.example.androidexample.preferences</string>
+    <string name="saved_counter_key">saved_counter</string>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="LoginPage">#FF5722</color>
+    <color name="LoginPage2">#FF5722</color>
+    <color name="buttonColor">#FFEB3B</color>
+    <color name="NoteColor">#292929</color>
+    <color name="NoteColorDark">#292929</color>
+    <color name="ColorAccent">#FDBE3B</color>
+    <color name="ColorSearchIcon">#DBDBDB</color>
+    <color name="colorTextHint">#7B7B7B</color>
+    <color name="colorQuickActionsBackground">#2F2D2E</color>
+    <color name="ColorIcons">#A4A4A4</color>
+    <color name="ColorTextSubtitle">#CECECE</color>
+    <color name="colorDefaultNoteColor">#333333</color>
+    <color name="colorNoteSubtitleText">#FAFAFA</color>
+    <color name="colorMiscellaneousBackground">#1F1F1F</color>
+    <color name="colorNoteColor2">#FDBE3B</color>
+    <color name="colorNoteColor3">#FF4842</color>
+    <color name="colorNoteColor4">#3A52Fc</color>
+    <color name="colorNoteColor5">#000000</color>
+<!--    <color name="colorDelete">#FF4842</color>-->
+    <color name="colorSearchBackground">#333333</color>
+<!--    <color name="blue">#0000FF</color>-->
+    <color name = "black_shade_1">#292D36</color>
+    <color name="gold">#F1BE48</color>
+
+    <color name="city">#363637</color>
+    <color name="country">#A6A6A6</color>
+    <color name="time">#040404</color>
+    <color name="red">#FF3D00</color>
+    <color name="green">#76FF03</color>
+<!--    <color name="gray">#B6B4B4</color>-->
+    <color name="yellow">#FFEA00</color>
+    <color name="background">#81252422</color>
+    <color name="backgroundforecast">#B2252422</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="lavender">#8692f7</color>
+
+
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#CC9A05</color>
+    <color name="colorAccent">#FFFF4081</color>
+    <color name="colorDelete">#F44336</color>
+    <color name="launcherBackground">#EEAF28</color>
+
+    <color name="gray">#888</color>
+    <color name="lightGray">#EEE</color>
+    <color name="blue">#0000FF</color>
+
+
+    <color name="bg_layer_2">#323232</color>
+    <color name="bg_layer_3">#525252</color>
+    <color name="bg_layer_4">#414141</color>
+    <color name="bg_layer_5">#313131</color>
+    <color name="text_color">#eeeeee</color>
+
+    <color name="orange">#f05e23</color>
+
+</resources>

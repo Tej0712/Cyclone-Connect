@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/space"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/exerciseId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_exercise_id"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:inputType="number"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btnDeleteExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_exercise"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_below="@id/exerciseId"
+        android:layout_marginTop="20dp"/>
+</RelativeLayout>

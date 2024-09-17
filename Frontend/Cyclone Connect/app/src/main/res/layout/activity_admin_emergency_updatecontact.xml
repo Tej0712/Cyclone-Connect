@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/space"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etEmergencyId"
+        android:layout_width="375dp"
+        android:layout_height="61dp"
+        android:autofillHints=""
+        android:hint="@string/emergency_id"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/etContactName"
+        android:layout_width="377dp"
+        android:layout_height="64dp"
+        android:autofillHints=""
+        android:hint="@string/contact_name"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/etPhoneNumber"
+        android:layout_width="377dp"
+        android:layout_height="62dp"
+        android:autofillHints=""
+        android:hint="@string/phone_number"
+        android:inputType="phone"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="378dp"
+        android:layout_height="64dp"
+        android:autofillHints=""
+        android:hint="@string/description"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update" />
+
+</LinearLayout>

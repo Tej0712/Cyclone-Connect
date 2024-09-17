@@ -1,0 +1,226 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CourseSpecificationController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Headstart.CourseSpecification01</a>
+</div>
+
+<h1>Coverage Summary for Class: CourseSpecificationController (onetoone.Headstart.CourseSpecification01)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CourseSpecificationController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.6%
+  </span>
+  <span class="absValue">
+    (2/55)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Headstart.CourseSpecification01;
+&nbsp;
+&nbsp;import onetoone.Headstart.Courses01.CourseRepository;
+&nbsp;import onetoone.Headstart.Courses01.Courses;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/courseSpecifications&quot;)
+&nbsp;public class CourseSpecificationController {
+&nbsp;
+&nbsp;    private final CourseSpecificationRepository courseSpecificationRepository;
+&nbsp;    @Autowired
+&nbsp;    private CourseRepository courseRepository;
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public CourseSpecificationController(CourseSpecificationRepository courseSpecificationRepository) {</b>
+<b class="fc">&nbsp;        this.courseSpecificationRepository = courseSpecificationRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping
+&nbsp;    public ResponseEntity&lt;?&gt; createCourseSpecification(@RequestBody CourseSpecificationDTO courseSpecificationDTO) {
+<b class="nc">&nbsp;        Optional&lt;Courses&gt; existingCourse = courseRepository.findById(courseSpecificationDTO.getCourseId());</b>
+<b class="nc">&nbsp;        if (existingCourse.isPresent() &amp;&amp; courseSpecificationRepository.findByCourse(existingCourse.get()).isPresent()) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.badRequest().body(&quot;Course Specification for this course already exists.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        CourseSpecification courseSpecification = convertToEntity(courseSpecificationDTO);</b>
+<b class="nc">&nbsp;        courseSpecification = courseSpecificationRepository.save(courseSpecification);</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(convertToDTO(courseSpecification));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/course/{courseId}&quot;)
+&nbsp;    public ResponseEntity&lt;CourseSpecificationDTO&gt; getCourseSpecificationByCourseId(@PathVariable Long courseId) {
+<b class="nc">&nbsp;        Optional&lt;Courses&gt; course = courseRepository.findById(courseId);</b>
+<b class="nc">&nbsp;        if (course.isPresent()) {</b>
+<b class="nc">&nbsp;            Optional&lt;CourseSpecification&gt; courseSpecification = courseSpecificationRepository.findByCourse(course.get());</b>
+<b class="nc">&nbsp;            return courseSpecification.map(cs -&gt; ResponseEntity.ok(convertToDTO(cs)))</b>
+<b class="nc">&nbsp;                    .orElseGet(() -&gt; ResponseEntity.notFound().build());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return ResponseEntity.notFound().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/course/{courseId}&quot;)
+&nbsp;    public ResponseEntity&lt;CourseSpecificationDTO&gt; updateCourseSpecificationByCourseId(@PathVariable Long courseId,
+&nbsp;                                                                                      @RequestBody CourseSpecificationDTO courseSpecificationDTO) {
+<b class="nc">&nbsp;        Optional&lt;Courses&gt; course = courseRepository.findById(courseId);</b>
+<b class="nc">&nbsp;        if (course.isPresent()) {</b>
+<b class="nc">&nbsp;            Optional&lt;CourseSpecification&gt; existingSpecification = courseSpecificationRepository.findByCourse(course.get());</b>
+<b class="nc">&nbsp;            if (existingSpecification.isPresent()) {</b>
+<b class="nc">&nbsp;                updateCourseSpecificationFromDTO(existingSpecification.get(), courseSpecificationDTO);</b>
+<b class="nc">&nbsp;                CourseSpecification updatedSpecification = courseSpecificationRepository.save(existingSpecification.get());</b>
+<b class="nc">&nbsp;                return ResponseEntity.ok(convertToDTO(updatedSpecification));</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return ResponseEntity.notFound().build();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return ResponseEntity.notFound().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;// Inside your CourseSpecificationController class
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; deleteCourseSpecificationById(@PathVariable Long id) {
+<b class="nc">&nbsp;        Optional&lt;CourseSpecification&gt; courseSpecificationOptional = courseSpecificationRepository.findById(id);</b>
+<b class="nc">&nbsp;        if (courseSpecificationOptional.isPresent()) {</b>
+<b class="nc">&nbsp;            courseSpecificationRepository.deleteById(id);</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok().body(&quot;Course Specification with ID &quot; + id + &quot; has been successfully deleted.&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return ResponseEntity.notFound().build();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // Helper methods to convert between entity and DTO
+&nbsp;    // You will need to implement these methods based on your entity and DTO structures
+&nbsp;    // Inside CourseSpecificationController
+&nbsp;
+&nbsp;    private CourseSpecificationDTO convertToDTO(CourseSpecification courseSpecification) {
+<b class="nc">&nbsp;        CourseSpecificationDTO dto = new CourseSpecificationDTO();</b>
+&nbsp;
+<b class="nc">&nbsp;        CourseSpecificationDTO courseSpecificationDTO = new CourseSpecificationDTO();</b>
+<b class="nc">&nbsp;        courseSpecificationDTO.setCourseId(courseSpecification.getCourse().getId()); // Assuming Course is the entity related to CourseSpecification</b>
+<b class="nc">&nbsp;        courseSpecificationDTO.setProgrammingLanguages(courseSpecification.getProgrammingLanguages());</b>
+<b class="nc">&nbsp;        courseSpecificationDTO.setFramework(courseSpecification.getFramework());</b>
+<b class="nc">&nbsp;        courseSpecificationDTO.setResources(courseSpecification.getResources());</b>
+<b class="nc">&nbsp;        courseSpecificationDTO.setDifficultyLevel(courseSpecification.getDifficultyLevel());</b>
+<b class="nc">&nbsp;        courseSpecificationDTO.setTimeComplexity(courseSpecification.getTimeComplexity());</b>
+<b class="nc">&nbsp;        courseSpecificationDTO.setReviews(courseSpecification.getReviews());</b>
+<b class="nc">&nbsp;        return courseSpecificationDTO;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private CourseSpecification convertToEntity(CourseSpecificationDTO courseSpecificationDTO) {
+&nbsp;
+<b class="nc">&nbsp;        CourseSpecification courseSpecification = new CourseSpecification();</b>
+&nbsp;        // Use the autowired repository to fetch the course
+<b class="nc">&nbsp;        Courses course = courseRepository.findById(courseSpecificationDTO.getCourseId())</b>
+<b class="nc">&nbsp;                .orElseThrow(() -&gt; new RuntimeException(&quot;Course not found&quot;));</b>
+<b class="nc">&nbsp;        courseSpecification.setCourse(course);</b>
+<b class="nc">&nbsp;        courseSpecification.setProgrammingLanguages(courseSpecificationDTO.getProgrammingLanguages());</b>
+<b class="nc">&nbsp;        courseSpecification.setFramework(courseSpecificationDTO.getFramework());</b>
+<b class="nc">&nbsp;        courseSpecification.setResources(courseSpecificationDTO.getResources());</b>
+<b class="nc">&nbsp;        courseSpecification.setDifficultyLevel(courseSpecificationDTO.getDifficultyLevel());</b>
+<b class="nc">&nbsp;        courseSpecification.setTimeComplexity(courseSpecificationDTO.getTimeComplexity());</b>
+<b class="nc">&nbsp;        courseSpecification.setReviews(courseSpecificationDTO.getReviews());</b>
+<b class="nc">&nbsp;        return courseSpecification;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void updateCourseSpecificationFromDTO(CourseSpecification courseSpecification, CourseSpecificationDTO courseSpecificationDTO) {
+&nbsp;        // Assuming that the courseId cannot be changed after creation
+<b class="nc">&nbsp;        courseSpecification.setProgrammingLanguages(courseSpecificationDTO.getProgrammingLanguages());</b>
+<b class="nc">&nbsp;        courseSpecification.setFramework(courseSpecificationDTO.getFramework());</b>
+<b class="nc">&nbsp;        courseSpecification.setResources(courseSpecificationDTO.getResources());</b>
+<b class="nc">&nbsp;        courseSpecification.setDifficultyLevel(courseSpecificationDTO.getDifficultyLevel());</b>
+<b class="nc">&nbsp;        courseSpecification.setTimeComplexity(courseSpecificationDTO.getTimeComplexity());</b>
+<b class="nc">&nbsp;        courseSpecification.setReviews(courseSpecificationDTO.getReviews());</b>
+&nbsp;        // No need to save here, as this will be handled in the calling method
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

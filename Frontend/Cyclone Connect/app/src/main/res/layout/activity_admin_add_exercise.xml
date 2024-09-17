@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/space">
+
+    <EditText
+        android:id="@+id/exerciseName"
+        android:layout_width="377dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/exercise_name"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/exerciseDuration"
+        android:layout_width="379dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/exerciseName"
+        android:layout_marginTop="10dp"
+        android:hint="@string/duration_in_minutes"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/exerciseCalories"
+        android:layout_width="381dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/exerciseDuration"
+        android:layout_marginTop="10dp"
+        android:hint="@string/calories_burned"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/exerciseImageUrl"
+        android:layout_width="384dp"
+        android:layout_height="63dp"
+        android:layout_below="@id/exerciseCalories"
+        android:layout_marginTop="10dp"
+        android:autofillHints="URL"
+        android:hint="@string/image_url"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <Button
+        android:id="@+id/btnAddExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_exercise"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_below="@id/exerciseImageUrl"
+        android:layout_marginTop="20dp"/>
+</RelativeLayout>

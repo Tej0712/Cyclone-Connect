@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/space"
+    tools:context=".CyFind.ItemFound">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#66F2F2F2"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:text="@string/add_details_of_the_item_you_found"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_name"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/item_name_edittext"
+            android:layout_width="309dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="13dp"
+            android:background="@color/white"
+            android:backgroundTint="#FFFFFF"
+            android:inputType="text"
+            android:textColor="#000000"
+            android:autofillHints="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="312dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:autofillHints=""
+            tools:ignore="LabelFor" />
+
+        <TextView
+            android:layout_width="236dp"
+            android:layout_height="wrap_content"
+            android:text="@string/select_category"
+            android:textColor="#000000" />
+
+        <Spinner
+            android:id="@+id/categorySpinner"
+            android:layout_width="358dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:backgroundTint="#FFFFFF"
+            android:hapticFeedbackEnabled="true" />
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/location"
+            android:textColor="#000000" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="294dp"
+            android:layout_height="58dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/markloc"
+                android:src="@drawable/myloc" />
+
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:backgroundTint="#1A0F0F"
+                android:textColorHint="@color/white"
+                android:hint="@string/location_at_where_you_found_it" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/select_date_of_found" />
+
+            <ImageButton
+                android:id="@+id/datePickerButton"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/date"
+                android:src="@drawable/daterange" />
+
+            <TextView
+                android:id="@+id/selectedDateEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#573C3C"
+                android:hint="@string/selected_date"
+                android:textColorHint="@color/white"
+                android:inputType="none"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_id"
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/emailIdEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:hint="@string/enter_email_id"
+            android:textColorHint="@color/white"
+            android:inputType="textEmailAddress" />
+
+        <Button
+            android:id="@+id/uploadImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#F3F3F3"
+            android:backgroundTint="#EBE7E7"
+            android:hapticFeedbackEnabled="false"
+            android:text="@string/upload_image"
+            app:rippleColor="#F4F3F3" />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/submit" />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

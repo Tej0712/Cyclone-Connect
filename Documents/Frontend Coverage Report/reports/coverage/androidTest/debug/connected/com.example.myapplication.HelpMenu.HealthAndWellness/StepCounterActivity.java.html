@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StepCounterActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.HelpMenu.HealthAndWellness</a> &gt; <span class="el_source">StepCounterActivity.java</span></div><h1>StepCounterActivity.java</h1><pre class="source lang-java linenums">package com.example.myapplication.HelpMenu.HealthAndWellness;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.R;
+
+import java.util.Locale;
+
+<span class="nc" id="L22">public class StepCounterActivity extends AppCompatActivity implements SensorEventListener {</span>
+
+    private static final String TAG = &quot;StepCounterActivity&quot;;
+    private static final int STEP_UPDATE_THRESHOLD = 5;
+
+    private SensorManager sensorManager;
+<span class="nc" id="L28">    private boolean running = false;</span>
+    private TextView stepsTV;
+    private TextView distanceTV;
+    private TextView caloriesTV;
+    private Button startButton;
+    private Button stopButton;
+<span class="nc" id="L34">    private int stepCount = 0;</span>
+<span class="nc" id="L35">    private int previousTotalSteps = 0;</span>
+<span class="nc" id="L36">    private final double strideLength = 0.7; // Average stride length in meters</span>
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L40">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L41">        setContentView(R.layout.activity_step_counter);</span>
+
+<span class="nc" id="L43">        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);</span>
+<span class="nc" id="L44">        stepsTV = findViewById(R.id.idTVSteps);</span>
+<span class="nc" id="L45">        distanceTV = findViewById(R.id.idTVDistance);</span>
+<span class="nc" id="L46">        caloriesTV = findViewById(R.id.idTVCalories);</span>
+<span class="nc" id="L47">        startButton = findViewById(R.id.idButtonStart);</span>
+<span class="nc" id="L48">        stopButton = findViewById(R.id.idButtonStop);</span>
+
+<span class="nc" id="L50">        startButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+<span class="nc" id="L53">                startStepCounter();</span>
+<span class="nc" id="L54">            }</span>
+        });
+
+<span class="nc" id="L57">        stopButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+<span class="nc" id="L60">                stopStepCounter();</span>
+<span class="nc" id="L61">            }</span>
+        });
+<span class="nc" id="L63">    }</span>
+
+    private void startStepCounter() {
+<span class="nc" id="L66">        running = true;</span>
+<span class="nc" id="L67">        previousTotalSteps = stepCount;</span>
+<span class="nc" id="L68">        startButton.setEnabled(false);</span>
+<span class="nc" id="L69">        stopButton.setEnabled(true);</span>
+<span class="nc" id="L70">        Toast.makeText(StepCounterActivity.this, &quot;Step counter started&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L71">    }</span>
+
+    private void stopStepCounter() {
+<span class="nc" id="L74">        running = false;</span>
+<span class="nc" id="L75">        startButton.setEnabled(true);</span>
+<span class="nc" id="L76">        stopButton.setEnabled(false);</span>
+<span class="nc" id="L77">        Toast.makeText(StepCounterActivity.this, &quot;Step counter stopped&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L78">    }</span>
+
+    @Override
+    protected void onResume() {
+<span class="nc" id="L82">        super.onResume();</span>
+<span class="nc" id="L83">        Sensor stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);</span>
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (stepSensor != null) {</span>
+<span class="nc" id="L86">            sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI);</span>
+<span class="nc" id="L87">            Log.d(TAG, &quot;Step sensor registered.&quot;);</span>
+        } else {
+<span class="nc" id="L89">            Toast.makeText(this, &quot;Step sensor not found&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L90">            Log.e(TAG, &quot;Step sensor not found.&quot;);</span>
+        }
+<span class="nc" id="L92">    }</span>
+
+    @Override
+    protected void onPause() {
+<span class="nc" id="L96">        super.onPause();</span>
+<span class="nc" id="L97">        sensorManager.unregisterListener(this);</span>
+<span class="nc" id="L98">        Log.d(TAG, &quot;Step sensor unregistered.&quot;);</span>
+<span class="nc" id="L99">    }</span>
+
+    @SuppressLint(&quot;SetTextI18n&quot;)
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (running) {</span>
+<span class="nc" id="L105">            int totalSteps = (int) event.values[0];</span>
+<span class="nc" id="L106">            int currentSteps = totalSteps - previousTotalSteps;</span>
+<span class="nc" id="L107">            stepCount += currentSteps;</span>
+<span class="nc" id="L108">            previousTotalSteps = totalSteps;</span>
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">            if (currentSteps &gt;= STEP_UPDATE_THRESHOLD) {</span>
+<span class="nc" id="L111">                stepsTV.setText(String.valueOf(stepCount));</span>
+
+                // Calculate distance and calories burned
+<span class="nc" id="L114">                double distance = calculateDistance(stepCount);</span>
+<span class="nc" id="L115">                double calories = calculateCalories(stepCount);</span>
+<span class="nc" id="L116">                distanceTV.setText(String.format(Locale.US, &quot;%.2f&quot;, distance) + &quot; m&quot;);</span>
+<span class="nc" id="L117">                caloriesTV.setText(String.format(Locale.US, &quot;%.2f&quot;, calories) + &quot; cal&quot;);</span>
+
+<span class="nc" id="L119">                Log.d(TAG, &quot;Steps: &quot; + stepCount + &quot;, Distance: &quot; + distance + &quot; m, Calories: &quot; + calories + &quot; cal&quot;);</span>
+            }
+        }
+<span class="nc" id="L122">    }</span>
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // Not used in this example
+<span class="nc" id="L127">    }</span>
+
+    private double calculateDistance(int steps) {
+        // Distance = Number of steps * Stride length
+<span class="nc" id="L131">        return steps * strideLength;</span>
+    }
+
+    private double calculateCalories(int steps) {
+        // Calories burned = (BMR / 24) * MET * Duration in hours
+        // where BMR = Basal Metabolic Rate, MET = Metabolic Equivalent of Task
+        // Assuming a MET value of 3.5 for walking and a duration of 1 hour
+<span class="nc" id="L138">        double bmr = calculateBMR();</span>
+<span class="nc" id="L139">        double met = 3.5;</span>
+<span class="nc" id="L140">        double duration = (steps * strideLength) / (1.4 * 3600); // Average walking speed of 1.4 m/s</span>
+<span class="nc" id="L141">        return (bmr / 24) * met * duration;</span>
+    }
+
+    private double calculateBMR() {
+        // BMR formula for men: 88.362 + (13.397 * weight in kg) + (4.799 * height in cm) - (5.677 * age in years)
+        // BMR formula for women: 447.593 + (9.247 * weight in kg) + (3.098 * height in cm) - (4.330 * age in years)
+        // Assuming a height of 170 cm and an age of 30 years for simplicity
+<span class="nc" id="L148">        double height = 170;</span>
+<span class="nc" id="L149">        int age = 30;</span>
+        // User's weight in kilograms
+<span class="nc" id="L151">        double weight = 70.0;</span>
+<span class="nc" id="L152">        return 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

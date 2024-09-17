@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GPA_Calculator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.GPACalc</a> &gt; <span class="el_source">GPA_Calculator.java</span></div><h1>GPA_Calculator.java</h1><pre class="source lang-java linenums">package com.example.myapplication.GPACalc;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+<span class="nc" id="L23">public class GPA_Calculator extends AppCompatActivity {</span>
+
+    private LinearLayout coursesContainer;
+    private Button btnAddCourse, btnCalculateGPA;
+    private TextView tvResult;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L31">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L32">        setContentView(R.layout.gpa_calc);</span>
+
+<span class="nc" id="L34">        coursesContainer = findViewById(R.id.coursesContainer);</span>
+<span class="nc" id="L35">        btnAddCourse = findViewById(R.id.btnAddCourse);</span>
+<span class="nc" id="L36">        btnCalculateGPA = findViewById(R.id.btnCalculateGPA);</span>
+<span class="nc" id="L37">        tvResult = findViewById(R.id.tvResult);</span>
+
+<span class="nc" id="L39">        btnAddCourse.setOnClickListener(v -&gt; addCourseEntry());</span>
+<span class="nc" id="L40">        btnCalculateGPA.setOnClickListener(v -&gt; calculateGPA());</span>
+<span class="nc" id="L41">    }</span>
+
+    private void addCourseEntry() {
+<span class="nc" id="L44">        View courseEntry = LayoutInflater.from(this).inflate(R.layout.gpa_add_course, coursesContainer, false);</span>
+<span class="nc" id="L45">        Spinner spinnerGrade = courseEntry.findViewById(R.id.spinnerGrade);</span>
+<span class="nc" id="L46">        ArrayAdapter&lt;CharSequence&gt; adapter = ArrayAdapter.createFromResource(this,</span>
+                R.array.grades_array, android.R.layout.simple_spinner_item);
+<span class="nc" id="L48">        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</span>
+<span class="nc" id="L49">        spinnerGrade.setAdapter(adapter);</span>
+<span class="nc" id="L50">        coursesContainer.addView(courseEntry);</span>
+<span class="nc" id="L51">    }</span>
+
+    private void calculateGPA() {
+<span class="nc" id="L54">        JSONArray coursesArray = new JSONArray();</span>
+
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        for (int i = 0; i &lt; coursesContainer.getChildCount(); i++) {</span>
+<span class="nc" id="L57">            View courseEntry = coursesContainer.getChildAt(i);</span>
+<span class="nc" id="L58">            String courseNumber = ((EditText) courseEntry.findViewById(R.id.editTextCourseNumber)).getText().toString();</span>
+<span class="nc" id="L59">            String credits = ((EditText) courseEntry.findViewById(R.id.editTextCredits)).getText().toString();</span>
+<span class="nc" id="L60">            String grade = ((Spinner) courseEntry.findViewById(R.id.spinnerGrade)).getSelectedItem().toString();</span>
+
+<span class="nc" id="L62">            JSONObject courseObject = new JSONObject();</span>
+            try {
+<span class="nc" id="L64">                courseObject.put(&quot;course_number&quot;, courseNumber);</span>
+<span class="nc" id="L65">                courseObject.put(&quot;credits&quot;, credits);</span>
+<span class="nc" id="L66">                courseObject.put(&quot;grade&quot;, grade);</span>
+<span class="nc" id="L67">                coursesArray.put(courseObject);</span>
+<span class="nc" id="L68">            } catch (JSONException e) {</span>
+<span class="nc" id="L69">                e.printStackTrace();</span>
+<span class="nc" id="L70">            }</span>
+        }
+
+<span class="nc" id="L73">        String url = &quot;http://yourbackendapi.com/api/gpa&quot;;</span>
+<span class="nc" id="L74">        sendPostRequest(url, coursesArray);</span>
+<span class="nc" id="L75">    }</span>
+
+    private void sendPostRequest(String url, JSONArray requestBodyArray) {
+<span class="nc" id="L78">        JSONObject requestBody = new JSONObject();</span>
+        try {
+<span class="nc" id="L80">            requestBody.put(&quot;courses&quot;, requestBodyArray);  // Wrap the JSONArray inside a JSONObject with a key, e.g., &quot;courses&quot;</span>
+<span class="nc" id="L81">        } catch (JSONException e) {</span>
+<span class="nc" id="L82">            e.printStackTrace();  // Handle the exception here</span>
+<span class="nc" id="L83">        }</span>
+
+<span class="nc" id="L85">        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, requestBody,</span>
+                response -&gt; {
+                    try {
+                        // Assuming the response contains a key 'calculated_gpa' that holds the GPA value
+<span class="nc" id="L89">                        String gpaResult = response.getString(&quot;calculated_gpa&quot;);</span>
+<span class="nc" id="L90">                        tvResult.setText(&quot;Your GPA is: &quot; + gpaResult);</span>
+<span class="nc" id="L91">                        tvResult.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L92">                    } catch (JSONException e) {</span>
+<span class="nc" id="L93">                        e.printStackTrace();</span>
+<span class="nc" id="L94">                        tvResult.setText(&quot;Error in response&quot;);</span>
+<span class="nc" id="L95">                        tvResult.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L96">                    }</span>
+<span class="nc" id="L97">                },</span>
+                error -&gt; {
+<span class="nc" id="L99">                    error.printStackTrace();</span>
+<span class="nc" id="L100">                    tvResult.setText(&quot;Failed to calculate GPA&quot;);</span>
+<span class="nc" id="L101">                    tvResult.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L102">                });</span>
+
+<span class="nc" id="L104">        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);</span>
+<span class="nc" id="L105">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

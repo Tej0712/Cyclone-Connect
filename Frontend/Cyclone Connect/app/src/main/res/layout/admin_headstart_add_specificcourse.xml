@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/courseIdEditText"
+            android:layout_width="378dp"
+            android:layout_height="66dp"
+            android:autofillHints=""
+            android:hint="@string/course_id"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/courseNameEditText"
+            android:layout_width="378dp"
+            android:layout_height="73dp"
+            android:autofillHints=""
+            android:hint="@string/course_name" />
+
+        <EditText
+            android:id="@+id/courseDescriptionEditText"
+            android:layout_width="376dp"
+            android:layout_height="72dp"
+            android:autofillHints=""
+            android:hint="@string/course_description" />
+
+        <EditText
+            android:id="@+id/prerequisitesEditText"
+            android:layout_width="382dp"
+            android:layout_height="74dp"
+            android:autofillHints=""
+            android:hint="@string/prerequisites" />
+
+        <EditText
+            android:id="@+id/totalCreditsEditText"
+            android:layout_width="376dp"
+            android:layout_height="69dp"
+            android:autofillHints=""
+            android:hint="@string/total_credits"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/programmingLanguagesEditText"
+            android:layout_width="374dp"
+            android:layout_height="64dp"
+            android:autofillHints=""
+            android:hint="@string/programming_languages" />
+
+        <EditText
+            android:id="@+id/frameworkEditText"
+            android:layout_width="378dp"
+            android:layout_height="66dp"
+            android:autofillHints=""
+            android:hint="@string/framework" />
+
+        <EditText
+            android:id="@+id/difficultyLevelEditText"
+            android:layout_width="384dp"
+            android:layout_height="73dp"
+            android:autofillHints=""
+            android:hint="@string/difficulty_level" />
+
+        <EditText
+            android:id="@+id/timeComplexityEditText"
+            android:layout_width="378dp"
+            android:layout_height="74dp"
+            android:autofillHints=""
+            android:hint="@string/time_complexity" />
+
+        <EditText
+            android:id="@+id/resourcesEditText"
+            android:layout_width="384dp"
+            android:layout_height="72dp"
+            android:autofillHints=""
+            android:hint="@string/resources" />
+
+        <EditText
+            android:id="@+id/embeddedLinksEditText"
+            android:layout_width="382dp"
+            android:layout_height="71dp"
+            android:autofillHints=""
+            android:hint="@string/embedded_links" />
+
+        <EditText
+            android:id="@+id/roadMapEditText"
+            android:layout_width="374dp"
+            android:layout_height="71dp"
+            android:autofillHints=""
+            android:hint="@string/road_map" />
+
+        <EditText
+            android:id="@+id/reviewsEditText"
+            android:layout_width="376dp"
+            android:layout_height="82dp"
+            android:autofillHints=""
+            android:hint="@string/reviews" />
+
+        <EditText
+            android:id="@+id/ratingEditText"
+            android:layout_width="382dp"
+            android:layout_height="81dp"
+            android:autofillHints=""
+            android:hint="@string/rating"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/editedByEditText"
+            android:layout_width="384dp"
+            android:layout_height="80dp"
+            android:autofillHints=""
+            android:hint="@string/edited_by" />
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="77dp"
+            android:text="@string/add_specific_course" />
+
+    </LinearLayout>
+
+</ScrollView>

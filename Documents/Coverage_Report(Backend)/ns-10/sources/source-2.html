@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > RatingEndpoint</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Websockets</a>
+</div>
+
+<h1>Coverage Summary for Class: RatingEndpoint (onetoone.Websockets)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RatingEndpoint</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Websockets;
+&nbsp;
+&nbsp;import jakarta.websocket.OnClose;
+&nbsp;import jakarta.websocket.OnError;
+&nbsp;import jakarta.websocket.OnMessage;
+&nbsp;import jakarta.websocket.OnOpen;
+&nbsp;import jakarta.websocket.Session;
+&nbsp;import jakarta.websocket.server.ServerEndpoint;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.HashSet;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Set;
+&nbsp;
+&nbsp;@ServerEndpoint(value = &quot;/rate&quot;)
+<b class="nc">&nbsp;public class RatingEndpoint {</b>
+&nbsp;
+<b class="nc">&nbsp;    private static final Set&lt;Session&gt; sessions = Collections.synchronizedSet(new HashSet&lt;&gt;());</b>
+<b class="nc">&nbsp;    private static final List&lt;Integer&gt; ratings = Collections.synchronizedList(new ArrayList&lt;&gt;());</b>
+&nbsp;
+&nbsp;    @OnOpen
+&nbsp;    public void onOpen(Session session) {
+<b class="nc">&nbsp;        sessions.add(session);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnMessage
+&nbsp;    public void onMessage(String message, Session session) throws IOException {
+&nbsp;        try {
+<b class="nc">&nbsp;            int rating = Integer.parseInt(message);</b>
+<b class="nc">&nbsp;            ratings.add(rating);</b>
+<b class="nc">&nbsp;            double averageRating = ratings.stream().mapToInt(Integer::intValue).average().orElse(0.0);</b>
+<b class="nc">&nbsp;            broadcast(String.format(&quot;Average rating updated: %.2f&quot;, averageRating));</b>
+&nbsp;            try {
+&nbsp;                // Acknowledge the sender inside an inner try-catch block
+<b class="nc">&nbsp;                session.getBasicRemote().sendText(&quot;Your rating has been received and processed.&quot;);</b>
+<b class="nc">&nbsp;            } catch (IOException e) {</b>
+&nbsp;                // Handle the potential IOException here
+<b class="nc">&nbsp;                System.err.println(&quot;Error sending confirmation to client: &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;                e.printStackTrace();</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;            System.err.println(&quot;Invalid rating received: &quot; + message);</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                session.getBasicRemote().sendText(&quot;Error: Invalid rating format.&quot;);</b>
+<b class="nc">&nbsp;            } catch (IOException ioException) {</b>
+&nbsp;                // Handle the IOException
+<b class="nc">&nbsp;                System.err.println(&quot;Error sending error message to client: &quot; + ioException.getMessage());</b>
+<b class="nc">&nbsp;                ioException.printStackTrace();</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnClose
+&nbsp;    public void onClose(Session session) {
+<b class="nc">&nbsp;        sessions.remove(session);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnError
+&nbsp;    public void onError(Session session, Throwable throwable) {
+<b class="nc">&nbsp;        throwable.printStackTrace();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void broadcast(String message) {
+<b class="nc">&nbsp;        sessions.forEach(session -&gt; {</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                if (session.isOpen()) {</b>
+<b class="nc">&nbsp;                    session.getBasicRemote().sendText(message);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            } catch (IOException e) {</b>
+<b class="nc">&nbsp;                e.printStackTrace();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

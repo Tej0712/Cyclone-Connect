@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Maps.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.Maps</a> &gt; <span class="el_source">Maps.java</span></div><h1>Maps.java</h1><pre class="source lang-java linenums">package com.example.myapplication.Maps;
+
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
+
+import com.example.myapplication.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
+import java.io.IOException;
+import java.util.List;
+
+<span class="nc" id="L35">public class Maps extends FragmentActivity implements OnMapReadyCallback {</span>
+
+    private GoogleMap mMap;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private SearchView searchView;
+    private Button satelliteViewButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L44">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L45">        setContentView(R.layout.activity_maps);</span>
+
+<span class="nc" id="L47">        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()</span>
+<span class="nc" id="L48">                .findFragmentById(R.id.map);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        assert mapFragment != null;</span>
+<span class="nc" id="L50">        mapFragment.getMapAsync(this);</span>
+
+<span class="nc" id="L52">        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);</span>
+
+<span class="nc" id="L54">        searchView = findViewById(R.id.search);</span>
+<span class="nc" id="L55">        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {</span>
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+<span class="nc" id="L58">                String location = searchView.getQuery().toString();</span>
+<span class="nc" id="L59">                List&lt;Address&gt; addressList = null;</span>
+
+<span class="nc" id="L61">                Geocoder geocoder = new Geocoder(Maps.this);</span>
+                try {
+<span class="nc" id="L63">                    addressList = geocoder.getFromLocationName(location, 1);</span>
+<span class="nc" id="L64">                } catch (IOException e) {</span>
+<span class="nc" id="L65">                    e.printStackTrace();</span>
+<span class="nc" id="L66">                }</span>
+
+<span class="nc bnc" id="L68" title="All 4 branches missed.">                if (addressList != null &amp;&amp; !addressList.isEmpty()) {</span>
+<span class="nc" id="L69">                    Address address = addressList.get(0);</span>
+<span class="nc" id="L70">                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());</span>
+<span class="nc" id="L71">                    mMap.addMarker(new MarkerOptions().position(latLng).title(location));</span>
+<span class="nc" id="L72">                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));</span>
+<span class="nc" id="L73">                } else {</span>
+<span class="nc" id="L74">                    Toast.makeText(Maps.this, &quot;Location not found&quot;, Toast.LENGTH_SHORT).show();</span>
+                }
+<span class="nc" id="L76">                return false;</span>
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+<span class="nc" id="L81">                return false;</span>
+            }
+        });
+
+<span class="nc" id="L85">        satelliteViewButton = findViewById(R.id.satellite_view_button);</span>
+<span class="nc" id="L86">        satelliteViewButton.setOnClickListener(new View.OnClickListener() {</span>
+            @SuppressLint(&quot;SetTextI18n&quot;)
+            @Override
+            public void onClick(View v) {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                if (mMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL) {</span>
+<span class="nc" id="L91">                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);</span>
+<span class="nc" id="L92">                    satelliteViewButton.setText(&quot;Normal View&quot;);</span>
+                } else {
+<span class="nc" id="L94">                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);</span>
+<span class="nc" id="L95">                    satelliteViewButton.setText(&quot;Satellite View&quot;);</span>
+                }
+<span class="nc" id="L97">            }</span>
+        });
+
+<span class="nc" id="L100">        Button myLocationToDestinationButton = findViewById(R.id.my_location_to_destination_button);</span>
+<span class="nc" id="L101">        myLocationToDestinationButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                if (ActivityCompat.checkSelfPermission(Maps.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                        &amp;&amp; ActivityCompat.checkSelfPermission(Maps.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {</span>
+<span class="nc" id="L106">                    ActivityCompat.requestPermissions(Maps.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);</span>
+<span class="nc" id="L107">                    return;</span>
+                }
+
+<span class="nc" id="L110">                Task&lt;Location&gt; locationTask = fusedLocationProviderClient.getLastLocation();</span>
+<span class="nc" id="L111">                locationTask.addOnSuccessListener(Maps.this, new OnSuccessListener&lt;Location&gt;() {</span>
+                    @Override
+                    public void onSuccess(Location location) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">                        if (location != null) {</span>
+<span class="nc" id="L115">                            LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());</span>
+<span class="nc" id="L116">                            String destinationQuery = searchView.getQuery().toString();</span>
+<span class="nc" id="L117">                            List&lt;Address&gt; destinationAddressList = null;</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                            if (!destinationQuery.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L120">                                Geocoder geocoder = new Geocoder(Maps.this);</span>
+                                try {
+<span class="nc" id="L122">                                    destinationAddressList = geocoder.getFromLocationName(destinationQuery, 1);</span>
+<span class="nc" id="L123">                                } catch (IOException e) {</span>
+<span class="nc" id="L124">                                    e.printStackTrace();</span>
+<span class="nc" id="L125">                                }</span>
+
+<span class="nc bnc" id="L127" title="All 4 branches missed.">                                if (destinationAddressList != null &amp;&amp; !destinationAddressList.isEmpty()) {</span>
+<span class="nc" id="L128">                                    Address destinationAddress = destinationAddressList.get(0);</span>
+<span class="nc" id="L129">                                    LatLng destinationLatLng = new LatLng(destinationAddress.getLatitude(), destinationAddress.getLongitude());</span>
+<span class="nc" id="L130">                                    mMap.addMarker(new MarkerOptions().position(currentLocation).title(&quot;Current Location&quot;));</span>
+<span class="nc" id="L131">                                    mMap.addMarker(new MarkerOptions().position(destinationLatLng).title(destinationQuery));</span>
+<span class="nc" id="L132">                                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(</span>
+                                            new com.google.android.gms.maps.model.LatLngBounds(currentLocation, destinationLatLng), 100));
+<span class="nc" id="L134">                                } else {</span>
+<span class="nc" id="L135">                                    Toast.makeText(Maps.this, &quot;Destination not found&quot;, Toast.LENGTH_SHORT).show();</span>
+                                }
+<span class="nc" id="L137">                            } else {</span>
+<span class="nc" id="L138">                                Toast.makeText(Maps.this, &quot;Please enter a destination&quot;, Toast.LENGTH_SHORT).show();</span>
+                            }
+                        }
+<span class="nc" id="L141">                    }</span>
+                });
+<span class="nc" id="L143">            }</span>
+        });
+<span class="nc" id="L145">    }</span>
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+<span class="nc" id="L149">        mMap = googleMap;</span>
+
+        // Check permissions
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">                &amp;&amp; ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {</span>
+<span class="nc" id="L154">            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);</span>
+<span class="nc" id="L155">            return;</span>
+        }
+
+<span class="nc" id="L158">        mMap.setMyLocationEnabled(true);</span>
+
+        // Set the initial location to Atanasoff Hall, Iowa State University, Ames, IA
+<span class="nc" id="L161">        LatLng atanasoffHall = new LatLng(42.028611, -93.651944);</span>
+<span class="nc" id="L162">        MarkerOptions markerOptions = new MarkerOptions()</span>
+<span class="nc" id="L163">                .position(atanasoffHall)</span>
+<span class="nc" id="L164">                .title(&quot;Atanasoff Hall&quot;)</span>
+<span class="nc" id="L165">                .snippet(&quot;Iowa State University&quot;);</span>
+<span class="nc" id="L166">        mMap.addMarker(markerOptions);</span>
+
+        // Move the camera to Atanasoff Hall with a zoom level of 17
+<span class="nc" id="L169">        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(atanasoffHall, 17));</span>
+
+        // Set up a custom info window adapter
+<span class="nc" id="L172">        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {</span>
+            @Override
+            public View getInfoWindow(@NonNull com.google.android.gms.maps.model.Marker marker) {
+<span class="nc" id="L175">                return null;</span>
+            }
+
+            @Override
+            public View getInfoContents(@NonNull com.google.android.gms.maps.model.Marker marker) {
+<span class="nc" id="L180">                @SuppressLint(&quot;InflateParams&quot;) View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_window, null, false);</span>
+<span class="nc" id="L181">                TextView title = infoWindow.findViewById(R.id.info_window_title);</span>
+<span class="nc" id="L182">                TextView snippet = infoWindow.findViewById(R.id.info_window_snippet);</span>
+<span class="nc" id="L183">                title.setText(marker.getTitle());</span>
+<span class="nc" id="L184">                snippet.setText(marker.getSnippet());</span>
+<span class="nc" id="L185">                return infoWindow;</span>
+            }
+        });
+
+        // Set up a marker click listener to show the info window
+<span class="nc" id="L190">        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {</span>
+            @Override
+            public boolean onMarkerClick(@NonNull com.google.android.gms.maps.model.Marker marker) {
+<span class="nc" id="L193">                marker.showInfoWindow();</span>
+<span class="nc" id="L194">                return true;</span>
+            }
+        });
+<span class="nc" id="L197">    }</span>
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+<span class="nc" id="L201">        super.onRequestPermissionsResult(requestCode, permissions, grantResults);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">        if (requestCode == 1) {</span>
+<span class="nc bnc" id="L203" title="All 4 branches missed.">            if (grantResults.length &gt; 0 &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED) {</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {</span>
+<span class="nc" id="L205">                    mMap.setMyLocationEnabled(true);</span>
+                }
+            } else {
+<span class="nc" id="L208">                Toast.makeText(this, &quot;Permission denied&quot;, Toast.LENGTH_SHORT).show();</span>
+            }
+        }
+<span class="nc" id="L211">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

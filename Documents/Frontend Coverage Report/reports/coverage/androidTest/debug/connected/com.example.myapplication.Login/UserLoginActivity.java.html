@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserLoginActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.Login</a> &gt; <span class="el_source">UserLoginActivity.java</span></div><h1>UserLoginActivity.java</h1><pre class="source lang-java linenums">package com.example.myapplication.Login;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.HomePage;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+/**
+ * UserLoginActivity provides a user interface for logging into the application. It handles user input for
+ * email and password, performs the login operation by communicating with a backend server, and navigates
+ * the user to the HomePage upon successful login.
+ *
+ * This activity uses Volley for making the network request and SharedPreferences for storing the userId
+ * obtained from the login response, facilitating user session management across the application.
+ *
+ * Author: Abhay Prasanna Rao
+ */
+<span class="nc" id="L44">public class UserLoginActivity extends AppCompatActivity {</span>
+
+    private EditText emailEditText;
+    private EditText passwordEditText;
+<span class="nc" id="L48">    private final String loginUrl = &quot;http://coms-309-046.class.las.iastate.edu:8080/api/login&quot;;</span>
+
+    /**
+     * Called when the activity is starting. This method initializes the UI components, retrieves the
+     * views from the layout, and sets up a click listener for the login button to initiate the login
+     * process with the provided credentials.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after being previously shut down,
+     *                           this Bundle contains the data it most recently supplied. Otherwise, it is null.
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L60">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L61">        setContentView(R.layout.activity_user_login);</span>
+
+<span class="nc" id="L63">        emailEditText = findViewById(R.id.email_edit_text);</span>
+<span class="nc" id="L64">        passwordEditText = findViewById(R.id.password_edit_text);</span>
+<span class="nc" id="L65">        Button loginButton = findViewById(R.id.loginbutton);</span>
+
+<span class="nc" id="L67">        setupPasswordVisibilityToggle();</span>
+
+<span class="nc" id="L69">        loginButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L72">                String email = emailEditText.getText().toString().trim();</span>
+<span class="nc" id="L73">                String password = passwordEditText.getText().toString().trim();</span>
+<span class="nc" id="L74">                loginUser(email, password);</span>
+<span class="nc" id="L75">            }</span>
+        });
+<span class="nc" id="L77">    }</span>
+
+    /**
+     * Setup toggle to change the visibility of the password.
+     */
+    @SuppressLint(&quot;ClickableViewAccessibility&quot;)
+    private void setupPasswordVisibilityToggle() {
+<span class="nc" id="L84">        passwordEditText.setOnTouchListener((v, event) -&gt; {</span>
+<span class="nc" id="L85">            final int DRAWABLE_RIGHT = 2;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (event.getAction() == MotionEvent.ACTION_UP) {</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">                if (event.getRawX() &gt;= (passwordEditText.getRight() - passwordEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">                    if (passwordEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {</span>
+<span class="nc" id="L89">                        passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);</span>
+<span class="nc" id="L90">                        passwordEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_off, 0);</span>
+                    } else {
+<span class="nc" id="L92">                        passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);</span>
+<span class="nc" id="L93">                        passwordEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_off, 0);</span>
+                    }
+<span class="nc" id="L95">                    passwordEditText.setSelection(passwordEditText.getText().length());</span>
+<span class="nc" id="L96">                    return true;</span>
+                }
+            }
+<span class="nc" id="L99">            return false;</span>
+        });
+<span class="nc" id="L101">    }</span>
+
+    private boolean validateEmail(String email) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (email.isEmpty()) {</span>
+<span class="nc" id="L105">            emailEditText.setError(&quot;Email cannot be empty&quot;);</span>
+<span class="nc" id="L106">            return false;</span>
+        }
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (!email.endsWith(&quot;@iastate.edu&quot;)) {</span>
+<span class="nc" id="L110">            emailEditText.setError(&quot;Email must have @iastate.edu domain&quot;);</span>
+<span class="nc" id="L111">            return false;</span>
+        }
+
+<span class="nc" id="L114">        return true;</span>
+    }
+
+    private boolean validatePassword(String password) {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (password.isEmpty()) {</span>
+<span class="nc" id="L119">            passwordEditText.setError(&quot;Password cannot be empty&quot;);</span>
+<span class="nc" id="L120">            return false;</span>
+        }
+
+<span class="nc" id="L123">        return true;</span>
+    }
+
+
+    /**
+     * Initiates the login process by sending the user's email and password to the backend server. Upon
+     * receiving a successful response, it stores the userId in SharedPreferences and navigates the user
+     * to the HomePage activity. In case of failure, it displays an appropriate error message to the user.
+     *
+     * @param email The email address provided by the user.
+     * @param password The password provided by the user.
+     */
+    private void loginUser(String email, String password) {
+<span class="nc bnc" id="L136" title="All 4 branches missed.">        if (!validateEmail(email) || !validatePassword(password)) {</span>
+<span class="nc" id="L137">            return;</span>
+        }
+<span class="nc" id="L139">        Map&lt;String, String&gt; params = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L140">        params.put(&quot;email&quot;, email);</span>
+<span class="nc" id="L141">        params.put(&quot;password&quot;, password);</span>
+
+<span class="nc" id="L143">        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, loginUrl,</span>
+                new JSONObject(params),
+<span class="nc" id="L145">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // Parse the response
+<span class="nc" id="L150">                            String message = response.getString(&quot;message&quot;);</span>
+<span class="nc" id="L151">                            long userId = response.getLong(&quot;userId&quot;); // Extract the userId</span>
+<span class="nc" id="L152">                            Log.i(&quot;User ID&quot;, String.valueOf(userId));</span>
+
+                            // Save userId in SharedPreferences
+<span class="nc" id="L155">                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(UserLoginActivity.this);</span>
+<span class="nc" id="L156">                            SharedPreferences.Editor editor = preferences.edit();</span>
+<span class="nc" id="L157">                            editor.putLong(&quot;userId&quot;, userId);</span>
+<span class="nc" id="L158">                            editor.apply();</span>
+
+                            // Notify user and navigate
+<span class="nc" id="L161">                            Toast.makeText(UserLoginActivity.this, message, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L162">                            Intent intent = new Intent(UserLoginActivity.this, HomePage.class);</span>
+<span class="nc" id="L163">                            intent.putExtra(&quot;ID&quot;, userId);</span>
+<span class="nc" id="L164">                            startActivity(intent);</span>
+
+<span class="nc" id="L166">                        } catch (JSONException e) {</span>
+<span class="nc" id="L167">                            e.printStackTrace();</span>
+<span class="nc" id="L168">                            Toast.makeText(UserLoginActivity.this, &quot;Parsing error&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L169">                        }</span>
+<span class="nc" id="L170">                    }</span>
+                },
+<span class="nc" id="L172">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handling error response
+<span class="nc bnc" id="L176" title="All 2 branches missed.">                        if (error.networkResponse != null) {</span>
+<span class="nc" id="L177">                            String errorMsg = new String(error.networkResponse.data);</span>
+<span class="nc" id="L178">                            Toast.makeText(UserLoginActivity.this, errorMsg, Toast.LENGTH_LONG).show();</span>
+<span class="nc" id="L179">                        } else {</span>
+<span class="nc" id="L180">                            Toast.makeText(UserLoginActivity.this, &quot;Login failed&quot;, Toast.LENGTH_SHORT).show();</span>
+                        }
+<span class="nc" id="L182">                    }</span>
+<span class="nc" id="L183">                }) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L186">                Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L187">                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);</span>
+<span class="nc" id="L188">                return headers;</span>
+            }
+        };
+
+<span class="nc" id="L192">        VolleySingleton.getInstance(this).addToRequestQueue(loginRequest);</span>
+<span class="nc" id="L193">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

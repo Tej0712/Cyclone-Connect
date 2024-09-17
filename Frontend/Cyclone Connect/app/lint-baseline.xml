@@ -1,0 +1,2858 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="5" by="lint Hedgehog | 2023.1.1 Patch 2">
+
+    <issue
+        id="FontValidation"
+        message="For `minSdkVersion`=30 only `android:` attributes should be used">
+        <location
+            file="src/main/res/font/abel.xml"
+            line="3"/>
+    </issue>
+
+    <issue
+        id="FontValidation"
+        message="For `minSdkVersion`=30 only `android:` attributes should be used">
+        <location
+            file="src/main/res/font/alfa_slab_one.xml"
+            line="3"/>
+    </issue>
+
+    <issue
+        id="QueryPermissionsNeeded"
+        message="Consider adding a `&lt;queries>` declaration to your manifest when calling this \&#xA;method; see https://g.co/dev/packagevisibility for details">
+        <location
+            file="src/main/java/com/example/myapplication/profile/ProfilePhotoActivity.java"
+            line="54"/>
+    </issue>
+
+    <issue
+        id="UsingOnClickInXml"
+        message="Use databinding or explicit wiring of click listener in code">
+        <location
+            file="src/main/res/layout/activity_calendarpage.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="UsingOnClickInXml"
+        message="Use databinding or explicit wiring of click listener in code">
+        <location
+            file="src/main/res/layout/activity_calendarpage.xml"
+            line="38"/>
+    </issue>
+
+    <issue
+        id="UsingOnClickInXml"
+        message="Use databinding or explicit wiring of click listener in code">
+        <location
+            file="src/main/res/layout/activity_calendarpage.xml"
+            line="59"/>
+    </issue>
+
+    <issue
+        id="UsingOnClickInXml"
+        message="Use databinding or explicit wiring of click listener in code">
+        <location
+            file="src/main/res/layout/activity_event_edit.xml"
+            line="153"/>
+    </issue>
+
+    <issue
+        id="UsingOnClickInXml"
+        message="Use databinding or explicit wiring of click listener in code">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="471"/>
+    </issue>
+
+    <issue
+        id="UsingOnClickInXml"
+        message="Use databinding or explicit wiring of click listener in code">
+        <location
+            file="src/main/res/layout/activity_week_view.xml"
+            line="26"/>
+    </issue>
+
+    <issue
+        id="UsingOnClickInXml"
+        message="Use databinding or explicit wiring of click listener in code">
+        <location
+            file="src/main/res/layout/activity_week_view.xml"
+            line="47"/>
+    </issue>
+
+    <issue
+        id="UsingOnClickInXml"
+        message="Use databinding or explicit wiring of click listener in code">
+        <location
+            file="src/main/res/layout/activity_week_view.xml"
+            line="137"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 31">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="21"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (940 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_web_link.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/advisor_view` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_adivisor_view.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/admin_home` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_admin.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `#FBFBFB` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_advisor_page.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/student_create` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_create_account.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/prof_signup` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_create_faculty_account.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/admin_home` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_emergency_contact_updates.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `#F16060` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_exercise.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `#F16060` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_exercise_detail.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/books` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_headstart.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/health` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_health.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/helphome` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_help_page.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/homepagemain1` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_homepage.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/signup_bg` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_login.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/white` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_note.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@color/white` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_notes_list.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/reportbugs` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_reportbugs.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/signup_bg` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_user_login.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/who` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/activity_who.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/admin_home` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/admin_headstart.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/admin_home` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/admin_headstart_course_updates.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/admin_home` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/admin_headstart_major_updates.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/admin_home` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/admin_headstart_specific_updates.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/admin_home` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/admin_navigation.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/library` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/headstart_course.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/darkbglines` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/headstart_specific_course.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `@drawable/library2` with a theme that also paints a background (inferred theme is `@style/Theme.MyApplication`)">
+        <location
+            file="src/main/res/layout/professor_home.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.alphabetical_to_numerical` appears to be unused">
+        <location
+            file="src/main/res/drawable/alphabetical_to_numerical.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.appback11` appears to be unused">
+        <location
+            file="src/main/res/drawable/appback11.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.appback22` appears to be unused">
+        <location
+            file="src/main/res/drawable/appback22.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.background_add_button` appears to be unused">
+        <location
+            file="src/main/res/drawable/background_add_button.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.background_done_button` appears to be unused">
+        <location
+            file="src/main/res/drawable/background_done_button.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.background_search` appears to be unused">
+        <location
+            file="src/main/res/drawable/background_search.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.background_subtitle_indicator` appears to be unused">
+        <location
+            file="src/main/res/drawable/background_subtitle_indicator.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.chat_bubble` appears to be unused">
+        <location
+            file="src/main/res/drawable/chat_bubble.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.circle` appears to be unused">
+        <location
+            file="src/main/res/drawable/circle.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.buttonColor` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.NoteColor` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.NoteColorDark` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.ColorAccent` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.ColorSearchIcon` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorTextHint` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorQuickActionsBackground` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.ColorIcons` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.ColorTextSubtitle` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorDefaultNoteColor` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="17"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorNoteSubtitleText` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="18"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorMiscellaneousBackground` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorNoteColor2` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="20"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorNoteColor4` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="22"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorNoteColor5` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="23"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorSearchBackground` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="25"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black_shade_1` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="27"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.country` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="31"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.time` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="32"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.green` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="34"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.yellow` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="36"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_200` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="40"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_500` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="41"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_700` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="42"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_200` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="43"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_700` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="44"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.lavender` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="45"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorPrimary` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="48"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorPrimaryDark` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="49"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorAccent` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="50"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorDelete` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="51"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.launcherBackground` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="52"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.lightGray` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="55"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._40sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="3"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._10sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._30sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._6sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._20sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._12sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._4sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._37sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._16ssp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._10ssp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._13ssp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._100sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._5sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._15sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._2sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="17"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._8sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="18"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen._23sdp` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.divider` appears to be unused">
+        <location
+            file="src/main/res/drawable/divider.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.divider_settings` appears to be unused">
+        <location
+            file="src/main/res/drawable/divider_settings.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.event_list_item` appears to be unused">
+        <location
+            file="src/main/res/layout/event_list_item.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.font.font` appears to be unused">
+        <location
+            file="src/main/res/font/font.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.raw.gmail` appears to be unused">
+        <location
+            file="src/main/res/raw/gmail.json"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_add` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_add.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_add_circle_outline_white_24dp` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_add_circle_outline_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-hdpi/ic_add_circle_outline_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_add_circle_outline_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/ic_add_circle_outline_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_add_circle_outline_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_add_circle_outline_white_24dp.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_add_outline` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_add_outline.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_back` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_back.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_bg` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_bg.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_bg.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/ic_bg.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_bg.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_bg.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_delete_white_24dp` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_delete_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_delete_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/ic_delete_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_delete_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_delete_white_24dp.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_done` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_done.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_image` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_image.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.mipmap.ic_launcher` appears to be unused">
+        <location
+            file="src/main/res/mipmap-anydpi/ic_launcher.xml"
+            line="2"/>
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_background` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_launcher_background.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.mipmap.ic_launcher_foreground` appears to be unused">
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_foreground` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_launcher_foreground.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.mipmap.ic_launcher_round` appears to be unused">
+        <location
+            file="src/main/res/mipmap-anydpi/ic_launcher_round.xml"
+            line="2"/>
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_search` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_search.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_settings_white_24dp` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_settings_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_settings_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/ic_settings_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_settings_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_settings_white_24dp.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_share_white_24dp` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_share_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_share_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/ic_share_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_share_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_share_white_24dp.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_sort_alphabetical` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_sort_alphabetical.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_sort_numeric_white_24dp` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_sort_numeric_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_sort_numeric_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/ic_sort_numeric_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_sort_numeric_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_sort_numeric_white_24dp.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_splash` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_splash.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_splash.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/ic_splash.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_splash.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_splash.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_undo_white_24dp` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_undo_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_undo_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi/ic_undo_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_undo_white_24dp.png"/>
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_undo_white_24dp.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_web_link` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_web_link.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.maps_border` appears to be unused">
+        <location
+            file="src/main/res/drawable/maps_border.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.menu_note` appears to be unused">
+        <location
+            file="src/main/res/menu/menu_note.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.menu_notes_list` appears to be unused">
+        <location
+            file="src/main/res/menu/menu_notes_list.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.numeric_to_alphabetical` appears to be unused">
+        <location
+            file="src/main/res/drawable/numeric_to_alphabetical.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.raw.playmarket` appears to be unused">
+        <location
+            file="src/main/res/raw/playmarket.json"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.rounded_background` appears to be unused">
+        <location
+            file="src/main/res/drawable/rounded_background.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.rounded_button` appears to be unused">
+        <location
+            file="src/main/res/drawable/rounded_button.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.splash_screen` appears to be unused">
+        <location
+            file="src/main/res/drawable/splash_screen.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.square` appears to be unused">
+        <location
+            file="src/main/res/drawable/square.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.select_major` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.select_subject` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.select_course` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.note_subtitle` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.type_note_here` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.my_notes` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.search_notes` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="17"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.accent_colour` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="25"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.launcher_title` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="26"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.apply_changes` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="27"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.background_colour` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="28"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.colour_indicator` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="29"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.colour_navigation_bar` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.confirm_delete` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="31"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.confirm_delete_text` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="32"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.exception` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="35"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.font_colour` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="36"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.new_note` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="37"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.no` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="38"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.search` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="40"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.settings` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="41"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.share_to` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="42"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.share` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="43"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sort` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="44"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.yes` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="46"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.undo` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="47"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.done` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="48"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.get_note` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="49"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.set_note` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="50"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.note_change` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="51"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.note_title` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="52"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.note_title_description` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="53"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.note_content` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="54"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.note_content_description` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="55"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.append` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="56"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.append_text` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="57"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.note_not_found` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="58"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.Description` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="59"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.save` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="60"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.profile` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="64"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.AppTheme` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.AlertDialogTheme` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.SplashTheme` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="21"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.TaskerInputTheme` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="26"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.TextInputLayoutStyle` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="35"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.raw.verified` appears to be unused">
+        <location
+            file="src/main/res/raw/verified.json"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.raw.youtube` appears to be unused">
+        <location
+            file="src/main/res/raw/youtube.json"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary; transfer the `background` attribute to the other view">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="211"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary; transfer the `background` attribute to the other view">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="262"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary; transfer the `background` attribute to the other view">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="313"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary; transfer the `background` attribute to the other view">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="366"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary; transfer the `background` attribute to the other view">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="419"/>
+    </issue>
+
+    <issue
+        id="TypographyDashes"
+        message="Replace &quot;-&quot; with an &quot;en dash&quot; character (–, &amp;#8211;) ?">
+        <location
+            file="src/main/res/values-night/strings.xml"
+            line="79"/>
+    </issue>
+
+    <issue
+        id="TypographyDashes"
+        message="Replace &quot;-&quot; with an &quot;en dash&quot; character (–, &amp;#8211;) ?">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="166"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?">
+        <location
+            file="src/main/res/values-night/strings.xml"
+            line="52"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?">
+        <location
+            file="src/main/res/values-night/strings.xml"
+            line="113"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="139"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="200"/>
+    </issue>
+
+    <issue
+        id="IconXmlAndPng"
+        message="The following images appear both as density independent `.xml` files and as bitmap files: src/main/res/mipmap-anydpi/ic_launcher.xml, src/main/res/mipmap-hdpi/ic_launcher.webp">
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher.webp"/>
+        <location
+            file="src/main/res/mipmap-anydpi/ic_launcher.xml"/>
+    </issue>
+
+    <issue
+        id="IconXmlAndPng"
+        message="The following images appear both as density independent `.xml` files and as bitmap files: src/main/res/drawable/ic_launcher_foreground.xml, src/main/res/mipmap-hdpi/ic_launcher_foreground.png">
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher_foreground.png"/>
+        <location
+            file="src/main/res/drawable/ic_launcher_foreground.xml"/>
+    </issue>
+
+    <issue
+        id="IconXmlAndPng"
+        message="The following images appear both as density independent `.xml` files and as bitmap files: src/main/res/mipmap-anydpi/ic_launcher_round.xml, src/main/res/mipmap-hdpi/ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-anydpi/ic_launcher_round.xml"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        message="Launcher icon used as round icon did not have a circular shape">
+        <location
+            file="src/main/res/drawable/main_icon.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/admin_home.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/admin_home.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/advisor_view.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/advisor_view.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/appback11.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/appback11.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/appback22.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/appback22.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/appback3.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/appback3.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/books.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/books.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/darkbglines.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/darkbglines.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/facebook.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/facebook.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/github.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/github.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/health.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/health.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/helphome.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/helphome.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/homebutton.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/homebutton.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/homepagemain1.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/homepagemain1.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/ic_add_circle_outline_white_24dp.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/ic_add_circle_outline_white_24dp.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/library.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/library.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/library2.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/library2.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/locationsicon.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/locationsicon.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/main_icon.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/main_icon.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/moreicon.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/moreicon.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/prof_signup.webp` in densityless folder">
+        <location
+            file="src/main/res/drawable/prof_signup.webp"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/reportbugs.webp` in densityless folder">
+        <location
+            file="src/main/res/drawable/reportbugs.webp"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/signup_bg.webp` in densityless folder">
+        <location
+            file="src/main/res/drawable/signup_bg.webp"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/student_create.webp` in densityless folder">
+        <location
+            file="src/main/res/drawable/student_create.webp"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/twitter.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/twitter.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/uni_icon.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/uni_icon.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/user.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/user.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/w01d.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/w01d.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/w02d.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/w02d.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/w03d.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/w03d.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/w04d.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/w04d.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/w09d.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/w09d.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/w10d.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/w10d.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/w11d.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/w11d.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/w13d.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/w13d.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/who.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/who.png"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="210"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="217"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="232"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="239"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_add_major.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_add_navigation_item.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_add_navigation_item.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_add_new_contact.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_add_new_contact.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_add_new_contact.xml"
+            line="29"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_advisor_page.xml"
+            line="48"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_delete_major.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="48"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="58"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="105"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="114"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_update_navigation_item.xml"
+            line="23"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/activity_update_navigation_item.xml"
+            line="35"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_course.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_course.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_course.xml"
+            line="22"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_specificcourse.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_specificcourse.xml"
+            line="23"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_specificcourse.xml"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_specificcourse.xml"
+            line="37"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_specificcourse.xml"
+            line="44"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_add_specificcourse.xml"
+            line="51"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_course.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_course.xml"
+            line="23"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_course.xml"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_specificcourse.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_specificcourse.xml"
+            line="23"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_specificcourse.xml"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_specificcourse.xml"
+            line="37"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_specificcourse.xml"
+            line="44"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`">
+        <location
+            file="src/main/res/layout/admin_headstart_update_specificcourse.xml"
+            line="51"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_add_major.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_add_navigation_item.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_add_navigation_item.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_add_new_contact.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_add_new_contact.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_add_new_contact.xml"
+            line="29"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_admin_emergency_deletecontact.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_advisor_page.xml"
+            line="48"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_delete_major.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="58"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="95"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_profile.xml"
+            line="124"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_update_navigation_item.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_update_navigation_item.xml"
+            line="23"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute">
+        <location
+            file="src/main/res/layout/activity_update_navigation_item.xml"
+            line="35"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image">
+        <location
+            file="src/main/res/layout/activity_advisor_page.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="228"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="279"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="330"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="383"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="436"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EditEvent.java"
+            line="133"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EditEvent.java"
+            line="133"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EditEvent.java"
+            line="143"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EditEvent.java"
+            line="143"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EditEvent.java"
+            line="146"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EditEvent.java"
+            line="146"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EventEditActivity.java"
+            line="83"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EventEditActivity.java"
+            line="83"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EventEditActivity.java"
+            line="93"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EventEditActivity.java"
+            line="93"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EventEditActivity.java"
+            line="96"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="String literal in `setText` can not be translated. Use Android resources instead.">
+        <location
+            file="src/main/java/com/example/myapplication/Calendar/EventEditActivity.java"
+            line="96"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Event Details&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_event_edit.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Fitness App&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_health.xml"
+            line="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Fri, Jun 26&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="223"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;28°&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="245"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Sat, Jun 27&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="274"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;29°&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="295"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Sun, Jun 28&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="325"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;31°&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="347"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Mon, Jun 29&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="378"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;19°&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="400"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Tue, Jun 30&quot;, should use `@string` resource">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="431"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingStart` you should probably also define `paddingEnd` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="221"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingStart` you should probably also define `paddingEnd` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="221"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="243"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="243"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="272"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="272"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="293"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="293"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="323"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="323"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="345"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="345"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="376"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="376"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="398"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="398"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="429"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingLeft` you should probably also define `paddingRight` for right-to-left symmetry">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="429"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Use &quot;`start`&quot; instead of &quot;`left`&quot; to ensure correct behavior in right-to-left locales">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="179"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Use &quot;`start`&quot; instead of &quot;`left`&quot; to ensure correct behavior in right-to-left locales">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="179"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Use &quot;`start`&quot; instead of &quot;`left`&quot; to ensure correct behavior in right-to-left locales">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="190"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Use &quot;`start`&quot; instead of &quot;`left`&quot; to ensure correct behavior in right-to-left locales">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="190"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;30dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="243"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;30dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="243"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;40dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="272"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;40dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="272"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;30dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="293"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;30dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="293"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;40dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="323"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;40dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="323"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;30dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="345"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;30dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="345"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;40dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="376"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;40dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="376"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;30dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="398"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;30dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="398"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;40dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="429"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingLeft` with `android:paddingStart=&quot;40dp&quot;` to better support right-to-left layouts">
+        <location
+            file="src/main/res/layout/activity_weatherpage.xml"
+            line="429"/>
+    </issue>
+
+</issues>

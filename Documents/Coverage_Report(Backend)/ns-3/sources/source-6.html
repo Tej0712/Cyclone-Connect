@@ -1,0 +1,313 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > UsersCalendarController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Calendar_with_userID</a>
+</div>
+
+<h1>Coverage Summary for Class: UsersCalendarController (onetoone.Calendar_with_userID)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UsersCalendarController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    6.2%
+  </span>
+  <span class="absValue">
+    (1/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.3%
+  </span>
+  <span class="absValue">
+    (4/92)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Calendar_with_userID;
+&nbsp;
+&nbsp;import onetoone.Users.User;
+&nbsp;import onetoone.Users.UserServices;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/api/user/calendar&quot;)
+&nbsp;public class UsersCalendarController {
+&nbsp;
+&nbsp;    private final UserServices userServices;
+&nbsp;    private final UserCalendarRepository usercalendarRepository;
+&nbsp;
+&nbsp;    private final UserCalendarService userCalendarService;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    private CalendarEventDTO convertToDTO(CalendarEntity entity) {
+<b class="nc">&nbsp;        CalendarEventDTO dto = new CalendarEventDTO();</b>
+<b class="nc">&nbsp;        dto.setId(entity.getId());</b>
+<b class="nc">&nbsp;        dto.setTitle(entity.getTitle());</b>
+<b class="nc">&nbsp;        dto.setDescription(entity.getDescription());</b>
+<b class="nc">&nbsp;        dto.setDate(entity.getDate());</b>
+<b class="nc">&nbsp;        dto.setStartTime(entity.getStartTime());</b>
+<b class="nc">&nbsp;        dto.setEndTime(entity.getEndTime());</b>
+&nbsp;        // Add other fields as needed
+<b class="nc">&nbsp;        return dto;</b>
+&nbsp;    }
+&nbsp;    private CalendarEventWithUserDTO convertToCalendarEventWithUserDTO(CalendarEntity entity) {
+<b class="nc">&nbsp;        CalendarEventWithUserDTO dto = new CalendarEventWithUserDTO();</b>
+<b class="nc">&nbsp;        dto.setId(entity.getId());</b>
+<b class="nc">&nbsp;        dto.setTitle(entity.getTitle());</b>
+<b class="nc">&nbsp;        dto.setDescription(entity.getDescription());</b>
+<b class="nc">&nbsp;        dto.setDate(entity.getDate());</b>
+<b class="nc">&nbsp;        dto.setStartTime(entity.getStartTime());</b>
+<b class="nc">&nbsp;        dto.setEndTime(entity.getEndTime());</b>
+<b class="nc">&nbsp;        User user = entity.getUser();</b>
+<b class="nc">&nbsp;        if (user != null) {</b>
+<b class="nc">&nbsp;            dto.setUserId(user.getUserId());</b>
+<b class="nc">&nbsp;            dto.setUsername(user.getFirstName() + &quot; &quot; + user.getLastName());</b>
+&nbsp;            // Set other user-related fields as needed
+&nbsp;        }
+<b class="nc">&nbsp;        return dto;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public UsersCalendarController(UserServices userServices, UserCalendarRepository usercalendarRepository, UserCalendarService userCalendarService) {</b>
+<b class="fc">&nbsp;        this.userServices = userServices;</b>
+<b class="fc">&nbsp;        this.usercalendarRepository = usercalendarRepository;</b>
+<b class="fc">&nbsp;        this.userCalendarService = userCalendarService;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/generateDummySchedules/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;List&lt;CalendarEntity&gt;&gt; generateAndRetrieveDummySchedules(@PathVariable Long userId) {
+<b class="nc">&nbsp;        User user = userServices.getUserById(userId); // Call the method from UserService to retrieve the user</b>
+<b class="nc">&nbsp;        if (user == null) {</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        List&lt;CalendarEntity&gt; schedules = userCalendarService.generateDummySchedulesForUser(user);</b>
+<b class="nc">&nbsp;        return new ResponseEntity&lt;&gt;(schedules, HttpStatus.OK);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/events-with-users&quot;)
+&nbsp;    public ResponseEntity&lt;List&lt;CalendarEventWithUserDTO&gt;&gt; getAllEventsWithUsers() {
+<b class="nc">&nbsp;        List&lt;CalendarEntity&gt; events = usercalendarRepository.findAllWithUsers();</b>
+<b class="nc">&nbsp;        List&lt;CalendarEventWithUserDTO&gt; dtos = events.stream()</b>
+<b class="nc">&nbsp;                .map(this::convertToCalendarEventWithUserDTO)</b>
+<b class="nc">&nbsp;                .collect(Collectors.toList());</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(dtos);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    public ResponseEntity&lt;List&lt;CalendarEventDTO&gt;&gt; getAllEvents() {
+<b class="nc">&nbsp;        List&lt;CalendarEntity&gt; events = usercalendarRepository.findAll();</b>
+<b class="nc">&nbsp;        List&lt;CalendarEventDTO&gt; dtos = events.stream().map(this::convertToDTO).collect(Collectors.toList());</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(dtos);</b>
+&nbsp;    }
+&nbsp;    @GetMapping(&quot;/user/{userId}/events&quot;)
+&nbsp;    public ResponseEntity&lt;List&lt;CalendarEventDTO&gt;&gt; getUserEvents(@PathVariable Long userId) {
+<b class="nc">&nbsp;        User user = userServices.getUserById(userId);</b>
+<b class="nc">&nbsp;        if (user == null) {</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        List&lt;CalendarEntity&gt; events = usercalendarRepository.findByUserId(userId);</b>
+<b class="nc">&nbsp;        List&lt;CalendarEventDTO&gt; dtos = events.stream()</b>
+<b class="nc">&nbsp;                .map(this::convertToDTO)</b>
+<b class="nc">&nbsp;                .collect(Collectors.toList());</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(dtos);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;CalendarEventDTO&gt; getEventById(@PathVariable(&quot;id&quot;) Long id) {
+<b class="nc">&nbsp;        return usercalendarRepository.findById(id)</b>
+<b class="nc">&nbsp;                .map(this::convertToDTO)</b>
+<b class="nc">&nbsp;                .map(ResponseEntity::ok)</b>
+<b class="nc">&nbsp;                .orElseGet(() -&gt; ResponseEntity.notFound().build());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @PostMapping(&quot;/user/{userId}/events&quot;)
+&nbsp;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; createEvent(@PathVariable Long userId, @RequestBody CalendarEventDTO eventDTO) {
+&nbsp;        // First, find the user by ID to ensure they exist
+&nbsp;
+<b class="nc">&nbsp;        User user = userServices.getUserById(userId);</b>
+<b class="nc">&nbsp;        if (user == null) {</b>
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; errorResponse = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            errorResponse.put(&quot;error&quot;, &quot;User not found.&quot;);</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Create a new CalendarEntity and set its user
+<b class="nc">&nbsp;        CalendarEntity event = convertToEntity(eventDTO);</b>
+<b class="nc">&nbsp;        event.setUser(user);</b>
+&nbsp;
+&nbsp;        // Save the new event
+<b class="nc">&nbsp;        CalendarEntity savedEvent = usercalendarRepository.save(event);</b>
+&nbsp;
+<b class="nc">&nbsp;        Map&lt;String, Object&gt; successResponse = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;        successResponse.put(&quot;message&quot;, &quot;Event created successfully&quot;);</b>
+<b class="nc">&nbsp;        successResponse.put(&quot;eventId&quot;, savedEvent.getId());</b>
+<b class="nc">&nbsp;        return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private CalendarEntity convertToEntity(CalendarEventDTO dto) {
+<b class="nc">&nbsp;        CalendarEntity entity = new CalendarEntity();</b>
+<b class="nc">&nbsp;        entity.setTitle(dto.getTitle());</b>
+<b class="nc">&nbsp;        entity.setDescription(dto.getDescription());</b>
+<b class="nc">&nbsp;        entity.setDate(dto.getDate());</b>
+<b class="nc">&nbsp;        entity.setStartTime(dto.getStartTime());</b>
+<b class="nc">&nbsp;        entity.setEndTime(dto.getEndTime());</b>
+&nbsp;        // Add other fields as necessary
+<b class="nc">&nbsp;        return entity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @PutMapping(&quot;/{userId}/{eventId}&quot;)
+&nbsp;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; updateEvent(
+&nbsp;            @PathVariable(&quot;userId&quot;) Long userId,
+&nbsp;            @PathVariable(&quot;eventId&quot;) Long eventId,
+&nbsp;            @RequestBody CalendarEntity updatedEvent
+&nbsp;    )  {
+<b class="nc">&nbsp;        return usercalendarRepository.findByIdAndUser_UserId(eventId, userId).map(event -&gt; {</b>
+&nbsp;            // Explicitly update the desired fields from updatedEvent to event
+<b class="nc">&nbsp;            event.setTitle(updatedEvent.getTitle());</b>
+<b class="nc">&nbsp;            event.setDescription(updatedEvent.getDescription());</b>
+<b class="nc">&nbsp;            event.setDate(updatedEvent.getDate());</b>
+<b class="nc">&nbsp;            event.setStartTime(updatedEvent.getStartTime());</b>
+<b class="nc">&nbsp;            event.setEndTime(updatedEvent.getEndTime());</b>
+&nbsp;            // Assume other fields are set similarly
+&nbsp;            // The user of the event is not changed
+&nbsp;
+<b class="nc">&nbsp;            CalendarEntity savedEvent = usercalendarRepository.save(event);</b>
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            response.put(&quot;message&quot;, &quot;Event updated successfully&quot;);</b>
+<b class="nc">&nbsp;            response.put(&quot;eventId&quot;, savedEvent.getId());</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(response);</b>
+<b class="nc">&nbsp;        }).orElseGet(() -&gt; {</b>
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            response.put(&quot;error&quot;, &quot;Event not found with ID: &quot; + eventId + &quot; for User ID: &quot; + userId);</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/{userId}/{eventId}&quot;)
+&nbsp;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; deleteEvent(
+&nbsp;            @PathVariable(&quot;userId&quot;) Long userId,
+&nbsp;            @PathVariable(&quot;eventId&quot;) Long eventId
+&nbsp;    ) {
+<b class="nc">&nbsp;        return usercalendarRepository.findByIdAndUser_UserId(eventId, userId).map(event -&gt; {</b>
+<b class="nc">&nbsp;            usercalendarRepository.deleteByIdAndUser_UserId(eventId, userId);</b>
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            response.put(&quot;message&quot;, &quot;Event deleted successfully.&quot;);</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(response);</b>
+<b class="nc">&nbsp;        }).orElseGet(() -&gt; {</b>
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            response.put(&quot;error&quot;, &quot;Event not found with ID: &quot; + eventId + &quot; for User ID: &quot; + userId);</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

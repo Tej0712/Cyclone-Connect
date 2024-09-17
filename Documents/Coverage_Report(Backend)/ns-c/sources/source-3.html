@@ -1,0 +1,196 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > UsersNotesController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Notes_with_userID</a>
+</div>
+
+<h1>Coverage Summary for Class: UsersNotesController (onetoone.Notes_with_userID)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UsersNotesController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.1%
+  </span>
+  <span class="absValue">
+    (35/38)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Notes_with_userID;
+&nbsp;
+&nbsp;import onetoone.Users.User;
+&nbsp;import onetoone.Users.UserRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/api/users/{userId}/notes&quot;)
+<b class="fc">&nbsp;public class UsersNotesController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserNotesRepository notesRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserRepository userRepository;
+&nbsp;
+&nbsp;
+&nbsp;    private Notes_Entity convertToEntity(NotesDTO notesDTO) {
+<b class="fc">&nbsp;        Notes_Entity noteEntity = new Notes_Entity();</b>
+<b class="fc">&nbsp;        noteEntity.setTitle(notesDTO.getTitle());</b>
+<b class="fc">&nbsp;        noteEntity.setContent(notesDTO.getContent());</b>
+&nbsp;        // Set other properties if there are any
+<b class="fc">&nbsp;        return noteEntity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    public ResponseEntity&lt;List&lt;Notes_Entity&gt;&gt; getAllNotes(@PathVariable(&quot;userId&quot;) Long userId) {
+<b class="fc">&nbsp;        List&lt;Notes_Entity&gt; notes = notesRepository.findAll(); // Adjust to filter by userId if necessary</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(notes, HttpStatus.OK);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Notes_Entity&gt; getNoteById(@PathVariable(&quot;userId&quot;) Long userId, @PathVariable(&quot;id&quot;) Long id) {
+<b class="fc">&nbsp;        Optional&lt;Notes_Entity&gt; note = notesRepository.findById(id);</b>
+<b class="fc">&nbsp;        if (note.isPresent()) {</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(note.get(), HttpStatus.OK);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping
+&nbsp;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; createNote(@PathVariable(&quot;userId&quot;) Long userId, @RequestBody NotesDTO notesDTO) {
+<b class="fc">&nbsp;        return userRepository.findById(userId).map(user -&gt; {</b>
+<b class="fc">&nbsp;            Notes_Entity note = convertToEntity(notesDTO);</b>
+<b class="fc">&nbsp;            note.setUser(user);</b>
+<b class="fc">&nbsp;            Notes_Entity savedNote = notesRepository.save(note);</b>
+<b class="fc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;            response.put(&quot;message&quot;, &quot;Note created successfully&quot;);</b>
+<b class="fc">&nbsp;            response.put(&quot;noteId&quot;, savedNote.getId());</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(response, HttpStatus.CREATED);</b>
+<b class="fc">&nbsp;        }).orElseGet(() -&gt; {</b>
+<b class="fc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;            response.put(&quot;error&quot;, &quot;User not found&quot;);</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(response, HttpStatus.BAD_REQUEST);</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Notes_Entity&gt; updateNote(@PathVariable(&quot;userId&quot;) Long userId, @PathVariable(&quot;id&quot;) Long id, @RequestBody NotesDTO notesDTO) {
+<b class="fc">&nbsp;        return notesRepository.findById(id).map(note -&gt; {</b>
+<b class="fc">&nbsp;            note.setTitle(notesDTO.getTitle());</b>
+<b class="fc">&nbsp;            note.setContent(notesDTO.getContent());</b>
+<b class="fc">&nbsp;            Notes_Entity savedNote = notesRepository.save(note);</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(savedNote, HttpStatus.OK);</b>
+<b class="fc">&nbsp;        }).orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; deleteNote(@PathVariable(&quot;userId&quot;) Long userId, @PathVariable(&quot;id&quot;) Long id) {
+<b class="fc">&nbsp;        Optional&lt;Notes_Entity&gt; note = notesRepository.findById(id);</b>
+<b class="fc">&nbsp;        if (note.isPresent()) {</b>
+<b class="fc">&nbsp;            notesRepository.deleteById(id);</b>
+<b class="fc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;            response.put(&quot;message&quot;, &quot;Note deleted successfully&quot;);</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(response, HttpStatus.OK);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            response.put(&quot;error&quot;, &quot;Note not found&quot;);</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(response, HttpStatus.NOT_FOUND);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

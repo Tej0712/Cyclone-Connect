@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExerciseActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.HelpMenu.HealthAndWellness</a> &gt; <span class="el_source">ExerciseActivity.java</span></div><h1>ExerciseActivity.java</h1><pre class="source lang-java linenums">package com.example.myapplication.HelpMenu.HealthAndWellness;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import com.example.myapplication.R;
+
+import java.util.ArrayList;
+
+//public class ExerciseActivity extends AppCompatActivity implements ExerciseRVAdapter.ExerciseClickInterface {
+//
+//    private ArrayList&lt;ExerciseRVModal&gt; exerciseRVModalArrayList;
+//    private ExerciseRVAdapter exerciseRVAdapter;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_exercise);
+//        RecyclerView exerciseRV = findViewById(R.id.idRVExercise);
+//        exerciseRVModalArrayList = new ArrayList&lt;&gt;();
+//        exerciseRVAdapter = new ExerciseRVAdapter(exerciseRVModalArrayList, this);
+//        exerciseRV.setLayoutManager(new LinearLayoutManager(this));
+//        exerciseRV.setAdapter(exerciseRVAdapter);
+//        addData();
+//    }
+//
+//    @SuppressLint(&quot;NotifyDataSetChanged&quot;)
+//    private void addData() {
+//        exerciseRVModalArrayList.add(new ExerciseRVModal(&quot;Side Plank&quot;, getResources().getString(R.string.side_plank), &quot;https://lottie.host/ccf1a3b2-bda3-455a-aefd-cc32f1a511fe/wT38vTq1Dr.json&quot;, 20, 10));
+//        exerciseRVModalArrayList.add(new ExerciseRVModal(&quot;Lunges&quot;, getResources().getString(R.string.lunges), &quot;https://lottie.host/7f79ef0c-3ce1-41c8-843f-35d6bd0ce77f/dgIQMbafF6.json&quot;, 20, 10));
+//        exerciseRVModalArrayList.add(new ExerciseRVModal(&quot;High Stepping&quot;, getResources().getString(R.string.stepping), &quot;https://lottie.host/cbf039b5-03f5-483d-bdae-892a6cf08ec5/XqGALV6c3E.json&quot;, 40, 10));
+//        exerciseRVModalArrayList.add(new ExerciseRVModal(&quot;Abs Crunches&quot;, getResources().getString(R.string.abs_crunches), &quot;https://lottie.host/6a692e81-2cc2-4767-9c69-83081479cd2a/7Ql2DebrX8.json&quot;, 50, 10));
+//        exerciseRVModalArrayList.add(new ExerciseRVModal(&quot;Push Ups&quot;, getResources().getString(R.string.push_ups), &quot;https://lottie.host/92f53510-5f96-4b55-b46f-36a8e5e9db8b/nIGtor0JGU.json&quot;, 10, 5));
+//        exerciseRVAdapter.notifyDataSetChanged();
+//    }
+//
+//    @Override
+//    public void onExerciseClick(int position) {
+//        Intent i = new Intent(ExerciseActivity.this, ExerciseDetailActivity.class);
+//        i.putExtra(&quot;exerciseName&quot;, exerciseRVModalArrayList.get(position).getExerciseName());
+//        i.putExtra(&quot;imgUrl&quot;, exerciseRVModalArrayList.get(position).getImgUrl());
+//        i.putExtra(&quot;time&quot;, exerciseRVModalArrayList.get(position).getTime());
+//        i.putExtra(&quot;calories&quot;, exerciseRVModalArrayList.get(position).getCalories());
+//        i.putExtra(&quot;desc&quot;, exerciseRVModalArrayList.get(position).getExerciseDescription());
+//        startActivity(i);
+//    }
+//}
+
+
+<span class="nc" id="L74">public class ExerciseActivity extends AppCompatActivity implements ExerciseRVAdapter.ExerciseClickInterface {</span>
+<span class="nc" id="L75">    private static final String TAG = ExerciseActivity.class.getSimpleName();</span>
+    private static final String GET_EXERCISES_URL = &quot;http://coms-309-046.class.las.iastate.edu:8080/exercises&quot;;
+
+    private RecyclerView exerciseRV;
+    private ArrayList&lt;ExerciseRVModal&gt; exerciseRVModalArrayList;
+    private ExerciseRVAdapter exerciseRVAdapter;
+    private Map&lt;String, String&gt; exerciseImageUrlMap;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L85">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L86">        setContentView(R.layout.activity_exercise);</span>
+
+<span class="nc" id="L88">        exerciseRV = findViewById(R.id.idRVExercise);</span>
+<span class="nc" id="L89">        exerciseRVModalArrayList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L90">        exerciseRVAdapter = new ExerciseRVAdapter(exerciseRVModalArrayList, this);</span>
+<span class="nc" id="L91">        exerciseRV.setLayoutManager(new LinearLayoutManager(this));</span>
+<span class="nc" id="L92">        exerciseRV.setAdapter(exerciseRVAdapter);</span>
+
+<span class="nc" id="L94">        exerciseImageUrlMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L95">        populateExerciseImageUrlMap();</span>
+
+<span class="nc" id="L97">        getExercisesFromBackend();</span>
+<span class="nc" id="L98">    }</span>
+
+    private void populateExerciseImageUrlMap() {
+<span class="nc" id="L101">        exerciseImageUrlMap.put(&quot;Side Plank&quot;, &quot;https://lottie.host/ccf1a3b2-bda3-455a-aefd-cc32f1a511fe/wT38vTq1Dr.json&quot;);</span>
+<span class="nc" id="L102">        exerciseImageUrlMap.put(&quot;Lunges&quot;, &quot;https://lottie.host/7f79ef0c-3ce1-41c8-843f-35d6bd0ce77f/dgIQMbafF6.json&quot;);</span>
+<span class="nc" id="L103">        exerciseImageUrlMap.put(&quot;High Stepping&quot;, &quot;https://lottie.host/cbf039b5-03f5-483d-bdae-892a6cf08ec5/XqGALV6c3E.json&quot;);</span>
+<span class="nc" id="L104">        exerciseImageUrlMap.put(&quot;Abs Crunches&quot;, &quot;https://lottie.host/6a692e81-2cc2-4767-9c69-83081479cd2a/7Ql2DebrX8.json&quot;);</span>
+<span class="nc" id="L105">        exerciseImageUrlMap.put(&quot;Push Ups&quot;, &quot;https://lottie.host/92f53510-5f96-4b55-b46f-36a8e5e9db8b/nIGtor0JGU.json&quot;);</span>
+<span class="nc" id="L106">    }</span>
+
+    private void getExercisesFromBackend() {
+<span class="nc" id="L109">        VolleySingleton.getInstance(this).sendGetRequest(GET_EXERCISES_URL, new Response.Listener&lt;JSONObject&gt;() {</span>
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+<span class="nc" id="L113">                    JSONArray exercisesArray = response.getJSONArray(&quot;exercises&quot;);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">                    for (int i = 0; i &lt; exercisesArray.length(); i++) {</span>
+<span class="nc" id="L115">                        JSONObject exerciseObj = exercisesArray.getJSONObject(i);</span>
+<span class="nc" id="L116">                        int exerciseId = exerciseObj.getInt(&quot;exerciseId&quot;);</span>
+<span class="nc" id="L117">                        String exerciseName = exerciseObj.getString(&quot;exercise_name&quot;);</span>
+<span class="nc" id="L118">                        int time = exerciseObj.getInt(&quot;time&quot;);</span>
+
+                        // Get the image URL and exercise description from the frontend map
+<span class="nc" id="L121">                        String imageUrl = exerciseImageUrlMap.get(exerciseName);</span>
+<span class="nc" id="L122">                        String exerciseDescription = getExerciseDescription(exerciseName);</span>
+
+                        // Create an ExerciseRVModal object with the retrieved data
+<span class="nc" id="L125">                        ExerciseRVModal exerciseRVModal = new ExerciseRVModal(</span>
+                                exerciseName,
+                                exerciseDescription,
+                                imageUrl,
+                                0,
+                                time
+                        );
+<span class="nc" id="L132">                        exerciseRVModalArrayList.add(exerciseRVModal);</span>
+                    }
+<span class="nc" id="L134">                    exerciseRVAdapter.notifyDataSetChanged();</span>
+<span class="nc" id="L135">                } catch (JSONException e) {</span>
+<span class="nc" id="L136">                    Log.e(TAG, &quot;Error parsing JSON response&quot;, e);</span>
+<span class="nc" id="L137">                }</span>
+<span class="nc" id="L138">            }</span>
+<span class="nc" id="L139">        }, new Response.ErrorListener() {</span>
+            @Override
+            public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L142">                Log.e(TAG, &quot;Error fetching exercises from backend&quot;, error);</span>
+<span class="nc" id="L143">            }</span>
+        });
+<span class="nc" id="L145">    }</span>
+
+    private String getExerciseDescription(String exerciseName) {
+<span class="nc bnc" id="L148" title="All 6 branches missed.">        switch (exerciseName) {</span>
+            case &quot;Side Plank&quot;:
+<span class="nc" id="L150">                return getResources().getString(R.string.side_plank);</span>
+            case &quot;Lunges&quot;:
+<span class="nc" id="L152">                return getResources().getString(R.string.lunges);</span>
+            case &quot;High Stepping&quot;:
+<span class="nc" id="L154">                return getResources().getString(R.string.stepping);</span>
+            case &quot;Abs Crunches&quot;:
+<span class="nc" id="L156">                return getResources().getString(R.string.abs_crunches);</span>
+            case &quot;Push Ups&quot;:
+<span class="nc" id="L158">                return getResources().getString(R.string.push_ups);</span>
+            default:
+<span class="nc" id="L160">                return &quot;&quot;;</span>
+        }
+    }
+
+    @Override
+    public void onExerciseClick(int position) {
+<span class="nc" id="L166">        Intent i = new Intent(ExerciseActivity.this, ExerciseDetailActivity.class);</span>
+<span class="nc" id="L167">        i.putExtra(&quot;exerciseName&quot;, exerciseRVModalArrayList.get(position).getExerciseName());</span>
+<span class="nc" id="L168">        i.putExtra(&quot;imgUrl&quot;, exerciseRVModalArrayList.get(position).getImgUrl());</span>
+<span class="nc" id="L169">        i.putExtra(&quot;time&quot;, exerciseRVModalArrayList.get(position).getTime());</span>
+<span class="nc" id="L170">        i.putExtra(&quot;calories&quot;, exerciseRVModalArrayList.get(position).getCalories());</span>
+<span class="nc" id="L171">        i.putExtra(&quot;desc&quot;, exerciseRVModalArrayList.get(position).getExerciseDescription());</span>
+<span class="nc" id="L172">        startActivity(i);</span>
+<span class="nc" id="L173">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MapsServiceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.NavigateMap</a>
+</div>
+
+<h1>Coverage Summary for Class: MapsServiceImpl (onetoone.NavigateMap)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MapsServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    9.1%
+  </span>
+  <span class="absValue">
+    (1/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.NavigateMap;
+&nbsp;
+&nbsp;import onetoone.NavigateMap.Maps;
+&nbsp;import onetoone.NavigateMap.MapsRepository;
+&nbsp;import onetoone.NavigateMap.MapsService;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class MapsServiceImpl implements MapsService {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private MapsRepository mapsRepository;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Maps createMap(Maps map) {
+<b class="nc">&nbsp;        return mapsRepository.save(map);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;Maps&gt; getAllMaps() {
+<b class="nc">&nbsp;        return mapsRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Maps getMapById(Long id) {
+<b class="nc">&nbsp;        Optional&lt;Maps&gt; map = mapsRepository.findById(id);</b>
+<b class="nc">&nbsp;        return map.orElse(null);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Maps updateMap(Long id, Maps mapDetails) {
+<b class="nc">&nbsp;        Maps map = getMapById(id);</b>
+<b class="nc">&nbsp;        if (map != null) {</b>
+<b class="nc">&nbsp;            map.setDestination(mapDetails.getDestination());</b>
+&nbsp;            // Set other fields from mapDetails
+<b class="nc">&nbsp;            return mapsRepository.save(map);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return null; // Or handle accordingly</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void deleteMap(Long id) {
+<b class="nc">&nbsp;        mapsRepository.deleteById(id);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-27 01:00</div>
+</div>
+</body>
+</html>

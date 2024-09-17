@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalendarUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.Calendar</a> &gt; <span class="el_source">CalendarUtils.java</span></div><h1>CalendarUtils.java</h1><pre class="source lang-java linenums">package com.example.myapplication.Calendar;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+<span class="nc" id="L10">public class CalendarUtils</span>
+{
+    public static LocalDate selectedDate;
+
+    public static String formattedDate(LocalDate date)
+    {
+<span class="nc" id="L16">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd MMMM yyyy&quot;);</span>
+<span class="nc" id="L17">        return date.format(formatter);</span>
+    }
+
+    public static String formattedTime(LocalTime time)
+    {
+<span class="nc" id="L22">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;hh:mm:ss a&quot;);</span>
+<span class="nc" id="L23">        return time.format(formatter);</span>
+    }
+
+    public static String monthYearFromDate(LocalDate date)
+    {
+<span class="nc" id="L28">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;MMMM yyyy&quot;);</span>
+<span class="nc" id="L29">        return date.format(formatter);</span>
+    }
+
+    public static ArrayList&lt;LocalDate&gt; daysInMonthArray(LocalDate date)
+    {
+<span class="nc" id="L34">        ArrayList&lt;LocalDate&gt; daysInMonthArray = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L35">        YearMonth yearMonth = YearMonth.from(date);</span>
+
+<span class="nc" id="L37">        int daysInMonth = yearMonth.lengthOfMonth();</span>
+
+<span class="nc" id="L39">        LocalDate firstOfMonth = CalendarUtils.selectedDate.withDayOfMonth(1);</span>
+<span class="nc" id="L40">        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();</span>
+
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        for(int i = 1; i &lt;= 42; i++)</span>
+        {
+<span class="nc bnc" id="L44" title="All 4 branches missed.">            if(i &lt;= dayOfWeek || i &gt; daysInMonth + dayOfWeek)</span>
+<span class="nc" id="L45">                daysInMonthArray.add(null);</span>
+            else
+<span class="nc" id="L47">                daysInMonthArray.add(LocalDate.of(selectedDate.getYear(),selectedDate.getMonth(),i - dayOfWeek));</span>
+        }
+<span class="nc" id="L49">        return  daysInMonthArray;</span>
+    }
+
+    public static ArrayList&lt;LocalDate&gt; daysInWeekArray(LocalDate selectedDate)
+    {
+<span class="nc" id="L54">        ArrayList&lt;LocalDate&gt; days = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L55">        LocalDate current = sundayForDate(selectedDate);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        assert current != null;</span>
+<span class="nc" id="L57">        LocalDate endDate = current.plusWeeks(1);</span>
+
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        while (current.isBefore(endDate))</span>
+        {
+<span class="nc" id="L61">            days.add(current);</span>
+<span class="nc" id="L62">            current = current.plusDays(1);</span>
+        }
+<span class="nc" id="L64">        return days;</span>
+    }
+
+    private static LocalDate sundayForDate(LocalDate current)
+    {
+<span class="nc" id="L69">        LocalDate oneWeekAgo = current.minusWeeks(1);</span>
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        while (current.isAfter(oneWeekAgo))</span>
+        {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if(current.getDayOfWeek() == DayOfWeek.SUNDAY)</span>
+<span class="nc" id="L74">                return current;</span>
+
+<span class="nc" id="L76">            current = current.minusDays(1);</span>
+        }
+
+<span class="nc" id="L79">        return null;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

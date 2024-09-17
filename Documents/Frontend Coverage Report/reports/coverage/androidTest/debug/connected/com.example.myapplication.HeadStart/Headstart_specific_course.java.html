@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Headstart_specific_course.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.HeadStart</a> &gt; <span class="el_source">Headstart_specific_course.java</span></div><h1>Headstart_specific_course.java</h1><pre class="source lang-java linenums">package com.example.myapplication.HeadStart;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONException;
+
+<span class="nc" id="L17">public class Headstart_specific_course extends AppCompatActivity {</span>
+
+    private TextView courseNameTextView;
+    private TextView courseIdTextView;
+    private TextView courseDescriptionTextView;
+    private TextView prerequisitesTextView;
+    private TextView totalCreditsTextView;
+    private TextView programmingLanguagesTextView;
+    private TextView frameworkTextView;
+    private TextView difficultyLevelTextView;
+    private TextView timeComplexityTextView;
+    private TextView resourcesTextView;
+    private TextView embeddedLinksTextView;
+    private TextView roadMapTextView;
+    private TextView reviewsTextView;
+    private TextView ratingTextView;
+    private TextView editedByTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L37">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L38">        setContentView(R.layout.headstart_specific_course);</span>
+
+<span class="nc" id="L40">        courseNameTextView = findViewById(R.id.courseNameTextView);</span>
+<span class="nc" id="L41">        courseIdTextView = findViewById(R.id.courseIdTextView);</span>
+<span class="nc" id="L42">        courseDescriptionTextView = findViewById(R.id.courseDescriptionTextView);</span>
+<span class="nc" id="L43">        prerequisitesTextView = findViewById(R.id.prerequisitesTextView);</span>
+<span class="nc" id="L44">        totalCreditsTextView = findViewById(R.id.totalCreditsTextView);</span>
+<span class="nc" id="L45">        programmingLanguagesTextView = findViewById(R.id.programmingLanguagesTextView);</span>
+<span class="nc" id="L46">        frameworkTextView = findViewById(R.id.frameworkTextView);</span>
+<span class="nc" id="L47">        difficultyLevelTextView = findViewById(R.id.difficultyLevelTextView);</span>
+<span class="nc" id="L48">        timeComplexityTextView = findViewById(R.id.timeComplexityTextView);</span>
+<span class="nc" id="L49">        resourcesTextView = findViewById(R.id.resourcesTextView);</span>
+<span class="nc" id="L50">        embeddedLinksTextView = findViewById(R.id.embeddedLinksTextView);</span>
+<span class="nc" id="L51">        roadMapTextView = findViewById(R.id.roadMapTextView);</span>
+<span class="nc" id="L52">        reviewsTextView = findViewById(R.id.reviewsTextView);</span>
+<span class="nc" id="L53">        ratingTextView = findViewById(R.id.ratingTextView);</span>
+<span class="nc" id="L54">        editedByTextView = findViewById(R.id.editedByTextView);</span>
+
+<span class="nc" id="L56">        long courseID = getIntent().getLongExtra(&quot;courseID&quot;, -1);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (courseID != -1) {</span>
+<span class="nc" id="L58">            fetchCourseSpecifications(courseID);</span>
+        } else {
+<span class="nc" id="L60">            Toast.makeText(this, &quot;Invalid course ID&quot;, Toast.LENGTH_SHORT).show();</span>
+        }
+<span class="nc" id="L62">    }</span>
+
+    private void fetchCourseSpecifications(Long courseID) {
+<span class="nc" id="L65">        String url = &quot;http://coms-309-046.class.las.iastate.edu:8080/courseSpecifications/course/&quot; + courseID;</span>
+
+<span class="nc" id="L67">        @SuppressLint(&quot;SetTextI18n&quot;) JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,</span>
+                response -&gt; {
+                    try {
+<span class="nc" id="L70">                        String courseName = response.getString(&quot;courseName&quot;);</span>
+<span class="nc" id="L71">                        String courseId = response.getString(&quot;courseId&quot;);</span>
+<span class="nc" id="L72">                        String courseDescription = response.getString(&quot;courseDescription&quot;);</span>
+<span class="nc" id="L73">                        String prerequisites = response.getString(&quot;prerequisites&quot;);</span>
+<span class="nc" id="L74">                        String totalCredits = response.getString(&quot;totalCredits&quot;);</span>
+<span class="nc" id="L75">                        String programmingLanguages = response.getString(&quot;programmingLanguages&quot;);</span>
+<span class="nc" id="L76">                        String framework = response.getString(&quot;framework&quot;).trim();</span>
+<span class="nc" id="L77">                        String difficultyLevel = response.getString(&quot;difficultyLevel&quot;);</span>
+<span class="nc" id="L78">                        String timeComplexity = response.getString(&quot;timeComplexity&quot;);</span>
+<span class="nc" id="L79">                        String resources = response.getString(&quot;resources&quot;);</span>
+<span class="nc" id="L80">                        String embeddedLinks = response.getString(&quot;embeddedLinks&quot;);</span>
+<span class="nc" id="L81">                        String roadMap = response.getString(&quot;roadMap&quot;);</span>
+<span class="nc" id="L82">                        String reviews = response.getString(&quot;reviews&quot;);</span>
+<span class="nc" id="L83">                        String rating = response.getString(&quot;rating&quot;);</span>
+<span class="nc" id="L84">                        String editedBy = response.getString(&quot;editedBy&quot;);</span>
+
+<span class="nc" id="L86">                        courseNameTextView.setText(courseName);</span>
+<span class="nc" id="L87">                        courseIdTextView.setText(&quot;Course ID: &quot; + courseId);</span>
+<span class="nc" id="L88">                        courseDescriptionTextView.setText(&quot;Course Description: &quot; + courseDescription);</span>
+<span class="nc" id="L89">                        prerequisitesTextView.setText(&quot;Prerequisites: &quot; + prerequisites);</span>
+<span class="nc" id="L90">                        totalCreditsTextView.setText(&quot;Total Credits: &quot; + totalCredits);</span>
+<span class="nc" id="L91">                        programmingLanguagesTextView.setText(&quot;Programming Languages: &quot; + programmingLanguages);</span>
+<span class="nc" id="L92">                        frameworkTextView.setText(&quot;Framework: &quot; + framework);</span>
+<span class="nc" id="L93">                        difficultyLevelTextView.setText(&quot;Difficulty Level: &quot; + difficultyLevel);</span>
+<span class="nc" id="L94">                        timeComplexityTextView.setText(&quot;Time Complexity: &quot; + timeComplexity);</span>
+<span class="nc" id="L95">                        resourcesTextView.setText(&quot;Resources: &quot; + resources);</span>
+<span class="nc" id="L96">                        embeddedLinksTextView.setText(&quot;Embedded Links: &quot; + embeddedLinks);</span>
+<span class="nc" id="L97">                        roadMapTextView.setText(&quot;Road Map: &quot; + roadMap);</span>
+<span class="nc" id="L98">                        reviewsTextView.setText(&quot;Reviews: &quot; + reviews);</span>
+<span class="nc" id="L99">                        ratingTextView.setText(&quot;Rating: &quot; + rating);</span>
+<span class="nc" id="L100">                        editedByTextView.setText(&quot;Edited By: &quot; + editedBy);</span>
+
+<span class="nc" id="L102">                    } catch (JSONException e) {</span>
+<span class="nc" id="L103">                        e.printStackTrace();</span>
+<span class="nc" id="L104">                        Toast.makeText(Headstart_specific_course.this, &quot;Failed to parse course specifications&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L105">                    }</span>
+<span class="nc" id="L106">                },</span>
+                error -&gt; {
+<span class="nc" id="L108">                    error.printStackTrace();</span>
+<span class="nc" id="L109">                    Toast.makeText(Headstart_specific_course.this, &quot;Failed to fetch course specifications&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L110">                });</span>
+
+<span class="nc" id="L112">        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);</span>
+<span class="nc" id="L113">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

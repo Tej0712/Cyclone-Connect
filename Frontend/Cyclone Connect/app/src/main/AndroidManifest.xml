@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/main_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/main_icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignUp.CreateAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.Create_Faculty_Account"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.WhoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login.UserLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Calendar.EditEvent"
+            android:exported="false" />
+        <activity android:name=".HomePage"
+            android:exported="false" />
+        <activity android:name=".profile.Profile"
+            android:exported="false"/>
+        <activity android:name=".HeadStart.Headstart"
+            android:exported="false"/>
+        <activity android:name=".advisor.Advisor_Student_Chat"
+            android:exported="false"/>
+        <activity android:name=".advisor.AdvisorView"
+            android:exported="false"/>
+        <activity android:name=".Weather.Weather_Page"
+            android:exported="false"/>
+        <activity android:name=".Calendar.calendar_page"
+            android:exported="false"/>
+        <!--        <activity android:name=".Calendar.CalendarAdapter"-->
+        <!--            android:exported="false"/>-->
+        <!--        <activity android:name=".Calendar.CalendarUtils"-->
+        <!--            android:exported="false"/>-->
+        <!--        <activity android:name=".Calendar.CalendarViewHolder"-->
+        <!--            android:exported="false"/>-->
+        <!--        <activity android:name=".Calendar.Event"-->
+        <!--            android:exported="false"/>-->
+        <!--        <activity android:name=".Calendar.EventAdapter"-->
+        <!--            android:exported="false"/>-->
+        <activity android:name=".Calendar.WeekViewActivity"
+            android:exported="false"/>
+        <activity android:name=".Calendar.EventEditActivity"
+            android:exported="false"/>
+        <activity android:name=".Notes.NotesListActivity"
+            android:exported="false"/>
+        <activity android:name=".Notes.NoteActivity"
+            android:exported="false"/>
+        <activity android:name=".HelpMenu.Help_page"
+            android:exported="false"/>
+        <activity android:name=".HelpMenu.EmergencyContacts.EmergencyContacts"
+            android:exported="false"/>
+        <activity android:name=".HelpMenu.HealthAndWellness.HealthAndWellness"
+            android:exported="false"/>
+        <activity android:name=".HelpMenu.Navigate.NavigateApp"
+            android:exported="false"/>
+        <activity android:name=".HelpMenu.ReportBugs.ReportBugs"
+            android:exported="false"/>
+        <activity android:name=".admin.AdminPage"
+            android:exported="false"/>
+        <activity android:name=".profile.UpdateProfileActivity"
+            android:exported="false"/>
+        <activity android:name=".HelpMenu.ReportBugs.report_live_chat"
+            android:exported="false"/>
+        <!--        <activity android:name=".helper.WebSocketListener"-->
+        <!--            android:exported="false"/>-->
+        <!--        <activity android:name=".helper.WebSocketManager1"-->
+        <!--            android:exported="false"/>-->
+        <!--        <activity android:name=".helper.WebSocketManager2"-->
+        <!--            android:exported="false"/>-->
+        <activity android:name=".admin.Users.admin_fetchusers"
+            android:exported="false"/>
+        <activity android:name=".admin.Help.admin_bugs_chat"
+            android:exported="false"/>
+        <activity android:name=".admin.Help.EmergencyContacts.admin_EmergencyContactUpdatesActivity" />
+        <activity android:name=".admin.Help.EmergencyContacts.admin_Emergency_deletecontact"/>
+        <activity android:name=".admin.Help.EmergencyContacts.admin_Emergency_updatecontact"/>
+        <activity android:name=".AdvisorChat.User_Advisor_chat" />
+        <activity android:name=".Maps.Maps" />
+        <activity android:name=".admin.Help.Navigation.admin_NavigationApp"/>
+        <activity android:name=".admin.Help.Navigation.AddNavigationItemActivity"/>
+        <activity android:name=".admin.Help.Navigation.UpdateNavigationItemActivity"/>
+        <activity android:name=".admin.Help.Navigation.DeleteNavigationItemActivity"/>
+        <activity android:name=".HelpMenu.HealthAndWellness.ExerciseActivity"/>
+        <activity android:name=".HelpMenu.HealthAndWellness.StepCounterActivity"/>
+        <activity android:name=".HelpMenu.HealthAndWellness.ExerciseDetailActivity"/>
+        <!--        <activity android:name=".HelpMenu.HealthAndWellness.ExerciseRVAdapter"/>-->
+        <!--        <activity android:name=".HelpMenu.HealthAndWellness.ExerciseRVModal"/>-->
+        <activity android:name=".admin.HeadStart.admin_headstart"/>
+        <activity android:name=".admin.HeadStart.Major.admin_headstart_major_updates"/>
+        <activity android:name=".admin.HeadStart.Major.admin_headstart_add_major"/>
+        <activity android:name=".admin.HeadStart.Major.admin_headstart_delete_major"/>
+        <activity android:name=".admin.HeadStart.Major.admin_headstart_update_major"/>
+        <activity android:name=".admin.HeadStart.Course.admin_headstart_course_updates"/>
+        <activity android:name=".admin.HeadStart.SpecificCourse.admin_headstart_specific_updates"/>
+        <activity android:name=".admin.Help.EmergencyContacts.admin_Emergency_addcontact"/>
+
+        <activity android:name=".HeadStart.Headstart_courses"/>
+        <activity android:name=".HeadStart.Headstart_specific_course"/>
+        <activity android:name=".admin.HeadStart.Course.admin_headstart_add_courses"/>
+        <activity android:name=".admin.HeadStart.Course.admin_headstart_update_courses"/>
+        <activity android:name=".admin.HeadStart.Course.admin_headstart_delete_courses"/>
+        <activity android:name=".admin.HeadStart.SpecificCourse.admin_headstart_add_specificcourse"/>
+        <activity android:name=".admin.HeadStart.SpecificCourse.admin_headstart_update_specificcourse"/>
+        <activity android:name=".admin.HeadStart.SpecificCourse.admin_headstart_delete_specificcourse"/>
+
+        <!--        <activity android:name=".Notes.Note"/>-->
+
+        <activity android:name=".professor.ProfessorHome"/>
+        <activity android:name=".profile.ProfilePhotoActivity"/>
+        <!--        <activity android:name=".helper.MultipartRequest"/>-->
+
+        <activity android:name=".CyFind.CyFind_Home"
+            android:exported="false"/>
+        <activity android:name=".CyFind.ItemFound"
+            android:exported="false"/>
+        <activity android:name=".CyFind.ItemDetails"
+            android:exported="false"/>
+        <activity android:name=".GPACalc.GPACalculatorActivity"
+            android:exported="false"/>
+        <activity android:name=".SOH.StudentOrganizationsHub"
+            android:exported="false"/>
+        <activity android:name=".SOH.MemberListings"
+            android:exported="false"/>
+        <activity android:name=".SOH.ClubDetailsActivity"
+            android:exported="false"/>
+        <activity android:name=".CycloneAI.CycloneAI"
+            android:exported="false"/>
+        <activity android:name=".BMI.BMI_Calc"
+            android:exported="false"/>
+        <activity android:name=".BMI.BmiActivity"
+            android:exported="false"/>
+        <activity android:name=".CyMagicBall.MagicBall8"
+            android:exported="false"/>
+        <activity android:name=".GPACalc.AddCourseActivity"
+            android:exported="false"/>
+        <activity android:name=".GPACalc.DeleteCourseActivity"
+            android:exported="false"/>
+        <activity android:name=".GPACalc.UpdateCourseActivity"
+            android:exported="false"/>
+        <activity android:name=".admin.Help.Exercise.admin_add_exercise"
+            android:exported="false"/>
+        <activity android:name=".admin.Help.Exercise.admin_delete_exercise"
+            android:exported="false"/>
+        <activity android:name=".admin.Help.Exercise.admin_update_exercise"
+            android:exported="false"/>
+        <activity android:name=".admin.Help.Exercise.admin_exercise"
+            android:exported="false"/>
+        <activity android:name=".admin.Help.Exercise.AddExerciseBenefitActivity"
+            android:exported="false"/>
+        <activity android:name=".admin.Help.Exercise.admin_exercise_benifits"
+            android:exported="false"/>
+        <activity android:name=".admin.cyfind.admin_delete_cyfind"
+            android:exported="false"/>
+
+
+
+
+
+
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBMzSlmkfwrQLVt_0UEEqixQco8xXpXHJA" />
+    </application>
+
+</manifest>

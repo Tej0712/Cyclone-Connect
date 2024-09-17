@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Headstart_courses.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.HeadStart</a> &gt; <span class="el_source">Headstart_courses.java</span></div><h1>Headstart_courses.java</h1><pre class="source lang-java linenums">package com.example.myapplication.HeadStart;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.R;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L29">public class Headstart_courses extends AppCompatActivity {</span>
+    private CoursesAdapter coursesAdapter;
+<span class="nc" id="L31">    private final List&lt;Course&gt; courseList = new ArrayList&lt;&gt;();</span>
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L35">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L36">        setContentView(R.layout.headstart_course);</span>
+
+<span class="nc" id="L38">        long majorID = getIntent().getLongExtra(&quot;majorID&quot;, -1);</span>
+<span class="nc" id="L39">        RecyclerView coursesRecyclerView = findViewById(R.id.coursesRecyclerView);</span>
+<span class="nc" id="L40">        coursesRecyclerView.setLayoutManager(new LinearLayoutManager(this));</span>
+<span class="nc" id="L41">        coursesAdapter = new CoursesAdapter(courseList);</span>
+<span class="nc" id="L42">        coursesRecyclerView.setAdapter(coursesAdapter);</span>
+
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (majorID != -1) {</span>
+<span class="nc" id="L45">            fetchCourses(majorID);</span>
+        } else {
+<span class="nc" id="L47">            Toast.makeText(this, &quot;Error retrieving major ID&quot;, Toast.LENGTH_SHORT).show();</span>
+        }
+<span class="nc" id="L49">    }</span>
+
+    private void fetchCourses(long majorID) {
+<span class="nc" id="L52">        String url = &quot;http://coms-309-046.class.las.iastate.edu:8080/majors/&quot; + majorID;</span>
+
+<span class="nc" id="L54">        @SuppressLint(&quot;NotifyDataSetChanged&quot;) JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,</span>
+                response -&gt; {
+                    try {
+<span class="nc" id="L57">                        JSONArray coursesArray = response.getJSONArray(&quot;courses&quot;);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">                        for (int i = 0; i &lt; coursesArray.length(); i++) {</span>
+<span class="nc" id="L59">                            JSONObject object = coursesArray.getJSONObject(i);</span>
+<span class="nc" id="L60">                            Course course = new Course(</span>
+<span class="nc" id="L61">                                    object.getLong(&quot;id&quot;),</span>
+<span class="nc" id="L62">                                    object.getString(&quot;courseName&quot;),</span>
+<span class="nc" id="L63">                                    object.getString(&quot;courseNumber&quot;),</span>
+<span class="nc" id="L64">                                    object.getString(&quot;description&quot;));</span>
+<span class="nc" id="L65">                            courseList.add(course);</span>
+                        }
+<span class="nc" id="L67">                        coursesAdapter.notifyDataSetChanged();</span>
+<span class="nc" id="L68">                    } catch (Exception e) {</span>
+<span class="nc" id="L69">                        e.printStackTrace();</span>
+<span class="nc" id="L70">                    }</span>
+<span class="nc" id="L71">                },</span>
+<span class="nc" id="L72">                error -&gt; Toast.makeText(Headstart_courses.this, &quot;Failed to fetch courses&quot;, Toast.LENGTH_SHORT).show());</span>
+
+<span class="nc" id="L74">        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);</span>
+<span class="nc" id="L75">    }</span>
+
+    public static class Course {
+        private final Long courseId;
+        private final String courseName;
+        private final String courseNumber; // Added courseNumber
+        private final String description;
+
+<span class="nc" id="L83">        public Course(Long courseId, String courseName, String courseNumber, String description) {</span>
+<span class="nc" id="L84">            this.courseId = courseId;</span>
+<span class="nc" id="L85">            this.courseName = courseName;</span>
+<span class="nc" id="L86">            this.courseNumber = courseNumber; // Initialize courseNumber</span>
+<span class="nc" id="L87">            this.description = description;</span>
+<span class="nc" id="L88">        }</span>
+
+        public Long getCourseId() {
+<span class="nc" id="L91">            return courseId;</span>
+        }
+
+        public String getCourseName() {
+<span class="nc" id="L95">            return courseName;</span>
+        }
+
+        public String getCourseNumber() {
+<span class="nc" id="L99">            return courseNumber; // Getter for courseNumber</span>
+        }
+
+        public String getDescription() {
+<span class="nc" id="L103">            return description;</span>
+        }
+    }
+
+    private static class CoursesAdapter extends RecyclerView.Adapter&lt;CoursesAdapter.ViewHolder&gt; {
+        private final List&lt;Course&gt; courses;
+
+<span class="nc" id="L110">        public CoursesAdapter(List&lt;Course&gt; courses) {</span>
+<span class="nc" id="L111">            this.courses = courses;</span>
+<span class="nc" id="L112">        }</span>
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+<span class="nc" id="L117">            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_item, parent, false);</span>
+<span class="nc" id="L118">            return new ViewHolder(view);</span>
+        }
+
+        @SuppressLint(&quot;SetTextI18n&quot;)
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+<span class="nc" id="L124">            Course course = courses.get(position);</span>
+<span class="nc" id="L125">            holder.courseIdNumber.setText(&quot;ID:&quot; + course.getCourseId() + &quot; -  &quot; + course.getCourseNumber());</span>
+<span class="nc" id="L126">            holder.courseName.setText(course.getCourseName());</span>
+<span class="nc" id="L127">            holder.description.setText(course.getDescription());</span>
+<span class="nc" id="L128">        }</span>
+
+        @Override
+        public int getItemCount() {
+<span class="nc" id="L132">            return courses.size();</span>
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            TextView courseIdNumber;
+            TextView courseName;
+            TextView description;
+            LinearLayout detailsLayout;
+
+<span class="nc" id="L141">            public ViewHolder(View view) {</span>
+<span class="nc" id="L142">                super(view);</span>
+<span class="nc" id="L143">                courseIdNumber = view.findViewById(R.id.courseIdNumberTextView);</span>
+<span class="nc" id="L144">                courseName = view.findViewById(R.id.courseNameTextView);</span>
+<span class="nc" id="L145">                description = view.findViewById(R.id.descriptionTextView);</span>
+<span class="nc" id="L146">                detailsLayout = view.findViewById(R.id.detailsLayout);</span>
+
+<span class="nc" id="L148">                courseIdNumber.setOnClickListener(new View.OnClickListener() {</span>
+                    @Override
+                    public void onClick(View v) {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                        if (detailsLayout.getVisibility() == View.GONE) {</span>
+<span class="nc" id="L152">                            detailsLayout.setVisibility(View.VISIBLE);</span>
+                        } else {
+<span class="nc" id="L154">                            detailsLayout.setVisibility(View.GONE);</span>
+                        }
+<span class="nc" id="L156">                    }</span>
+                });
+
+<span class="nc" id="L159">                View.OnClickListener navigateToSpecificCourse = new View.OnClickListener() {</span>
+                    @Override
+                    public void onClick(View v) {
+<span class="nc" id="L162">                        int position = getAdapterPosition();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">                        if (position != RecyclerView.NO_POSITION) {</span>
+<span class="nc" id="L164">                            Course course = courses.get(position);</span>
+<span class="nc" id="L165">                            Intent intent = new Intent(view.getContext(), Headstart_specific_course.class);</span>
+<span class="nc" id="L166">                            intent.putExtra(&quot;courseID&quot;, course.getCourseId());</span>
+<span class="nc" id="L167">                            view.getContext().startActivity(intent);</span>
+                        }
+<span class="nc" id="L169">                    }</span>
+                };
+
+<span class="nc" id="L172">                courseName.setOnClickListener(navigateToSpecificCourse);</span>
+<span class="nc" id="L173">                description.setOnClickListener(navigateToSpecificCourse);</span>
+<span class="nc" id="L174">            }</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

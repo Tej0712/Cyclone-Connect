@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateAccountActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.SignUp</a> &gt; <span class="el_source">CreateAccountActivity.java</span></div><h1>CreateAccountActivity.java</h1><pre class="source lang-java linenums">package com.example.myapplication.SignUp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.R;
+import com.example.myapplication.Login.UserLoginActivity;
+import com.example.myapplication.helper.VolleySingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
+
+/**
+ * CreateAccountActivity is responsible for allowing a new user to create an account.
+ * It supports input fields for the user's first name, last name, email, password, and
+ * confirmation password. Upon successful account creation, the user is navigated to
+ * the UserLoginActivity. This activity also integrates with a backend service using
+ * a POST request to send the signup details.
+ * &lt;p&gt;
+ * Author: Abhay Prasanna Rao
+ */
+<span class="nc" id="L33">public class CreateAccountActivity extends AppCompatActivity {</span>
+    // UI elements for user input and action
+    private EditText firstNameEditText;
+    private EditText lastNameEditText;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private EditText confirmPasswordEditText;
+
+    private String accountType;     // Stores the account type set by previous activities
+
+    private boolean validateEmail(String email) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (!email.endsWith(&quot;@iastate.edu&quot;)) {</span>
+<span class="nc" id="L45">            emailEditText.setError(&quot;Email must have @iastate.edu domain&quot;);</span>
+<span class="nc" id="L46">            return false;</span>
+        }
+<span class="nc" id="L48">        return true;</span>
+    }
+
+    private boolean validatePassword(String password) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (password.length() &lt; 8) {</span>
+<span class="nc" id="L53">            passwordEditText.setError(&quot;Password must be at least 8 characters long&quot;);</span>
+<span class="nc" id="L54">            return false;</span>
+        }
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (!password.matches(&quot;.*[!@#$%^&amp;*(),.?\&quot;:{}|&lt;&gt;].*&quot;)) {</span>
+<span class="nc" id="L57">            passwordEditText.setError(&quot;Password must contain at least one special character&quot;);</span>
+<span class="nc" id="L58">            return false;</span>
+        }
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (!password.matches(&quot;.*\\d.*&quot;)) {</span>
+<span class="nc" id="L61">            passwordEditText.setError(&quot;Password must contain at least one number&quot;);</span>
+<span class="nc" id="L62">            return false;</span>
+        }
+<span class="nc" id="L64">        return true;</span>
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L70">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L71">        setContentView(R.layout.activity_create_account);</span>
+
+<span class="nc" id="L73">        firstNameEditText = findViewById(R.id.first_name_edit_text);</span>
+<span class="nc" id="L74">        lastNameEditText = findViewById(R.id.last_name_edit_text);</span>
+<span class="nc" id="L75">        emailEditText = findViewById(R.id.email_edit_text);</span>
+<span class="nc" id="L76">        passwordEditText = findViewById(R.id.password_edit_text);</span>
+<span class="nc" id="L77">        confirmPasswordEditText = findViewById(R.id.confirm_password_edit_text);</span>
+<span class="nc" id="L78">        Button createAccountButton = findViewById(R.id.create_account_button);</span>
+<span class="nc" id="L79">        Intent intent = getIntent();</span>
+<span class="nc" id="L80">        accountType = AccountTypeHolder.getInstance().getAccountType();</span>
+<span class="nc" id="L81">        createAccountButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L84">                String firstName = firstNameEditText.getText().toString().trim();</span>
+<span class="nc" id="L85">                String lastName = lastNameEditText.getText().toString().trim();</span>
+<span class="nc" id="L86">                String email = emailEditText.getText().toString().trim();</span>
+<span class="nc" id="L87">                String password = passwordEditText.getText().toString().trim();</span>
+<span class="nc" id="L88">                String confirmPassword = confirmPasswordEditText.getText().toString().trim();</span>
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                if (!validateEmail(email)) {</span>
+<span class="nc" id="L91">                    return;</span>
+                }
+
+<span class="nc bnc" id="L94" title="All 2 branches missed.">                if (!validatePassword(password)) {</span>
+<span class="nc" id="L95">                    return;</span>
+                }
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                if (!password.equals(confirmPassword)) {</span>
+<span class="nc" id="L99">                    Toast.makeText(CreateAccountActivity.this, &quot;Passwords do not match&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L100">                    return;</span>
+                }
+
+
+<span class="nc" id="L104">                sendSignupRequest(firstName, lastName, email, password);</span>
+<span class="nc" id="L105">            }</span>
+        });
+<span class="nc" id="L107">    }</span>
+    /**
+     * Constructs and sends a signup request to the backend server using Volley. This method
+     * constructs a JSON payload containing the user's first name, last name, email, password,
+     * and account type. Handles both success and error responses from the server.
+     *
+     * @param firstName User's first name
+     * @param lastName User's last name
+     * @param email User's email address
+     * @param password User's chosen password
+     */
+    private void sendSignupRequest(String firstName, String lastName, String email, String password) {
+        try {
+<span class="nc" id="L120">            final String requestBody = new JSONObject()</span>
+<span class="nc" id="L121">                    .put(&quot;firstName&quot;, firstName)</span>
+<span class="nc" id="L122">                    .put(&quot;lastName&quot;, lastName)</span>
+<span class="nc" id="L123">                    .put(&quot;email&quot;, email)</span>
+<span class="nc" id="L124">                    .put(&quot;password&quot;, password)</span>
+<span class="nc" id="L125">                    .put(&quot;accountType&quot;, accountType)</span>
+<span class="nc" id="L126">                    .toString();</span>
+
+<span class="nc" id="L128">            String backendUrl = &quot;http://coms-309-046.class.las.iastate.edu:8080/api/signup&quot;;</span>
+
+            // Use StringRequest instead of JsonObjectRequest
+<span class="nc" id="L131">            StringRequest stringRequest = new StringRequest(Request.Method.POST, backendUrl,</span>
+<span class="nc" id="L132">                    new Response.Listener&lt;String&gt;() {</span>
+                        @Override
+                        public void onResponse(String response) {
+                            // Handle success response
+<span class="nc" id="L136">                            Toast.makeText(CreateAccountActivity.this, response, Toast.LENGTH_LONG).show();</span>
+<span class="nc" id="L137">                            Intent intent = new Intent(CreateAccountActivity.this, UserLoginActivity.class);</span>
+<span class="nc" id="L138">                            startActivity(intent);</span>
+<span class="nc" id="L139">                        }</span>
+                    },
+<span class="nc" id="L141">                    new Response.ErrorListener() {</span>
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // Handle error response
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                            if (error.networkResponse != null) {</span>
+<span class="nc" id="L146">                                String errorMsg = new String(error.networkResponse.data);</span>
+<span class="nc" id="L147">                                Toast.makeText(CreateAccountActivity.this, errorMsg, Toast.LENGTH_LONG).show();</span>
+<span class="nc" id="L148">                            } else {</span>
+<span class="nc" id="L149">                                Toast.makeText(CreateAccountActivity.this, &quot;Error creating account&quot;, Toast.LENGTH_SHORT).show();</span>
+                            }
+<span class="nc" id="L151">                        }</span>
+<span class="nc" id="L152">                    }) {</span>
+                @Override
+                public byte[] getBody() throws com.android.volley.AuthFailureError {
+<span class="nc" id="L155">                    return requestBody.getBytes(StandardCharsets.UTF_8);</span>
+                }
+
+                @Override
+                public String getBodyContentType() {
+<span class="nc" id="L160">                    return &quot;application/json; charset=utf-8&quot;;</span>
+                }
+            };
+
+<span class="nc" id="L164">            VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);</span>
+<span class="nc" id="L165">        } catch (JSONException e) {</span>
+<span class="nc" id="L166">            e.printStackTrace();</span>
+<span class="nc" id="L167">        }</span>
+<span class="nc" id="L168">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

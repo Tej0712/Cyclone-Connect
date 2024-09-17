@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+    <item
+        android:id="@+id/ChatwithAdvisor"
+        android:title="Advisor Chat"
+        android:icon="@drawable/chat_bubble"/>
+    <item
+        android:id="@+id/Calendar"
+        android:title="Calendar"
+        android:icon="@drawable/ic_calendar"/>
+    <item
+        android:id="@+id/Maps"
+        android:title="Maps"
+        android:icon="@drawable/ic_map"/>
+    <item
+        android:id="@+id/Notes"
+        android:title="Notes"
+        android:icon="@drawable/drawer_note"/>
+    <item
+        android:id="@+id/Help"
+        android:title="Help"
+        android:icon="@drawable/drawer_help"/>
+    <item
+        android:id="@+id/CycloneAI"
+        android:title="Cyclone AI"
+        android:icon="@drawable/ai"/>
+    <item
+        android:id="@+id/CyFind"
+        android:title="CyFind"
+        android:icon="@drawable/search"/>
+    <item
+        android:id="@+id/btnCalculateGPA"
+        android:title="GPA Calculator"
+        android:icon="@drawable/calculator"/>
+
+    <item
+        android:id="@+id/StudentOrg"
+        android:title="Student Organization"
+        android:icon="@drawable/school"/>
+
+    <item
+        android:id="@+id/Weather"
+        android:title="Weather"
+        android:icon="@drawable/ic_cloud"/>
+
+        <item
+            android:id="@+id/BMIcalc"
+            android:title="BMI"
+            android:icon="@drawable/ic_add_circle_outline_white_24dp"/>
+
+        <item
+            android:id="@+id/CyMagicBall8"
+            android:title="@string/cyclone_magic_ball_8"
+            android:icon="@drawable/ball2"/>
+
+    </group>
+</menu>

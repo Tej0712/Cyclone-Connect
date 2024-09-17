@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>report_live_chat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.myapplication.HelpMenu.ReportBugs</a> &gt; <span class="el_source">report_live_chat.java</span></div><h1>report_live_chat.java</h1><pre class="source lang-java linenums">package com.example.myapplication.HelpMenu.ReportBugs;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.R;
+import com.example.myapplication.helper.WebSocketListener;
+import com.example.myapplication.helper.WebSocketManager1;
+
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L29">public class report_live_chat extends AppCompatActivity implements WebSocketListener {</span>
+
+    private EditText messageEditText;
+    private RecyclerView recyclerView;
+    private MessageAdapter messageAdapter;
+    private List&lt;Message&gt; messageList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L38">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L39">        setContentView(R.layout.report_live_chat);</span>
+
+<span class="nc" id="L41">        messageEditText = findViewById(R.id.edit_gchat_message);</span>
+<span class="nc" id="L42">        recyclerView = findViewById(R.id.recycler_gchat);</span>
+<span class="nc" id="L43">        messageList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L44">        messageAdapter = new MessageAdapter(messageList);</span>
+<span class="nc" id="L45">        recyclerView.setLayoutManager(new LinearLayoutManager(this));</span>
+<span class="nc" id="L46">        recyclerView.setAdapter(messageAdapter);</span>
+
+<span class="nc" id="L48">        findViewById(R.id.button_gchat_send).setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L51">                String messageText = messageEditText.getText().toString().trim();</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">                if (!messageText.isEmpty()) {</span>
+<span class="nc" id="L53">                    sendMessage(messageText);</span>
+<span class="nc" id="L54">                    messageEditText.setText(&quot;&quot;);</span>
+                }
+<span class="nc" id="L56">            }</span>
+        });
+<span class="nc" id="L58">    }</span>
+
+    @Override
+    protected void onResume() {
+<span class="nc" id="L62">        super.onResume();</span>
+
+<span class="nc" id="L64">        Log.d(&quot;report_live_chat&quot;, &quot;onResume called&quot;);</span>
+
+<span class="nc" id="L66">        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);</span>
+<span class="nc" id="L67">        long userId = preferences.getLong(&quot;userId&quot;, -1);</span>
+
+<span class="nc" id="L69">        Log.d(&quot;report_live_chat&quot;, &quot;Retrieved userId: &quot; + userId);</span>
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (userId != -1) {</span>
+<span class="nc" id="L72">            String serverUrl = &quot;ws://coms-309-046.class.las.iastate.edu:8080/chat/1/&quot; + userId;</span>
+<span class="nc" id="L73">            Log.d(&quot;report_live_chat&quot;, &quot;Connecting to WebSocket: &quot; + serverUrl);</span>
+<span class="nc" id="L74">            WebSocketManager1.getInstance().connectWebSocket(serverUrl);</span>
+<span class="nc" id="L75">            WebSocketManager1.getInstance().setWebSocketListener(this);</span>
+<span class="nc" id="L76">        } else {</span>
+<span class="nc" id="L77">            Log.d(&quot;report_live_chat&quot;, &quot;User ID not found&quot;);</span>
+<span class="nc" id="L78">            Toast.makeText(this, &quot;User ID not found. Please login again.&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L79">            finish();</span>
+        }
+<span class="nc" id="L81">    }</span>
+
+    @Override
+    protected void onPause() {
+<span class="nc" id="L85">        super.onPause();</span>
+
+<span class="nc" id="L87">        Log.d(&quot;report_live_chat&quot;, &quot;onPause called&quot;);</span>
+
+<span class="nc" id="L89">        WebSocketManager1.getInstance().disconnectWebSocket();</span>
+<span class="nc" id="L90">    }</span>
+
+    private void sendMessage(String messageText) {
+<span class="nc" id="L93">        WebSocketManager1.getInstance().sendMessage(messageText);</span>
+<span class="nc" id="L94">        Message message = new Message(messageText, true);</span>
+<span class="nc" id="L95">        messageList.add(message);</span>
+<span class="nc" id="L96">        messageAdapter.notifyItemInserted(messageList.size() - 1);</span>
+<span class="nc" id="L97">        recyclerView.scrollToPosition(messageList.size() - 1);</span>
+<span class="nc" id="L98">    }</span>
+
+    @Override
+    public void onWebSocketMessage(String message) {
+<span class="nc" id="L102">        Log.d(&quot;report_live_chat&quot;, &quot;Received message: &quot; + message);</span>
+<span class="nc" id="L103">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L106">                Message receivedMessage = new Message(message, false);</span>
+<span class="nc" id="L107">                messageList.add(receivedMessage);</span>
+<span class="nc" id="L108">                messageAdapter.notifyItemInserted(messageList.size() - 1);</span>
+<span class="nc" id="L109">                recyclerView.scrollToPosition(messageList.size() - 1);</span>
+<span class="nc" id="L110">            }</span>
+        });
+<span class="nc" id="L112">    }</span>
+
+    @Override
+    public void onWebSocketClose(int code, String reason, boolean remote) {
+<span class="nc" id="L116">        Log.d(&quot;report_live_chat&quot;, &quot;WebSocket connection closed. Code: &quot; + code + &quot;, Reason: &quot; + reason);</span>
+<span class="nc" id="L117">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L120">                Toast.makeText(report_live_chat.this, &quot;Disconnected from the chat: &quot; + reason, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L121">            }</span>
+        });
+<span class="nc" id="L123">    }</span>
+
+    @Override
+    public void onWebSocketOpen(ServerHandshake handshakedata) {
+<span class="nc" id="L127">        Log.d(&quot;report_live_chat&quot;, &quot;WebSocket connection opened&quot;);</span>
+<span class="nc" id="L128">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L131">                Toast.makeText(report_live_chat.this, &quot;Connected to the chat&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L132">            }</span>
+        });
+<span class="nc" id="L134">    }</span>
+
+    @Override
+    public void onWebSocketError(Exception ex) {
+<span class="nc" id="L138">        Log.d(&quot;report_live_chat&quot;, &quot;WebSocket error: &quot; + ex.getMessage());</span>
+<span class="nc" id="L139">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L142">                Toast.makeText(report_live_chat.this, &quot;Error: &quot; + ex.getMessage(), Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L143">            }</span>
+        });
+<span class="nc" id="L145">    }</span>
+
+    private static class Message {
+        private String text;
+        private boolean isSent;
+
+<span class="nc" id="L151">        public Message(String text, boolean isSent) {</span>
+<span class="nc" id="L152">            this.text = text;</span>
+<span class="nc" id="L153">            this.isSent = isSent;</span>
+<span class="nc" id="L154">        }</span>
+
+        public String getText() {
+<span class="nc" id="L157">            return text;</span>
+        }
+
+        public boolean isSent() {
+<span class="nc" id="L161">            return isSent;</span>
+        }
+    }
+
+    private static class MessageAdapter extends RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt; {
+        private static final int VIEW_TYPE_SENT = 0;
+        private static final int VIEW_TYPE_RECEIVED = 1;
+
+        private final List&lt;Message&gt; messageList;
+
+<span class="nc" id="L171">        public MessageAdapter(List&lt;Message&gt; messageList) {</span>
+<span class="nc" id="L172">            this.messageList = messageList;</span>
+<span class="nc" id="L173">        }</span>
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+<span class="nc" id="L178">            LayoutInflater inflater = LayoutInflater.from(parent.getContext());</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            if (viewType == VIEW_TYPE_SENT) {</span>
+<span class="nc" id="L180">                View view = inflater.inflate(R.layout.message_view, parent, false);</span>
+<span class="nc" id="L181">                return new SentMessageViewHolder(view);</span>
+            } else {
+<span class="nc" id="L183">                View view = inflater.inflate(R.layout.message_receive_view, parent, false);</span>
+<span class="nc" id="L184">                return new ReceivedMessageViewHolder(view);</span>
+            }
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+<span class="nc" id="L190">            Message message = messageList.get(position);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">            if (holder instanceof SentMessageViewHolder) {</span>
+<span class="nc" id="L192">                ((SentMessageViewHolder) holder).bind(message);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">            } else if (holder instanceof ReceivedMessageViewHolder) {</span>
+<span class="nc" id="L194">                ((ReceivedMessageViewHolder) holder).bind(message);</span>
+            }
+<span class="nc" id="L196">        }</span>
+
+        @Override
+        public int getItemCount() {
+<span class="nc" id="L200">            return messageList.size();</span>
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+<span class="nc" id="L205">            Message message = messageList.get(position);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">            if (message.isSent()) {</span>
+<span class="nc" id="L207">                return VIEW_TYPE_SENT;</span>
+            } else {
+<span class="nc" id="L209">                return VIEW_TYPE_RECEIVED;</span>
+            }
+        }
+
+        private static class SentMessageViewHolder extends RecyclerView.ViewHolder {
+            private final TextView messageTextView;
+
+            public SentMessageViewHolder(View itemView) {
+<span class="nc" id="L217">                super(itemView);</span>
+<span class="nc" id="L218">                messageTextView = itemView.findViewById(R.id.text_gchat_message_me);</span>
+<span class="nc" id="L219">            }</span>
+
+            public void bind(Message message) {
+<span class="nc" id="L222">                messageTextView.setText(message.getText());</span>
+<span class="nc" id="L223">            }</span>
+        }
+
+        private static class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
+            private final TextView messageTextView;
+
+            public ReceivedMessageViewHolder(View itemView) {
+<span class="nc" id="L230">                super(itemView);</span>
+<span class="nc" id="L231">                ImageView profileImageView = itemView.findViewById(R.id.image_gchat_profile_other);</span>
+<span class="nc" id="L232">                messageTextView = itemView.findViewById(R.id.text_gchat_message_other);</span>
+<span class="nc" id="L233">            }</span>
+
+            public void bind(Message message) {
+<span class="nc" id="L236">                messageTextView.setText(message.getText());</span>
+<span class="nc" id="L237">            }</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>
